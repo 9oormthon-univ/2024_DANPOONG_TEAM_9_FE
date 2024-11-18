@@ -16,6 +16,7 @@
 		8B11EFC12CEB2AF2003F92AC /* LOCC_FETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11EFBF2CEB2AF2003F92AC /* LOCC_FETests.swift */; };
 		8B11EFC52CEB2AF5003F92AC /* LOCC_FEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11EFC22CEB2AF5003F92AC /* LOCC_FEUITests.swift */; };
 		8B11EFC62CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11EFC32CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift */; };
+		8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */; };
 		8BC98CB02CEB2C82005CBE75 /* API+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98CAF2CEB2C82005CBE75 /* API+Extension.swift */; };
 		8BC98D402CEB2D39005CBE75 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8BC98D3E2CEB2D39005CBE75 /* Pretendard-SemiBold.otf */; };
 		8BC98D412CEB2D39005CBE75 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8BC98D3B2CEB2D39005CBE75 /* Pretendard-Light.otf */; };
@@ -67,6 +68,7 @@
 		8B11EFBF2CEB2AF2003F92AC /* LOCC_FETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LOCC_FETests.swift; sourceTree = "<group>"; };
 		8B11EFC22CEB2AF5003F92AC /* LOCC_FEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LOCC_FEUITests.swift; sourceTree = "<group>"; };
 		8B11EFC32CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LOCC_FEUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
 		8BC98CAF2CEB2C82005CBE75 /* API+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Extension.swift"; sourceTree = "<group>"; };
 		8BC98D372CEB2D39005CBE75 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		8BC98D382CEB2D39005CBE75 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */,
 				8BC98D572CEB331B005CBE75 /* CustomTabBar */,
 				8BC98D502CEB3128005CBE75 /* Login */,
 				8BC98D4F2CEB2E94005CBE75 /* Curation */,
@@ -200,6 +203,14 @@
 				8B11EFC32CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift */,
 			);
 			path = LOCC_FEUITests;
+			sourceTree = "<group>";
+		};
+		8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */,
+			);
+			path = CustomAnimation;
 			sourceTree = "<group>";
 		};
 		8BC98CB12CEB2CC0005CBE75 /* Font */ = {
@@ -533,6 +544,7 @@
 				8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */,
 				8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */,
 				8B11EFB92CEB2AF0003F92AC /* SceneDelegate.swift in Sources */,
+				8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
