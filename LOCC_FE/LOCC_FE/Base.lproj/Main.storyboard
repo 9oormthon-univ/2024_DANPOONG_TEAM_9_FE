@@ -27,7 +27,7 @@
         <!--Onboarding1 View Controller-->
         <scene sceneID="EFp-Yd-f7K">
             <objects>
-                <viewController id="dDp-Wj-b47" customClass="Onboarding1ViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Onboarding1ViewController" id="dDp-Wj-b47" customClass="Onboarding1ViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="608-aF-Q2O">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -325,7 +325,7 @@
         <!--Onboarding2 View Controller-->
         <scene sceneID="Kn3-Am-X6n">
             <objects>
-                <viewController id="SpB-Wi-v8m" customClass="Onboarding2ViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Onboarding2ViewController" id="SpB-Wi-v8m" customClass="Onboarding2ViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9rW-8x-kLW">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -341,6 +341,9 @@
                                 <rect key="frame" x="27" y="59" width="25" height="25"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="icon_back"/>
+                                <connections>
+                                    <action selector="didTapBackBtn:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="lKl-yQ-hBs"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2/2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q31-IM-LzK">
                                 <rect key="frame" x="33" y="125.00000000000001" width="20.333333333333329" height="15.666666666666671"/>
@@ -373,6 +376,9 @@
                                 <state key="normal" title="서울">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapSeoul:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="2Uh-rA-tZW"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I8D-ZJ-mZ6">
                                 <rect key="frame" x="105" y="265.66666666666669" width="86" height="45"/>
@@ -385,6 +391,9 @@
                                 <state key="normal" title="경기도">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapGyeonggi:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="VUG-MH-g5d"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DAv-Kh-GUc">
                                 <rect key="frame" x="198" y="265.66666666666669" width="71" height="45"/>
@@ -397,6 +406,9 @@
                                 <state key="normal" title="인천">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapIncheon:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="T9H-xS-UUP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UrF-Jm-870">
                                 <rect key="frame" x="276" y="265.66666666666669" width="86" height="45"/>
@@ -409,6 +421,9 @@
                                 <state key="normal" title="강원도">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapGangwon:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="LPh-ev-4ZT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BeU-uj-3LH">
                                 <rect key="frame" x="27" y="317.66666666666669" width="71" height="45"/>
@@ -421,6 +436,9 @@
                                 <state key="normal" title="대전">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapDaejeon:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="3Qj-ZA-czP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYX-aa-w5A">
                                 <rect key="frame" x="198" y="317.66666666666669" width="86" height="45"/>
@@ -433,6 +451,9 @@
                                 <state key="normal" title="전라도">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapJeolla:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="bhQ-MN-rbD"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PVt-ji-paN">
                                 <rect key="frame" x="291" y="317.66666666666669" width="71" height="45"/>
@@ -445,6 +466,9 @@
                                 <state key="normal" title="광주">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapGwangju:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="iIS-f1-SNY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yot-CH-CTH">
                                 <rect key="frame" x="27" y="369.66666666666669" width="86" height="45"/>
@@ -457,6 +481,9 @@
                                 <state key="normal" title="경상도">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapGyeongsang:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="7mm-RY-HWP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzT-Rf-y0e">
                                 <rect key="frame" x="120" y="369.66666666666669" width="71" height="45"/>
@@ -469,6 +496,9 @@
                                 <state key="normal" title="대구">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapDaegu:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="mff-gH-Lxy"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gM0-xW-xgS">
                                 <rect key="frame" x="198" y="369.66666666666669" width="71" height="45"/>
@@ -481,6 +511,9 @@
                                 <state key="normal" title="부산">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapBusan:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="cu2-QL-tmG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vqw-zr-rTc">
                                 <rect key="frame" x="276" y="369.66666666666669" width="71" height="45"/>
@@ -493,6 +526,9 @@
                                 <state key="normal" title="울산">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapUlsan:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="ZNL-B6-ZFe"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="577-wU-h4N">
                                 <rect key="frame" x="27" y="421.66666666666669" width="71" height="45"/>
@@ -505,6 +541,9 @@
                                 <state key="normal" title="제주">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapJeju:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="q5d-ph-en1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcP-N3-V39">
                                 <rect key="frame" x="33" y="695.66666666666663" width="328" height="55"/>
@@ -516,6 +555,9 @@
                                 <state key="normal" title="다음">
                                     <color key="titleColor" name="ButtonBackground"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapNextBtn2:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="EVY-J8-NJ7"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bT-2G-wOt">
                                 <rect key="frame" x="105" y="317.66666666666669" width="86" height="45"/>
@@ -528,6 +570,9 @@
                                 <state key="normal" title="충청도">
                                     <color key="titleColor" name="DefaultGreen"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapChungcheong:" destination="SpB-Wi-v8m" eventType="touchUpInside" id="gp5-a1-7Bu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ed4-B2-p0J"/>
@@ -575,6 +620,27 @@
                             <constraint firstItem="BeU-uj-3LH" firstAttribute="leading" secondItem="ed4-B2-p0J" secondAttribute="leading" constant="27" id="yvT-Ns-9dL"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="OSV-fi-EWO" id="J9N-hy-zIr"/>
+                        <outlet property="busanBtn" destination="gM0-xW-xgS" id="O0r-1u-3Gd"/>
+                        <outlet property="chungcheongBtn" destination="8bT-2G-wOt" id="bYv-im-7Ue"/>
+                        <outlet property="daeguBtn" destination="bzT-Rf-y0e" id="mvQ-1m-kYN"/>
+                        <outlet property="daejeonBtn" destination="BeU-uj-3LH" id="5dP-5n-geg"/>
+                        <outlet property="flowLabel2" destination="q31-IM-LzK" id="QrP-Jf-dEY"/>
+                        <outlet property="gangwonBtn" destination="UrF-Jm-870" id="xeb-wb-PKB"/>
+                        <outlet property="gwangjuBtn" destination="PVt-ji-paN" id="tiS-u7-UWi"/>
+                        <outlet property="gyeonggiBtn" destination="I8D-ZJ-mZ6" id="vbT-Eo-sga"/>
+                        <outlet property="gyeongsangBtn" destination="Yot-CH-CTH" id="N12-ta-xGk"/>
+                        <outlet property="incheonBtn" destination="DAv-Kh-GUc" id="mtr-dX-9MH"/>
+                        <outlet property="jejuBtn" destination="577-wU-h4N" id="6dI-qg-gnK"/>
+                        <outlet property="jeollaBtn" destination="NYX-aa-w5A" id="yoz-qz-pXO"/>
+                        <outlet property="likeRegionLabel" destination="NYI-2L-MU3" id="kkB-yf-SOV"/>
+                        <outlet property="maxRegionLabel" destination="kiw-xo-53q" id="buk-ER-g0C"/>
+                        <outlet property="nextButton2" destination="TcP-N3-V39" id="2Y1-Td-slL"/>
+                        <outlet property="progress2" destination="sZm-8b-DpO" id="o4o-fc-x3n"/>
+                        <outlet property="seoulBtn" destination="FXW-gU-aIc" id="INH-bg-ttJ"/>
+                        <outlet property="ulsanBtn" destination="Vqw-zr-rTc" id="DHy-ao-2Yd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2uo-58-VBl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -599,7 +665,7 @@
         <!--홈-->
         <scene sceneID="CGn-2F-jac">
             <objects>
-                <viewController id="Mef-ft-r8n" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="Mef-ft-r8n" customClass="HomeViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XdV-iB-22k">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
