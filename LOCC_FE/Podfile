@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'LOCC_FE' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for LOCC_FE
+  pod 'DropDown'
+  pod 'Alamofire'
+
+  target 'LOCC_FETests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'LOCC_FEUITests' do
+    # Pods for testing
+  end
+
+end
