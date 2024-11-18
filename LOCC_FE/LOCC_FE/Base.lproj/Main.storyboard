@@ -669,8 +669,19 @@
                     <view key="view" contentMode="scaleToFill" id="XdV-iB-22k">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BoE-5z-feR">
+                                <rect key="frame" x="24" y="64" width="85" height="24"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="logo"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vHn-XU-i93"/>
                         <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="BoE-5z-feR" firstAttribute="top" secondItem="vHn-XU-i93" secondAttribute="top" constant="5" id="knl-I3-FFI"/>
+                            <constraint firstItem="BoE-5z-feR" firstAttribute="leading" secondItem="vHn-XU-i93" secondAttribute="leading" constant="24" id="yTp-Rn-4mr"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="홈" image="bar_home" id="ROk-Yj-QOa"/>
                 </viewController>
@@ -755,6 +766,7 @@
         <image name="bar_post" width="50" height="50"/>
         <image name="bar_scrape" width="22" height="22"/>
         <image name="icon_back" width="25" height="25"/>
+        <image name="logo" width="85" height="24"/>
         <image name="on_accomodation" width="63" height="78"/>
         <image name="on_bookstore" width="65" height="71"/>
         <image name="on_cafe" width="56" height="76"/>
