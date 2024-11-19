@@ -15,8 +15,26 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xye-Ph-mCQ">
+                                <rect key="frame" x="101" y="218" width="191" height="59"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="logo2"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UA0-Th-DWO">
+                                <rect key="frame" x="112.66666666666669" y="304" width="168" height="51"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="splash_label"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="xye-Ph-mCQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Cc4-Xk-hzV"/>
+                            <constraint firstItem="UA0-Th-DWO" firstAttribute="centerX" secondItem="xye-Ph-mCQ" secondAttribute="centerX" id="Se2-yJ-qiV"/>
+                            <constraint firstItem="UA0-Th-DWO" firstAttribute="top" secondItem="xye-Ph-mCQ" secondAttribute="bottom" constant="27" id="dao-Wx-700"/>
+                            <constraint firstItem="xye-Ph-mCQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="159" id="ifx-x7-snJ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -25,6 +43,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo2" width="191" height="59"/>
+        <image name="splash_label" width="168" height="51"/>
         <namedColor name="Background">
             <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

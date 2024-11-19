@@ -10,21 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="vFT-s1-TkZ">
-            <objects>
-                <viewController id="0aW-Ir-F7o" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="yG5-SZ-Bgn">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="hN9-J0-oMp"/>
-                        <color key="backgroundColor" name="Background"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bar-BC-Qkj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-958" y="-8"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -38,18 +23,15 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="logo2"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOh-gL-GTF">
-                                <rect key="frame" x="109.66666666666667" y="304" width="173.66666666666663" height="50.333333333333314"/>
-                                <string key="text">로컬 크리에이터들을 
-한 손에서 발견!</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <color key="textColor" name="SelectedGreen"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2xM-GL-fY5">
-                                <rect key="frame" x="51" y="661.66666666666663" width="291" height="55"/>
+                                <rect key="frame" x="51" y="662.33333333333337" width="291" height="55"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="kakao"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4h-Df-RgK">
+                                <rect key="frame" x="112.66666666666669" y="304" width="168" height="51"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="splash_label"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -57,14 +39,13 @@
                         <constraints>
                             <constraint firstItem="2xM-GL-fY5" firstAttribute="centerX" secondItem="5Dq-d5-5Id" secondAttribute="centerX" id="0RH-eU-xdI"/>
                             <constraint firstItem="5Dq-d5-5Id" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7qf-aJ-kWs"/>
+                            <constraint firstItem="2xM-GL-fY5" firstAttribute="top" secondItem="n4h-Df-RgK" secondAttribute="bottom" constant="307.38999999999999" id="9hb-S1-qDg"/>
+                            <constraint firstItem="n4h-Df-RgK" firstAttribute="centerX" secondItem="5Dq-d5-5Id" secondAttribute="centerX" id="AYL-nr-Ae0"/>
                             <constraint firstItem="5Dq-d5-5Id" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="159" id="RE8-a0-dmn"/>
-                            <constraint firstItem="bOh-gL-GTF" firstAttribute="top" secondItem="5Dq-d5-5Id" secondAttribute="bottom" constant="27" id="U0n-Ga-WbA"/>
-                            <constraint firstItem="bOh-gL-GTF" firstAttribute="centerX" secondItem="5Dq-d5-5Id" secondAttribute="centerX" id="VVL-ec-ZUm"/>
-                            <constraint firstItem="2xM-GL-fY5" firstAttribute="top" secondItem="bOh-gL-GTF" secondAttribute="bottom" constant="307.38999999999999" id="mZV-bD-Uj2"/>
+                            <constraint firstItem="n4h-Df-RgK" firstAttribute="top" secondItem="5Dq-d5-5Id" secondAttribute="bottom" constant="27" id="s6g-98-v7T"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="introduceLabel" destination="bOh-gL-GTF" id="8hs-gh-yCH"/>
                         <outlet property="kakaoLoginBtn" destination="2xM-GL-fY5" id="dgb-qz-58e"/>
                         <outlet property="logo" destination="5Dq-d5-5Id" id="CLt-fx-mHd"/>
                     </connections>
@@ -1211,6 +1192,7 @@
         <image name="on_shopping" width="68" height="82"/>
         <image name="on_space" width="66" height="80"/>
         <image name="on_town_store" width="58" height="76"/>
+        <image name="splash_label" width="168" height="51"/>
         <namedColor name="Background">
             <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
