@@ -26,6 +26,9 @@ class CustomTabBarViewController: UITabBarController {
         setItemImageTint()
         setTitleFont()
         setBackground()
+        
+        // 스크롤뷰가 탭바를 가리지 않도록 탭바의 위치 고정
+        tabBar.frame = CGRect(x: 0, y: view.bounds.height - tabBar.frame.height, width: view.bounds.width, height: tabBar.frame.height)
     }
 
     private func setCustomTabBar() {

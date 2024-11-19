@@ -38,6 +38,8 @@ class HomeViewController: UIViewController {
         
         setupUI()
         setupBtn()
+        setupConstraints()
+        
     }
     
     private func setupUI() {

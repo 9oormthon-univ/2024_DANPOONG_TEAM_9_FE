@@ -1110,10 +1110,10 @@
             </objects>
             <point key="canvasLocation" x="6150" y="925"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar View Controller-->
         <scene sceneID="f58-mq-Zp8">
             <objects>
-                <tabBarController id="ety-R1-FKB" sceneMemberID="viewController">
+                <tabBarController id="ety-R1-FKB" customClass="CustomTabBarViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cPq-sJ-cGM">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
