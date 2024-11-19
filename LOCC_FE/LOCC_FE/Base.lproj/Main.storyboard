@@ -1064,12 +1064,45 @@
         <!--마이페이지-->
         <scene sceneID="vVg-MA-aPg">
             <objects>
-                <viewController id="LiH-tT-UIa" sceneMemberID="viewController">
+                <viewController id="LiH-tT-UIa" customClass="MyPageViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Sa-Eh-h9h">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1sJ-5U-31n">
+                                <rect key="frame" x="20" y="66" width="25" height="25"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="icon_back"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마이페이지" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AE6-NN-KKF">
+                                <rect key="frame" x="51" y="67.666666666666671" width="78" height="21.666666666666671"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLF-5k-axB">
+                                <rect key="frame" x="349" y="67" width="20" height="23"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="icon_setting"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ne-dt-eLZ">
+                                <rect key="frame" x="317" y="67" width="20" height="23"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="icon_bell"/>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="DIb-8c-XfR"/>
                         <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="1sJ-5U-31n" firstAttribute="leading" secondItem="DIb-8c-XfR" secondAttribute="leading" constant="20" id="JzH-Bl-kvn"/>
+                            <constraint firstItem="zLF-5k-axB" firstAttribute="leading" secondItem="6ne-dt-eLZ" secondAttribute="trailing" constant="12" id="Mtp-rx-SS3"/>
+                            <constraint firstItem="zLF-5k-axB" firstAttribute="centerY" secondItem="1sJ-5U-31n" secondAttribute="centerY" id="ePw-8I-ZtY"/>
+                            <constraint firstItem="AE6-NN-KKF" firstAttribute="centerY" secondItem="1sJ-5U-31n" secondAttribute="centerY" id="fHa-73-b1S"/>
+                            <constraint firstItem="1sJ-5U-31n" firstAttribute="top" secondItem="DIb-8c-XfR" secondAttribute="top" constant="7" id="g67-Tq-n8C"/>
+                            <constraint firstItem="DIb-8c-XfR" firstAttribute="trailing" secondItem="zLF-5k-axB" secondAttribute="trailing" constant="24" id="lmw-YF-SsI"/>
+                            <constraint firstItem="6ne-dt-eLZ" firstAttribute="centerY" secondItem="1sJ-5U-31n" secondAttribute="centerY" id="nvj-NH-YzH"/>
+                            <constraint firstItem="AE6-NN-KKF" firstAttribute="leading" secondItem="1sJ-5U-31n" secondAttribute="trailing" constant="6" id="ueA-bx-I0J"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="마이페이지" image="bar_mypage" id="AU2-hp-MWz"/>
                 </viewController>
@@ -1106,6 +1139,8 @@
         <image name="bar_post" width="50" height="50"/>
         <image name="bar_scrape" width="22" height="22"/>
         <image name="icon_back" width="25" height="25"/>
+        <image name="icon_bell" width="20" height="23"/>
+        <image name="icon_setting" width="20" height="23"/>
         <image name="logo" width="81" height="23"/>
         <image name="main_accomodation" width="46" height="62"/>
         <image name="main_bookstore" width="46" height="60"/>
