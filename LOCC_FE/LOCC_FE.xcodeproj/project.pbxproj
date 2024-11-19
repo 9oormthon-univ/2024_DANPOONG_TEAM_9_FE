@@ -33,6 +33,7 @@
 		8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98D532CEB319D005CBE75 /* Onboarding1ViewController.swift */; };
 		8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98D552CEB31A4005CBE75 /* Onboarding2ViewController.swift */; };
 		8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98D582CEB3362005CBE75 /* CustomTabBarViewController.swift */; };
+		8BEDE4982CEC663300AE9B02 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDE4972CEC663300AE9B02 /* SplashViewController.swift */; };
 		A95C295B04C0076F8A559FB4 /* Pods_LOCC_FE_LOCC_FEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F5BB9616115BAAB031F97E /* Pods_LOCC_FE_LOCC_FEUITests.framework */; };
 		C4417A428D2B7FFC7B660624 /* Pods_LOCC_FE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		8BC98D532CEB319D005CBE75 /* Onboarding1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding1ViewController.swift; sourceTree = "<group>"; };
 		8BC98D552CEB31A4005CBE75 /* Onboarding2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding2ViewController.swift; sourceTree = "<group>"; };
 		8BC98D582CEB3362005CBE75 /* CustomTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarViewController.swift; sourceTree = "<group>"; };
+		8BEDE4972CEC663300AE9B02 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		97799271014507EF40A68BB0 /* Pods-LOCC_FE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE.debug.xcconfig"; sourceTree = "<group>"; };
 		A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LOCC_FE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB907C981539F9AB89D550CF /* Pods-LOCC_FE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE.release.xcconfig"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				8BEDE4962CEC662100AE9B02 /* Splash */,
 				8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */,
 				8BC98D572CEB331B005CBE75 /* CustomTabBar */,
 				8BC98D502CEB3128005CBE75 /* Login */,
@@ -293,6 +296,14 @@
 				8BC98D582CEB3362005CBE75 /* CustomTabBarViewController.swift */,
 			);
 			path = CustomTabBar;
+			sourceTree = "<group>";
+		};
+		8BEDE4962CEC662100AE9B02 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				8BEDE4972CEC663300AE9B02 /* SplashViewController.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -553,6 +564,7 @@
 				8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */,
 				8B11EFB92CEB2AF0003F92AC /* SceneDelegate.swift in Sources */,
 				8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */,
+				8BEDE4982CEC663300AE9B02 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
