@@ -78,7 +78,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         let mapBackgroundView = UIView()
         mapBackgroundView.backgroundColor = .white
         mapBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         // "Hello, this is map view!" 라벨 생성
         let label = UILabel()
         label.text = "Hello, this is map view!"
@@ -86,11 +86,11 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-
+        
         // 뷰를 추가
         view.addSubview(mapBackgroundView)
         mapBackgroundView.addSubview(label)
-
+        
         // 배경 뷰의 제약 조건 설정 (전체 화면 차지)
         NSLayoutConstraint.activate([
             mapBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -98,7 +98,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             mapBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mapBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
+        
         // 라벨의 제약 조건 설정 (중앙 배치)
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: mapBackgroundView.centerXAnchor),
