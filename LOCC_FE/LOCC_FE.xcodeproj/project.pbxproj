@@ -34,6 +34,7 @@
 		8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98D552CEB31A4005CBE75 /* Onboarding2ViewController.swift */; };
 		8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC98D582CEB3362005CBE75 /* CustomTabBarViewController.swift */; };
 		A95C295B04C0076F8A559FB4 /* Pods_LOCC_FE_LOCC_FEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F5BB9616115BAAB031F97E /* Pods_LOCC_FE_LOCC_FEUITests.framework */; };
+		B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */; };
 		C4417A428D2B7FFC7B660624 /* Pods_LOCC_FE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LOCC_FE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB907C981539F9AB89D550CF /* Pods-LOCC_FE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE.release.xcconfig"; sourceTree = "<group>"; };
 		B052F49B543E219256E38889 /* Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = LOCC_FE/MapViewController.swift; sourceTree = SOURCE_ROOT; };
 		B8C2E6E4F07BA034A7EEC79F /* Pods-LOCC_FETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FETests.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FETests/Pods-LOCC_FETests.release.xcconfig"; sourceTree = "<group>"; };
 		C06E3D2E7D854C87C6EC5DA2 /* Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -253,6 +255,7 @@
 		8BC98D4B2CEB2E4B005CBE75 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */,
 				8BC98D522CEB313D005CBE75 /* LoginViewController.swift in Sources */,
 				8BC98CB02CEB2C82005CBE75 /* API+Extension.swift in Sources */,
+				B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */,
 				8B11EFB82CEB2AF0003F92AC /* AppDelegate.swift in Sources */,
 				8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */,
 				8BB425A52CEB914B00FA3EAB /* MyPageViewController.swift in Sources */,
