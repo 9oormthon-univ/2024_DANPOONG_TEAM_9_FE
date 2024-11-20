@@ -176,10 +176,7 @@
 				8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */,
 				8BC98D572CEB331B005CBE75 /* CustomTabBar */,
 				8BC98D502CEB3128005CBE75 /* Login */,
-				8BC98D4F2CEB2E94005CBE75 /* Curation */,
-				8BC98D4E2CEB2E84005CBE75 /* Detail */,
 				8BC98D4D2CEB2E72005CBE75 /* MyPage */,
-				8BC98D4B2CEB2E4B005CBE75 /* Map */,
 				8BC98D4A2CEB2E47005CBE75 /* Home */,
 				8BC98D492CEB2E3E005CBE75 /* Onboarding */,
 				8BC98CB12CEB2CC0005CBE75 /* Font */,
@@ -188,6 +185,7 @@
 				8B11EFB02CEB2AF0003F92AC /* Info.plist */,
 				8B11EFB22CEB2AF0003F92AC /* LaunchScreen.storyboard */,
 				8B11EFB42CEB2AF0003F92AC /* Main.storyboard */,
+				B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */,
 				8B11EFB52CEB2AF0003F92AC /* SceneDelegate.swift */,
 				8BC98CAF2CEB2C82005CBE75 /* API+Extension.swift */,
 			);
@@ -252,34 +250,12 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		8BC98D4B2CEB2E4B005CBE75 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
 		8BC98D4D2CEB2E72005CBE75 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
 				8BB425A42CEB914B00FA3EAB /* MyPageViewController.swift */,
 			);
 			path = MyPage;
-			sourceTree = "<group>";
-		};
-		8BC98D4E2CEB2E84005CBE75 /* Detail */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Detail;
-			sourceTree = "<group>";
-		};
-		8BC98D4F2CEB2E94005CBE75 /* Curation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Curation;
 			sourceTree = "<group>";
 		};
 		8BC98D502CEB3128005CBE75 /* Login */ = {
