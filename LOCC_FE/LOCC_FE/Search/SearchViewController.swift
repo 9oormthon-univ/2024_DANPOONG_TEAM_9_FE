@@ -12,10 +12,12 @@ class SearchViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) // Left alignment
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize // Dynamic item size
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
+    
+    private var tagCollectionViewHeightConstraint: NSLayoutConstraint!
     
     private let searchContainerView = UIView()
     private let searchIconView = UIImageView(image: UIImage(named: "icon_search"))
@@ -45,6 +47,13 @@ class SearchViewController: UIViewController {
         setupUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Update height constraint to match content size
+        tagCollectionViewHeightConstraint.constant = tagCollectionView.collectionViewLayout.collectionViewContentSize.height
+    }
+    
     // MARK: - Setup Methods
     private func setupView() {
         view.backgroundColor = .white
@@ -58,29 +67,49 @@ class SearchViewController: UIViewController {
     private func setupUI() {
         setupNavigationBar()
         setupSearchBar()
-
+        
+        // Create a stack view for Tag Header and Tag Collection
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        
         // Add Tag Header View
         let tagHeaderView = setupTagHeaderView()
-        view.addSubview(tagHeaderView)
-
+        stackView.addArrangedSubview(tagHeaderView)
+        
         // Add Tag Collection View
-        setupTagCollectionView()
+        stackView.addArrangedSubview(tagCollectionView)
+        
+        // Set collection view constraints
+        tagCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        tagCollectionView.backgroundColor = .blue
+        tagCollectionViewHeightConstraint = tagCollectionView.heightAnchor.constraint(equalToConstant: 0)
+        tagCollectionViewHeightConstraint.isActive = true
 
-        // Layout Constraints
+        // Add border below the stack view
+        let borderView = UIView()
+        borderView.backgroundColor = UIColor(hex: "#111111").withAlphaComponent(0.06)
+        borderView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(borderView)
+
+        // Add Stack View and Border Constraints
         NSLayoutConstraint.activate([
-            // Tag Header View Constraints
-            tagHeaderView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 16),
-            tagHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tagHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-
-            // Tag Collection View Constraints
-            tagCollectionView.topAnchor.constraint(equalTo: tagHeaderView.bottomAnchor, constant: 8),
-            tagCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tagCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tagCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            // Stack View Constraints
+            stackView.topAnchor.constraint(equalTo: customNavBar.bottomAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            // Border Constraints
+            borderView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20), // 20px below the stackView
+            borderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            borderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            borderView.heightAnchor.constraint(equalToConstant: 5) // 5px height
         ])
     }
-    
+
     private func setupNavigationBar() {
         view.addSubview(customNavBar)
         customNavBar.addArrangedSubview(backButton)
@@ -186,12 +215,13 @@ class SearchViewController: UIViewController {
     private func setupTagCollectionView() {
         view.addSubview(tagCollectionView)
         tagCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        tagCollectionView.backgroundColor = .blue
         
         NSLayoutConstraint.activate([
             tagCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tagCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tagCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tagCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+        
     }
     
     // MARK: - Actions
@@ -203,6 +233,25 @@ class SearchViewController: UIViewController {
         tags.removeAll() // Clear all tags
         tagCollectionView.reloadData() // Refresh collection view
         print("전체 태그 삭제됨")
+    }
+}
+
+// MARK: - thickBottomBorder
+extension UIView {
+    func addThickBottomBorder(color: UIColor, height: CGFloat, bottomSpacing: CGFloat = 0) -> UIView {
+        let border = UIView()
+        border.backgroundColor = color
+        border.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(border)
+
+        NSLayoutConstraint.activate([
+            border.heightAnchor.constraint(equalToConstant: height),
+            border.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            border.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            border.topAnchor.constraint(equalTo: self.bottomAnchor, constant: bottomSpacing)
+        ])
+
+        return border
     }
 }
 
