@@ -75,35 +75,35 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // kakaomap 추가
     private func setupKakaoMap() {
         // 배경이 흰색인 뷰 생성
-        let mapBackgroundView = UIView()
-        mapBackgroundView.backgroundColor = .white
-        mapBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // "Hello, this is map view!" 라벨 생성
-        let label = UILabel()
-        label.text = "Hello, this is map view!"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        // 뷰를 추가
-        view.addSubview(mapBackgroundView)
-        mapBackgroundView.addSubview(label)
-        
-        // 배경 뷰의 제약 조건 설정 (전체 화면 차지)
-        NSLayoutConstraint.activate([
-            mapBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        // 라벨의 제약 조건 설정 (중앙 배치)
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: mapBackgroundView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: mapBackgroundView.centerYAnchor)
-        ])
+            let mapBackgroundView = UIView()
+            mapBackgroundView.backgroundColor = .white
+            mapBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+
+            // "Hello, this is map view!" 라벨 생성
+            let label = UILabel()
+            label.text = "Hello, this is map view!"
+            label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+            label.textColor = .black
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+
+            // 뷰를 추가
+            view.addSubview(mapBackgroundView)
+            mapBackgroundView.addSubview(label)
+
+            // 배경 뷰의 제약 조건 설정 (전체 화면 차지)
+            NSLayoutConstraint.activate([
+                mapBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+                mapBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                mapBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                mapBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+
+            // 라벨의 제약 조건 설정 (중앙 배치)
+            NSLayoutConstraint.activate([
+                label.centerXAnchor.constraint(equalTo: mapBackgroundView.centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: mapBackgroundView.centerYAnchor)
+            ])
 //        let mapContainer = KMViewContainer(frame: self.view.bounds)
 //        mapContainer.translatesAutoresizingMaskIntoConstraints = false
 //        mapContainer.backgroundColor = .red
