@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reviewCell" id="gTV-IL-0wX" customClass="ReviewCollectionViewCell" customModule="LOCC_FE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="169" height="188"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="169" height="188"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRN-a5-N2P">
+                        <rect key="frame" x="0.0" y="0.0" width="169" height="188"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uvj-qW-huC">
+                                <rect key="frame" x="0.0" y="0.0" width="169" height="104"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="104" id="h8F-hm-doc"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRL-Uo-8ku">
+                                <rect key="frame" x="10" y="93" width="87" height="21"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="우수한탐방러_452" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMG-au-QNw">
+                                        <rect key="frame" x="6" y="4.6666666666666714" width="78" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                                        <color key="textColor" name="SelectedGreen"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6Px-QJ-rMf"/>
+                                    <constraint firstItem="FMG-au-QNw" firstAttribute="centerX" secondItem="SRL-Uo-8ku" secondAttribute="centerX" constant="1.5" id="ek3-x1-YIy"/>
+                                    <constraint firstItem="FMG-au-QNw" firstAttribute="centerY" secondItem="SRL-Uo-8ku" secondAttribute="centerY" id="qyI-PD-NZj"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="양지경성 광안 본점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQy-uW-TSh">
+                                <rect key="frame" x="17" y="116" width="105" height="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="맛집 · 부산 광안리" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLX-fE-1yF">
+                                <rect key="frame" x="17" y="135" width="87" height="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                <color key="textColor" name="NameLabel"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4n-5Q-qeC">
+                                <rect key="frame" x="31" y="156" width="23" height="12"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                <color key="textColor" name="RateLabel"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B9R-jQ-pLg">
+                                <rect key="frame" x="17" y="156" width="12" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="NsY-HP-afX"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="icon_star"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(274)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5S-X6-cUV">
+                                <rect key="frame" x="56" y="157" width="22" height="10"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="8"/>
+                                <color key="textColor" name="NameLabel"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Uvj-qW-huC" secondAttribute="trailing" id="0fP-vB-vqv"/>
+                            <constraint firstItem="SRL-Uo-8ku" firstAttribute="leading" secondItem="XRN-a5-N2P" secondAttribute="leading" constant="10" id="1sQ-H2-sQ0"/>
+                            <constraint firstItem="Uvj-qW-huC" firstAttribute="leading" secondItem="XRN-a5-N2P" secondAttribute="leading" id="7gu-6M-Gfd"/>
+                            <constraint firstItem="B9R-jQ-pLg" firstAttribute="top" secondItem="QLX-fE-1yF" secondAttribute="bottom" constant="6" id="Af2-9k-sW9"/>
+                            <constraint firstItem="QLX-fE-1yF" firstAttribute="leading" secondItem="lQy-uW-TSh" secondAttribute="leading" id="B9S-52-BpZ"/>
+                            <constraint firstItem="S5S-X6-cUV" firstAttribute="centerY" secondItem="B9R-jQ-pLg" secondAttribute="centerY" id="JPf-fB-PIk"/>
+                            <constraint firstItem="SRL-Uo-8ku" firstAttribute="top" secondItem="XRN-a5-N2P" secondAttribute="top" constant="93" id="Rln-Et-ayg"/>
+                            <constraint firstItem="B9R-jQ-pLg" firstAttribute="leading" secondItem="lQy-uW-TSh" secondAttribute="leading" id="YMN-pT-uyZ"/>
+                            <constraint firstAttribute="trailing" secondItem="SRL-Uo-8ku" secondAttribute="trailing" constant="72" id="YRZ-i7-EH5"/>
+                            <constraint firstItem="S5S-X6-cUV" firstAttribute="leading" secondItem="Q4n-5Q-qeC" secondAttribute="trailing" constant="2" id="Yzl-bN-pz5"/>
+                            <constraint firstItem="lQy-uW-TSh" firstAttribute="leading" secondItem="XRN-a5-N2P" secondAttribute="leading" constant="17" id="eJz-Oi-hG6"/>
+                            <constraint firstItem="Q4n-5Q-qeC" firstAttribute="leading" secondItem="B9R-jQ-pLg" secondAttribute="trailing" constant="2" id="erX-DE-4qS"/>
+                            <constraint firstItem="Q4n-5Q-qeC" firstAttribute="centerY" secondItem="B9R-jQ-pLg" secondAttribute="centerY" id="h4k-qM-Bdf"/>
+                            <constraint firstItem="lQy-uW-TSh" firstAttribute="top" secondItem="SRL-Uo-8ku" secondAttribute="bottom" constant="2" id="ked-iv-koe"/>
+                            <constraint firstItem="QLX-fE-1yF" firstAttribute="top" secondItem="lQy-uW-TSh" secondAttribute="bottom" constant="2" id="kme-bw-0iY"/>
+                            <constraint firstItem="Uvj-qW-huC" firstAttribute="top" secondItem="XRN-a5-N2P" secondAttribute="top" id="la0-Hf-6fA"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="XRN-a5-N2P" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0Pe-pK-SxV"/>
+                <constraint firstAttribute="bottom" secondItem="XRN-a5-N2P" secondAttribute="bottom" id="QmW-1x-GrE"/>
+                <constraint firstItem="XRN-a5-N2P" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="SyX-tr-xxJ"/>
+                <constraint firstAttribute="trailing" secondItem="XRN-a5-N2P" secondAttribute="trailing" id="wfU-OZ-bnX"/>
+            </constraints>
+            <connections>
+                <outlet property="baseView" destination="XRN-a5-N2P" id="QAT-Td-orp"/>
+                <outlet property="category" destination="QLX-fE-1yF" id="MTs-A7-7va"/>
+                <outlet property="nameView" destination="SRL-Uo-8ku" id="1YM-NZ-ILF"/>
+                <outlet property="reviewCnt" destination="S5S-X6-cUV" id="BtY-I8-ob5"/>
+                <outlet property="reviewImg" destination="Uvj-qW-huC" id="SSa-2p-a8x"/>
+                <outlet property="reviewRate" destination="Q4n-5Q-qeC" id="Kbr-ow-U2e"/>
+                <outlet property="reviewStarBtn" destination="B9R-jQ-pLg" id="Sb8-Ut-G8W"/>
+                <outlet property="reviewStoreName" destination="lQy-uW-TSh" id="ejD-kc-ywi"/>
+                <outlet property="userName" destination="FMG-au-QNw" id="CNK-7n-Hmr"/>
+            </connections>
+            <point key="canvasLocation" x="46.564885496183201" y="20.422535211267608"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="icon_star" width="12" height="11"/>
+        <namedColor name="Background">
+            <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NameLabel">
+            <color red="0.51764705882352946" green="0.51372549019607838" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="RateLabel">
+            <color red="0.3411764705882353" green="0.3411764705882353" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SelectedGreen">
+            <color red="0.21176470588235294" green="0.36078431372549019" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
