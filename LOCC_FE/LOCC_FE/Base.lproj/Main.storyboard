@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wKj-LJ-9vO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ety-R1-FKB">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -746,7 +746,7 @@
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nZ3-aC-nVc">
                                                 <rect key="frame" x="0.0" y="105" width="393" height="398"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="398" id="UvH-31-U2A"/>
                                                 </constraints>
@@ -840,7 +840,7 @@
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="m3U-b2-rts">
                                                 <rect key="frame" x="0.0" y="778" width="393" height="139"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="139" id="MDY-ou-Ewd"/>
                                                 </constraints>
@@ -863,7 +863,7 @@
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MKS-s8-Rr1">
                                                 <rect key="frame" x="0.0" y="947" width="393" height="61"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="61" id="1v9-jj-rfh"/>
                                                 </constraints>
@@ -886,7 +886,7 @@
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="70T-ks-5mk">
                                                 <rect key="frame" x="0.0" y="1041.3333333333333" width="393" height="204"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="204" id="Cev-UQ-TSU"/>
                                                 </constraints>
@@ -929,7 +929,7 @@
                                             </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="028-5C-y93">
                                                 <rect key="frame" x="0.0" y="1344" width="393" height="188"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="188" id="YAZ-WE-mF0"/>
                                                 </constraints>
@@ -1041,17 +1041,21 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="홈" image="bar_home" id="ROk-Yj-QOa"/>
                     <connections>
-                        <outlet property="allBtn1" destination="ABv-Ah-d3m" id="6o4-gh-Eze"/>
-                        <outlet property="allBtn2" destination="QYJ-Du-ibQ" id="EOp-Bf-MMN"/>
-                        <outlet property="collectionView" destination="nZ3-aC-nVc" id="ZhG-9l-EKX"/>
-                        <outlet property="dropDownBtn" destination="Y5J-Rq-3N2" id="vgR-gh-YQr"/>
-                        <outlet property="loccLabel" destination="vEH-WL-gvd" id="uBs-me-r6J"/>
-                        <outlet property="logoBtn" destination="w98-6F-FvX" id="4LL-7j-sWX"/>
-                        <outlet property="reviewLabel" destination="MKW-Vl-DiI" id="GKc-B1-axB"/>
-                        <outlet property="rewardLabel" destination="BD4-6N-ziJ" id="ukJ-Cc-UU9"/>
-                        <outlet property="scrollView" destination="790-BD-LsO" id="TSx-0M-rV4"/>
-                        <outlet property="todayCurate" destination="vRf-ki-FJf" id="j54-29-odl"/>
-                        <outlet property="watchReviewLabel" destination="uAJ-2e-fqx" id="6qc-dD-55p"/>
+                        <outlet property="adView" destination="70T-ks-5mk" id="5NW-W4-dhb"/>
+                        <outlet property="allBtn1" destination="ABv-Ah-d3m" id="U2h-Wm-PqN"/>
+                        <outlet property="allBtn2" destination="ABv-Ah-d3m" id="v1H-mu-bgy"/>
+                        <outlet property="benefitView" destination="m3U-b2-rts" id="Xjf-GH-M2u"/>
+                        <outlet property="curateView" destination="nZ3-aC-nVc" id="AwH-LR-OKs"/>
+                        <outlet property="loccLabel" destination="vEH-WL-gvd" id="EfL-Wj-VHG"/>
+                        <outlet property="logoBtn" destination="w98-6F-FvX" id="y4a-hs-Xvp"/>
+                        <outlet property="provinceView" destination="m3U-b2-rts" id="ZL0-EH-eVG"/>
+                        <outlet property="regionBtn" destination="Y5J-Rq-3N2" id="CHe-tm-vA4"/>
+                        <outlet property="reviewLabel" destination="MKW-Vl-DiI" id="L34-U8-XTh"/>
+                        <outlet property="reviewView" destination="028-5C-y93" id="dXm-cI-EmC"/>
+                        <outlet property="rewardLabel" destination="BD4-6N-ziJ" id="fvQ-CU-EFh"/>
+                        <outlet property="scrollView" destination="790-BD-LsO" id="mln-Qf-1Nd"/>
+                        <outlet property="todayCurate" destination="vRf-ki-FJf" id="TMy-A5-Lmg"/>
+                        <outlet property="watchReviewLabel" destination="uAJ-2e-fqx" id="4ss-sx-j1g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xXd-wC-75v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

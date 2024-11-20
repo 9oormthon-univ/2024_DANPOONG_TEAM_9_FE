@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="adCell" id="gTV-IL-0wX" customClass="AdCollectionViewCell" customModule="LOCC_FE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="204"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="204"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aek-N3-Y9U">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="204"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSW-BH-vPZ">
+                        <rect key="frame" x="21" y="90.666666666666671" width="215" height="38.333333333333329"/>
+                        <string key="text">이동할 때부터 지칠 수는 없으니까 
+친구들이랑 편하게</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" name="ButtonBackground"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="쏘카 3시간 할인 지역 보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtC-ay-OEB">
+                        <rect key="frame" x="21" y="135" width="244" height="29"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                        <color key="textColor" name="ButtonBackground"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="RSW-BH-vPZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="7jE-Le-1yF"/>
+                <constraint firstItem="aek-N3-Y9U" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="9lS-oj-Ya9"/>
+                <constraint firstAttribute="bottom" secondItem="aek-N3-Y9U" secondAttribute="bottom" id="HSU-X3-loE"/>
+                <constraint firstAttribute="trailing" secondItem="aek-N3-Y9U" secondAttribute="trailing" id="Kof-3g-eJG"/>
+                <constraint firstItem="wtC-ay-OEB" firstAttribute="leading" secondItem="RSW-BH-vPZ" secondAttribute="leading" id="O1x-6P-Xg6"/>
+                <constraint firstItem="aek-N3-Y9U" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ORR-CM-z8I"/>
+                <constraint firstItem="wtC-ay-OEB" firstAttribute="top" secondItem="RSW-BH-vPZ" secondAttribute="bottom" constant="6" id="hQ0-bQ-iNz"/>
+                <constraint firstAttribute="bottom" secondItem="RSW-BH-vPZ" secondAttribute="bottom" constant="75" id="liV-Dd-dbK"/>
+            </constraints>
+            <connections>
+                <outlet property="adImg" destination="aek-N3-Y9U" id="rpG-wH-WSh"/>
+                <outlet property="adSubTitle" destination="RSW-BH-vPZ" id="R26-QH-4S2"/>
+                <outlet property="adTitle" destination="wtC-ay-OEB" id="M36-Y0-RPX"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="Background">
+            <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
