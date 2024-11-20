@@ -1,97 +1,123 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+    // UI 요소 선언
+    private let searchTextField = UITextField() // searchTextField를 클래스 멤버로 선언
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        // 기본 Back Button 비활성화
-        navigationItem.hidesBackButton = true
-
-        // 네비게이션 바의 커스텀 뷰 추가
-        setupNavigationBarContent()
+        
+        // 기본 네비게이션 바 숨기기
+        navigationController?.isNavigationBarHidden = true
+        
+        // 폰트 및 UI 설정
+        setupFont()
+        setupUI()
+    }
+    
+    private func setupFont() {
+        searchTextField.font = UIFont(name: "Pretendard-Regular", size: 14)
+    }
+    
+    private func setupUI() {
+        setupCustomNavigationBar()
     }
 
-    // 네비게이션 바 콘텐츠 설정
-    private func setupNavigationBarContent() {
-        // 커스텀 Back Button 생성
+    private func setupCustomNavigationBar() {
+        // 커스텀 네비게이션 바 생성
+        let customNavBar = UIView()
+        customNavBar.backgroundColor = .white
+        customNavBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(customNavBar)
+        
+        // Back 버튼 생성
         let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "icon_back"), for: .normal) // 아이콘 설정
-        backButton.tintColor = .black // 아이콘 색상 설정
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside) // 액션 연결
+        backButton.setImage(UIImage(named: "icon_back"), for: .normal)
+        backButton.tintColor = UIColor(hex: "#8C8D90")
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-
+        
         // 검색 바 컨테이너 뷰 생성
         let searchContainerView = UIView()
         searchContainerView.layer.cornerRadius = 18
         searchContainerView.backgroundColor = UIColor(hex: "#111111").withAlphaComponent(0.06)
         searchContainerView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         // 검색 아이콘 설정
         let searchIconView = UIImageView(image: UIImage(named: "icon_search"))
         searchIconView.contentMode = .scaleAspectFit
         searchIconView.translatesAutoresizingMaskIntoConstraints = false
         searchContainerView.addSubview(searchIconView)
-
+        
         // 텍스트 필드 설정
-        let searchTextField = UITextField()
         searchTextField.placeholder = "지역, 공간, 메뉴 검색"
         searchTextField.borderStyle = .none
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         searchContainerView.addSubview(searchTextField)
-
+        
         // Clear 버튼 설정
         let clearButton = UIButton(type: .custom)
         clearButton.setImage(UIImage(named: "icon_search_x"), for: .normal)
         clearButton.translatesAutoresizingMaskIntoConstraints = false
         searchContainerView.addSubview(clearButton)
-
+        
         // 검색 바 내부 레이아웃 설정
         NSLayoutConstraint.activate([
             searchIconView.leadingAnchor.constraint(equalTo: searchContainerView.leadingAnchor, constant: 12),
             searchIconView.centerYAnchor.constraint(equalTo: searchContainerView.centerYAnchor),
             searchIconView.widthAnchor.constraint(equalToConstant: 20),
-
+            
             searchTextField.leadingAnchor.constraint(equalTo: searchIconView.trailingAnchor, constant: 8),
             searchTextField.centerYAnchor.constraint(equalTo: searchContainerView.centerYAnchor),
-
+            
             clearButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 8),
             clearButton.trailingAnchor.constraint(equalTo: searchContainerView.trailingAnchor, constant: -12),
             clearButton.centerYAnchor.constraint(equalTo: searchContainerView.centerYAnchor),
             clearButton.widthAnchor.constraint(equalToConstant: 20),
-
+            
             searchContainerView.heightAnchor.constraint(equalToConstant: 36)
         ])
-
+        
         // StackView 생성
         let stackView = UIStackView(arrangedSubviews: [backButton, searchContainerView])
         stackView.axis = .horizontal
-        stackView.spacing = 0
+        stackView.spacing = 8
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        // 네비게이션 바에 추가
-        let titleView = UIView()
-        titleView.translatesAutoresizingMaskIntoConstraints = false
-        titleView.addSubview(stackView)
-        navigationItem.titleView = titleView
-
-        // StackView 및 TitleView 제약 설정
+        customNavBar.addSubview(stackView)
+        
+        // Border 추가
+        let border = UIView()
+        border.backgroundColor = UIColor(hex: "#111111").withAlphaComponent(0.2)
+        border.translatesAutoresizingMaskIntoConstraints = false
+        customNavBar.addSubview(border)
+        
+        // 커스텀 네비게이션 바 및 StackView 레이아웃 설정
         NSLayoutConstraint.activate([
-            // StackView가 TitleView에 딱 맞게 위치
-            stackView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: titleView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: titleView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
-
-            // 검색 바의 너비가 Back Button을 제외한 남은 공간을 차지하도록 설정
-            searchContainerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 25 - 16) // 25px은 Back Button 크기, 16은 좌우 패딩
+            customNavBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            customNavBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            customNavBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            customNavBar.heightAnchor.constraint(equalToConstant: 60),
+            
+            stackView.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor, constant: -16),
+            stackView.centerYAnchor.constraint(equalTo: customNavBar.centerYAnchor),
+            
+            backButton.widthAnchor.constraint(equalToConstant: 25),
+            backButton.heightAnchor.constraint(equalToConstant: 25),
+            searchContainerView.widthAnchor.constraint(equalTo: customNavBar.widthAnchor, multiplier: 0.8),
+            
+            // Border 레이아웃 설정
+            border.heightAnchor.constraint(equalToConstant: 0.75),
+            border.leadingAnchor.constraint(equalTo: customNavBar.leadingAnchor),
+            border.trailingAnchor.constraint(equalTo: customNavBar.trailingAnchor),
+            border.bottomAnchor.constraint(equalTo: customNavBar.bottomAnchor)
         ])
     }
 
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
+    
 }
