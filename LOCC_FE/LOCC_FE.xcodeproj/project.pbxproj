@@ -43,6 +43,9 @@
 		8BCCD26E2CED787400F0391C /* AdCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCCD26B2CED787400F0391C /* AdCollectionViewCell.swift */; };
 		8BCCD2712CED793D00F0391C /* ReviewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BCCD2702CED793D00F0391C /* ReviewCollectionViewCell.xib */; };
 		8BCCD2722CED793D00F0391C /* ReviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCCD26F2CED793D00F0391C /* ReviewCollectionViewCell.swift */; };
+		8BF0531A2CED831400A86F2E /* CurateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF053192CED831400A86F2E /* CurateViewController.swift */; };
+		8BF053212CED984400A86F2E /* CurationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */; };
+		8BF053222CED984400A86F2E /* CurationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */; };
 		A95C295B04C0076F8A559FB4 /* Pods_LOCC_FE_LOCC_FEUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F5BB9616115BAAB031F97E /* Pods_LOCC_FE_LOCC_FEUITests.framework */; };
 		B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */; };
 		C4417A428D2B7FFC7B660624 /* Pods_LOCC_FE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */; };
@@ -108,6 +111,9 @@
 		8BCCD26C2CED787400F0391C /* AdCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdCollectionViewCell.xib; sourceTree = "<group>"; };
 		8BCCD26F2CED793D00F0391C /* ReviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BCCD2702CED793D00F0391C /* ReviewCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewCollectionViewCell.xib; sourceTree = "<group>"; };
+		8BF053192CED831400A86F2E /* CurateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurateViewController.swift; sourceTree = "<group>"; };
+		8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationCollectionViewCell.swift; sourceTree = "<group>"; };
+		8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurationCollectionViewCell.xib; sourceTree = "<group>"; };
 		97799271014507EF40A68BB0 /* Pods-LOCC_FE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE.debug.xcconfig"; sourceTree = "<group>"; };
 		A647676F421DDC5A56AB1D08 /* Pods_LOCC_FE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LOCC_FE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB907C981539F9AB89D550CF /* Pods-LOCC_FE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE.release.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				8BF053182CED82EC00A86F2E /* Curate */,
 				8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */,
 				8BC98D572CEB331B005CBE75 /* CustomTabBar */,
 				8BC98D502CEB3128005CBE75 /* Login */,
@@ -302,6 +309,16 @@
 				8BC98D582CEB3362005CBE75 /* CustomTabBarViewController.swift */,
 			);
 			path = CustomTabBar;
+			sourceTree = "<group>";
+		};
+		8BF053182CED82EC00A86F2E /* Curate */ = {
+			isa = PBXGroup;
+			children = (
+				8BF053192CED831400A86F2E /* CurateViewController.swift */,
+				8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */,
+				8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */,
+			);
+			path = Curate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,6 +443,7 @@
 				8BC98D452CEB2D39005CBE75 /* Pretendard-Bold.otf in Resources */,
 				8BC98D462CEB2D39005CBE75 /* Pretendard-Medium.otf in Resources */,
 				8BC98D472CEB2D39005CBE75 /* Pretendard-ExtraBold.otf in Resources */,
+				8BF053222CED984400A86F2E /* CurationCollectionViewCell.xib in Resources */,
 				8BC98D482CEB2D39005CBE75 /* Pretendard-ExtraLight.otf in Resources */,
 				8B11EFBE2CEB2AF0003F92AC /* Main.storyboard in Resources */,
 				8BCCD2612CED729600F0391C /* CurateCollectionViewCell.xib in Resources */,
@@ -567,6 +585,8 @@
 				8BCCD26A2CED781F00F0391C /* ProvinceCollectionViewCell.swift in Sources */,
 				8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */,
 				8BB425A52CEB914B00FA3EAB /* MyPageViewController.swift in Sources */,
+				8BF053212CED984400A86F2E /* CurationCollectionViewCell.swift in Sources */,
+				8BF0531A2CED831400A86F2E /* CurateViewController.swift in Sources */,
 				8B8C02CF2CEB64D3007F86E6 /* HomeViewController.swift in Sources */,
 				8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */,
 				8B11EFB92CEB2AF0003F92AC /* SceneDelegate.swift in Sources */,
