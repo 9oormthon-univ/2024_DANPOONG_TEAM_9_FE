@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="curateCell" id="gTV-IL-0wX" customClass="CurateCollectionViewCell" customModule="LOCC_FE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="274" height="371"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="274" height="371"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Kf-QT-G8V">
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="371"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ysA-iZ-AtS">
+                        <rect key="frame" x="28" y="249.66666666666666" width="149" height="38.333333333333343"/>
+                        <string key="text">강원도 감자 코스 
+모든 게 감자 감자 감자</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" name="ButtonBackground"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="강원도 감자 특선 3곳" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roH-lJ-Sth">
+                        <rect key="frame" x="28" y="299" width="197" height="29"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                        <color key="textColor" name="ButtonBackground"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="roH-lJ-Sth" firstAttribute="top" secondItem="ysA-iZ-AtS" secondAttribute="bottom" constant="11" id="10q-rY-txj"/>
+                <constraint firstAttribute="trailing" secondItem="ysA-iZ-AtS" secondAttribute="trailing" constant="97" id="2WV-Qw-LsG"/>
+                <constraint firstItem="ysA-iZ-AtS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="28" id="4H6-H6-h4f"/>
+                <constraint firstItem="6Kf-QT-G8V" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7kl-mf-LF8"/>
+                <constraint firstAttribute="trailing" secondItem="6Kf-QT-G8V" secondAttribute="trailing" id="Biw-TE-pEj"/>
+                <constraint firstAttribute="bottom" secondItem="6Kf-QT-G8V" secondAttribute="bottom" id="L97-VA-kjB"/>
+                <constraint firstAttribute="bottom" secondItem="ysA-iZ-AtS" secondAttribute="bottom" constant="83" id="Qlk-Jd-dcW"/>
+                <constraint firstItem="roH-lJ-Sth" firstAttribute="leading" secondItem="ysA-iZ-AtS" secondAttribute="leading" id="grQ-Mn-E6n"/>
+                <constraint firstItem="6Kf-QT-G8V" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="jGo-mX-GB0"/>
+            </constraints>
+            <connections>
+                <outlet property="curateImg" destination="6Kf-QT-G8V" id="V8f-2y-WVc"/>
+                <outlet property="curateSubTitle" destination="ysA-iZ-AtS" id="tYk-Xs-kYO"/>
+                <outlet property="curateTitle" destination="roH-lJ-Sth" id="Owo-Kg-FHr"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="20"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="Background">
+            <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
