@@ -1048,7 +1048,7 @@
                         <outlet property="curateView" destination="nZ3-aC-nVc" id="AwH-LR-OKs"/>
                         <outlet property="loccLabel" destination="vEH-WL-gvd" id="EfL-Wj-VHG"/>
                         <outlet property="logoBtn" destination="w98-6F-FvX" id="y4a-hs-Xvp"/>
-                        <outlet property="provinceView" destination="m3U-b2-rts" id="ZL0-EH-eVG"/>
+                        <outlet property="provinceView" destination="MKS-s8-Rr1" id="hTJ-L5-VOO"/>
                         <outlet property="regionBtn" destination="Y5J-Rq-3N2" id="CHe-tm-vA4"/>
                         <outlet property="reviewLabel" destination="MKW-Vl-DiI" id="L34-U8-XTh"/>
                         <outlet property="reviewView" destination="028-5C-y93" id="dXm-cI-EmC"/>
