@@ -8,6 +8,8 @@ target 'LOCC_FE' do
   # Pods for LOCC_FE
   pod 'DropDown'
   pod 'Alamofire'
+  pod 'KakaoSDKAuth'
+  pod 'KakaoSDKUser'
 
   target 'LOCC_FETests' do
     inherit! :search_paths
