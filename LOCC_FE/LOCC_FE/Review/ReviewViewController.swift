@@ -158,40 +158,144 @@ class ReviewViewController: UIViewController, UIScrollViewDelegate {
             gradientView.layer.addSublayer(gradientLayer)
         }
         
-        // 텍스트 오버레이
+        // 텍스트 오버레이 StackView
+        let textStack = UIStackView()
+        textStack.axis = .vertical
+        textStack.alignment = .leading
+        textStack.spacing = 8
+        textStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Title Stack (아이콘 + 타이틀)
+        let titleStack = UIStackView()
+        titleStack.axis = .horizontal
+        titleStack.alignment = .center
+        titleStack.spacing = 8
+        titleStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Icon for Location
+        let locationIcon = UIImageView(image: UIImage(named: "icon_location_orange"))
+        locationIcon.contentMode = .scaleAspectFit
+        locationIcon.translatesAutoresizingMaskIntoConstraints = false
+        locationIcon.widthAnchor.constraint(equalToConstant: 18).isActive = true // 아이콘 크기 설정
+        locationIcon.heightAnchor.constraint(equalToConstant: 18).isActive = true
+
+        // Title Label
         let titleLabel = UILabel()
         titleLabel.text = review.title
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
         titleLabel.textColor = .white
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        reviewView.addSubview(titleLabel)
-        
+
+        // Add Icon and Title to Title Stack
+        titleStack.addArrangedSubview(locationIcon)
+        titleStack.addArrangedSubview(titleLabel)
+
+        // Date Label
         let dateLabel = UILabel()
         dateLabel.text = review.date
-        dateLabel.font = UIFont.systemFont(ofSize: 14)
-        dateLabel.textColor = .white
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        reviewView.addSubview(dateLabel)
-        
+        dateLabel.font = UIFont(name: "Pretendard-Medium", size: 14)
+        dateLabel.textColor = UIColor(hex: "FFFFFF").withAlphaComponent(0.8)
+
+        // Description Label
         let descriptionLabel = UILabel()
         descriptionLabel.text = review.description
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        descriptionLabel.textColor = .white
+        descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 16)
+        descriptionLabel.textColor = UIColor(hex: "FFFFFF").withAlphaComponent(0.9)
         descriptionLabel.numberOfLines = 2
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        reviewView.addSubview(descriptionLabel)
+
+        // Add Title Stack, Date, and Description to Text Stack
+        textStack.addArrangedSubview(titleStack)
+        textStack.addArrangedSubview(dateLabel)
+        textStack.addArrangedSubview(descriptionLabel)
+
         
+        // 아이콘 StackView
+        let iconStack = UIStackView()
+        iconStack.axis = .vertical
+        iconStack.alignment = .center
+        iconStack.spacing = 12
+        iconStack.translatesAutoresizingMaskIntoConstraints = false
+
+        // Like Icon + 좋아요 개수 Stack
+        let likeStack = UIStackView()
+        likeStack.axis = .vertical
+        likeStack.alignment = .center
+        likeStack.spacing = 4
+        likeStack.translatesAutoresizingMaskIntoConstraints = false
+
+        let likeIcon = UIImageView(image: UIImage(named: "icon_like_stroke"))
+        likeIcon.contentMode = .scaleAspectFit
+        likeIcon.translatesAutoresizingMaskIntoConstraints = false
+        likeIcon.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        likeIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        
+        // Add Tap Gesture to likeIcon
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLikeIconTap))
+        likeIcon.isUserInteractionEnabled = true // Enable user interaction
+        likeIcon.addGestureRecognizer(tapGesture)
+
+        let likeCountLabel = UILabel()
+        likeCountLabel.text = "827" // 좋아요 개수
+        likeCountLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
+        likeCountLabel.textColor = .white
+        likeCountLabel.textAlignment = .center
+        likeCountLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        likeStack.addArrangedSubview(likeIcon)
+        likeStack.addArrangedSubview(likeCountLabel)
+
+        // Share Icon + 공유 텍스트 Stack
+        let shareStack = UIStackView()
+        shareStack.axis = .vertical
+        shareStack.alignment = .center
+        shareStack.spacing = 4
+        shareStack.translatesAutoresizingMaskIntoConstraints = false
+
+        let shareIcon = UIImageView(image: UIImage(named: "icon_share"))
+        shareIcon.contentMode = .scaleAspectFit
+        shareIcon.translatesAutoresizingMaskIntoConstraints = false
+        shareIcon.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        shareIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
+
+        let shareLabel = UILabel()
+        shareLabel.text = "공유" // 공유 텍스트
+        shareLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
+        shareLabel.textColor = .white
+        shareLabel.textAlignment = .center
+        shareLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        shareStack.addArrangedSubview(shareIcon)
+        shareStack.addArrangedSubview(shareLabel)
+
+        // Add to Icon Stack
+        iconStack.addArrangedSubview(likeStack)
+        iconStack.addArrangedSubview(shareStack)
+        
+        // Horizontal StackView
+        let horizontalStack = UIStackView()
+        horizontalStack.axis = .horizontal
+        horizontalStack.alignment = .center
+        horizontalStack.spacing = 16 // 두 스택 사이 간격 설정
+        horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(horizontalStack)
+
+        // textStack 추가
+        textStack.setContentHuggingPriority(.defaultLow, for: .horizontal) // textStack이 남은 공간을 채우도록 설정
+        textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal) // 압축에 대한 저항 우선순위 낮게 설정
+        horizontalStack.addArrangedSubview(textStack)
+
+        // iconStack 추가
+        iconStack.setContentHuggingPriority(.required, for: .horizontal) // iconStack의 크기가 고정되도록 설정
+        iconStack.setContentCompressionResistancePriority(.required, for: .horizontal) // 압축되지 않도록 설정
+        horizontalStack.addArrangedSubview(iconStack)
+
+        // iconStack 너비 고정
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
-            titleLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -8),
-            
-            dateLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
-            dateLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -8),
-            
-            descriptionLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
-            descriptionLabel.trailingAnchor.constraint(equalTo: reviewView.trailingAnchor, constant: -20),
-            descriptionLabel.bottomAnchor.constraint(equalTo: reviewView.safeAreaLayoutGuide.bottomAnchor, constant: -40)
+            iconStack.widthAnchor.constraint(equalToConstant: 32), // iconStack 너비를 32로 고정
+            horizontalStack.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
+            horizontalStack.trailingAnchor.constraint(equalTo: reviewView.trailingAnchor, constant: -20),
+            horizontalStack.bottomAnchor.constraint(equalTo: reviewView.safeAreaLayoutGuide.bottomAnchor, constant: -40)
         ])
+
         
         return reviewView
     }
@@ -220,6 +324,21 @@ class ReviewViewController: UIViewController, UIScrollViewDelegate {
         // 이전 화면으로 돌아가기
         dismiss(animated: true, completion: nil)
     }
+    
+    @objc private func handleLikeIconTap(_ sender: UITapGestureRecognizer) {
+        // Check if the tapped view is likeIcon
+        if let likeIcon = sender.view as? UIImageView {
+            // Toggle the image between `icon_like_stroke` and `icon_like`
+            if likeIcon.image == UIImage(named: "icon_like_stroke") {
+                likeIcon.image = UIImage(named: "icon_like")
+                print("like icon 활성화")
+            } else {
+                likeIcon.image = UIImage(named: "icon_like_stroke")
+                print("like icon 비활성화")
+            }
+        }
+    }
+
 }
 
 // 리뷰 데이터 모델
