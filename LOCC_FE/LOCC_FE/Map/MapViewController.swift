@@ -250,10 +250,24 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // searchField 클릭 시 다른 페이지로 이동하는 액션
     @objc private func searchFieldTapped() {
         print("move to search page")
-        print(navigationController == nil) // true면 UINavigationController에 포함되어 있지 않음
+//        print(navigationController == nil) // true면 UINavigationController에 포함되어 있지 않음
+//
+//        let searchVC = SearchViewController() // SearchViewController 인스턴스 생성
+//        navigationController?.pushViewController(searchVC, animated: true) // 화면 이동
+        // 스토리보드에서 SearchViewController 인스턴스 생성
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else {
+            print("Failed to instantiate SearchViewController")
+            return
+        }
+        
+        // 모달 방식으로 화면 전환 설정
+        searchVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
+        searchVC.modalTransitionStyle = .coverVertical // 전환 애니메이션 스타일 (기본값)
+        
+        // 화면 전환 실행
+        self.present(searchVC, animated: true, completion: nil)
 
-        let searchVC = SearchViewController() // SearchViewController 인스턴스 생성
-        navigationController?.pushViewController(searchVC, animated: true) // 화면 이동
     }
     
     private func setupFilterButtons() {

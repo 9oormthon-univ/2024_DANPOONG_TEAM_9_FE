@@ -12,20 +12,6 @@ import KakaoSDKCommon
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        // UIWindow 생성
-        window = UIWindow(frame: UIScreen.main.bounds)
-        
-        // MapViewController를 초기 ViewController로 설정
-        let mapViewController = MapViewController()
-        let navigationController = UINavigationController(rootViewController: mapViewController)
-        
-        // UIWindow에 NavigationController 설정
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
         
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

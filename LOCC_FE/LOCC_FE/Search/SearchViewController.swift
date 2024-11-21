@@ -510,7 +510,9 @@ class SearchViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func handleBackButton() {
-        navigationController?.popViewController(animated: true)
+        // 모달로 표시된 현재 ViewController 닫기
+            self.dismiss(animated: true, completion: nil)
+//        navigationController?.popViewController(animated: true)
     }
     
     @objc private func handleDeleteAll() {
