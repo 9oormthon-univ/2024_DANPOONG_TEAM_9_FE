@@ -448,7 +448,7 @@ class Onboarding2ViewController: UIViewController {
             return
         }
         
-        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
         
         toHomeVC.modalPresentationStyle = .fullScreen
         toHomeVC.transitioningDelegate = self

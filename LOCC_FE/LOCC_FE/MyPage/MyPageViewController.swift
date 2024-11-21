@@ -6,17 +6,26 @@
 //
 
 import UIKit
+import Alamofire
 
 class MyPageViewController: UIViewController {
+    
+    // image
+    @IBOutlet weak var profileImg: UIImageView!
+    
+    // label
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var idLabel: UILabel!
 
+    // MARK: - Constants
     private enum Constants {
         static let segmentedControlHeight: CGFloat = 40
         static let underlineViewColor: UIColor = .selectedGreen
         static let underlineViewHeight: CGFloat = 4
-        static let topOffset: CGFloat = 194 // 상단에서 떨어진 거리
+        static let topOffset: CGFloat = 194
     }
 
-    // Container view of the segmented control
+    // MARK: - Views
     private lazy var segmentedControlContainerView: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = UIColor.background
@@ -24,37 +33,18 @@ class MyPageViewController: UIViewController {
         return containerView
     }()
 
-    // Customised segmented control
     private lazy var segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl()
-        segmentedControl.backgroundColor = UIColor.background
-
-        // 세그먼트 추가
-        segmentedControl.insertSegment(withTitle: "큐레이션", at: 0, animated: true)
-        segmentedControl.insertSegment(withTitle: "내 리스트", at: 1, animated: true)
-
-        // 기본 선택 세그먼트 설정
-        segmentedControl.selectedSegmentIndex = 0
-
-        // 선택되지 않은 세그먼트의 텍스트 속성 설정
-        segmentedControl.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.segmentedGray,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)
-        ], for: .normal)
-
-        // 선택된 세그먼트의 텍스트 속성 설정
-        segmentedControl.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.labelGreen,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)
-        ], for: .selected)
-
-        // 이벤트 핸들러 설정
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        return segmentedControl
+        let control = UISegmentedControl()
+        control.backgroundColor = UIColor.background
+        control.insertSegment(withTitle: "큐레이션", at: 0, animated: true)
+        control.insertSegment(withTitle: "내 리스트", at: 1, animated: true)
+        control.selectedSegmentIndex = 0
+        configureSegmentedControlStyle(for: control)
+        control.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        return control
     }()
 
-    // The underline view below the segmented control
     private lazy var bottomUnderlineView: UIView = {
         let underlineView = UIView()
         underlineView.backgroundColor = Constants.underlineViewColor
@@ -66,34 +56,66 @@ class MyPageViewController: UIViewController {
         return bottomUnderlineView.leftAnchor.constraint(equalTo: segmentedControl.leftAnchor)
     }()
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSegmentedControlLayout()
+        getMyInfo()
+    }
+    
+    func getMyInfo() {
+        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
 
-        setupSegmentedControlStyle() // 스타일 설정 메서드 호출
+        // API 엔드포인트 설정
+        let endpoint = "/api/v1/users/me/profile"
 
-        // Add subviews to the view hierarchy
+        // APIClient를 사용하여 GET 요청
+        APIClient.getRequest(endpoint: endpoint, token: token, headerType: .authorization) { (result: Result<MyPageResponse, AFError>) in
+            switch result {
+            case .success(let myPageResponse):
+                guard let userData = myPageResponse.data else {
+                    print("API 응답은 성공했으나 데이터가 없습니다.")
+                    print("전체 응답: \(myPageResponse)")
+                    return
+                }
+                
+                // UI 업데이트
+                DispatchQueue.main.async {
+                    self.nameLabel.text = userData.username
+                }
+
+                print("Username: \(userData.username)")
+
+            case .failure(let error):
+                print("API 호출 실패: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    // MARK: - Layout and Style
+    private func setupSegmentedControlLayout() {
         view.addSubview(segmentedControlContainerView)
         segmentedControlContainerView.addSubview(segmentedControl)
         segmentedControlContainerView.addSubview(bottomUnderlineView)
 
-        // Constrain the container view to the view controller
         NSLayoutConstraint.activate([
+            // Container constraints
             segmentedControlContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.topOffset),
             segmentedControlContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             segmentedControlContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            segmentedControlContainerView.heightAnchor.constraint(equalToConstant: Constants.segmentedControlHeight)
-        ])
-
-        // Constrain the segmented control to the container view
-        NSLayoutConstraint.activate([
+            segmentedControlContainerView.heightAnchor.constraint(equalToConstant: Constants.segmentedControlHeight),
+            
+            // Segmented control constraints
             segmentedControl.topAnchor.constraint(equalTo: segmentedControlContainerView.topAnchor),
             segmentedControl.leadingAnchor.constraint(equalTo: segmentedControlContainerView.leadingAnchor),
             segmentedControl.centerXAnchor.constraint(equalTo: segmentedControlContainerView.centerXAnchor),
-            segmentedControl.centerYAnchor.constraint(equalTo: segmentedControlContainerView.centerYAnchor)
-        ])
-
-        // Constrain the underline view relative to the segmented control
-        NSLayoutConstraint.activate([
+            segmentedControl.centerYAnchor.constraint(equalTo: segmentedControlContainerView.centerYAnchor),
+            
+            // Underline constraints
             bottomUnderlineView.bottomAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             bottomUnderlineView.heightAnchor.constraint(equalToConstant: Constants.underlineViewHeight),
             leadingDistanceConstraint,
@@ -101,23 +123,29 @@ class MyPageViewController: UIViewController {
         ])
     }
 
-    // Setup the style of the segmented control
-    private func setupSegmentedControlStyle() {
-        let unselectedBackgroundImage = UIImage(color: UIColor.background)
-        let selectedBackgroundImage = UIImage(color: UIColor.background)
-
-        segmentedControl.setBackgroundImage(unselectedBackgroundImage, for: .normal, barMetrics: .default)
-        segmentedControl.setBackgroundImage(unselectedBackgroundImage, for: .highlighted, barMetrics: .default)
-        segmentedControl.setBackgroundImage(selectedBackgroundImage, for: .selected, barMetrics: .default)
-
-        segmentedControl.setDividerImage(selectedBackgroundImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+    private func configureSegmentedControlStyle(for control: UISegmentedControl) {
+        control.setTitleTextAttributes([
+            .foregroundColor: UIColor.segmentedGray,
+            .font: UIFont.systemFont(ofSize: 16, weight: .regular)
+        ], for: .normal)
+        
+        control.setTitleTextAttributes([
+            .foregroundColor: UIColor.labelGreen,
+            .font: UIFont.systemFont(ofSize: 16, weight: .bold)
+        ], for: .selected)
+        
+        let backgroundImage = UIImage(color: UIColor.background)
+        control.setBackgroundImage(backgroundImage, for: .normal, barMetrics: .default)
+        control.setBackgroundImage(backgroundImage, for: .highlighted, barMetrics: .default)
+        control.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
+        control.setDividerImage(backgroundImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }
 
+    // MARK: - Actions
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         changeSegmentedControlLinePosition()
     }
 
-    // Change position of the underline
     private func changeSegmentedControlLinePosition() {
         let segmentIndex = CGFloat(segmentedControl.selectedSegmentIndex)
         let segmentWidth = segmentedControl.frame.width / CGFloat(segmentedControl.numberOfSegments)
@@ -125,16 +153,15 @@ class MyPageViewController: UIViewController {
 
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.leadingDistanceConstraint.constant = leadingDistance
-            self?.view.layoutIfNeeded() // Update the layout of the view
+            self?.view.layoutIfNeeded()
         }
     }
 }
 
-// UIImage extension to create an image from a color
+// MARK: - UIImage Extension
 extension UIImage {
     convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
         let rect = CGRect(origin: .zero, size: size)
-        
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
         color.setFill()
         UIRectFill(rect)
@@ -143,5 +170,17 @@ extension UIImage {
 
         guard let cgImage = image?.cgImage else { return nil }
         self.init(cgImage: cgImage)
+    }
+}
+
+extension UIImageView {
+    func load(from url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self?.image = image
+                }
+            }
+        }
     }
 }
