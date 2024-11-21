@@ -709,9 +709,97 @@ class DetailViewController: UIViewController {
 
     // 5. 위치 안내 섹션
     private func createLocationSection() -> UIStackView {
-        return createSectionWithColor(.blue, title: "위치 안내 섹션")
+        let locationSectionStackView = UIStackView()
+        locationSectionStackView.translatesAutoresizingMaskIntoConstraints = false
+        locationSectionStackView.axis = .vertical
+        locationSectionStackView.spacing = 16
+        locationSectionStackView.backgroundColor = .gray
+        locationSectionStackView.alignment = .fill
+
+        // 1. "위치 안내" 레이블
+        let sectionTitleLabel = UILabel()
+        sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        sectionTitleLabel.text = "위치 안내"
+        sectionTitleLabel.textColor = .black
+        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        sectionTitleLabel.textAlignment = .left
+
+        // 2. 흰색 컨테이너
+        let whiteContainerView = UIStackView()
+        whiteContainerView.translatesAutoresizingMaskIntoConstraints = false
+        whiteContainerView.axis = .vertical
+        whiteContainerView.spacing = 16
+        whiteContainerView.alignment = .fill
+        whiteContainerView.backgroundColor = .white
+        whiteContainerView.layer.cornerRadius = 20
+        whiteContainerView.clipsToBounds = true
+        whiteContainerView.isLayoutMarginsRelativeArrangement = true
+        whiteContainerView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+
+        // 2-1. 지도 이미지
+        let mapImageView = UIImageView(image: UIImage(named: "image4")) // "map_sample" 에셋 이미지
+        mapImageView.translatesAutoresizingMaskIntoConstraints = false
+        mapImageView.contentMode = .scaleAspectFill
+        mapImageView.clipsToBounds = true
+        mapImageView.layer.cornerRadius = 12
+        mapImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+
+        // 2-2. 주소지와 버튼 (horizontalStackView)
+        let addressAndButtonStackView = UIStackView()
+        addressAndButtonStackView.translatesAutoresizingMaskIntoConstraints = false
+        addressAndButtonStackView.axis = .horizontal
+        addressAndButtonStackView.spacing = 8
+        addressAndButtonStackView.alignment = .center
+
+        // 주소지 (icon_location_orange + 텍스트)
+        let addressStackView = UIStackView()
+        addressStackView.translatesAutoresizingMaskIntoConstraints = false
+        addressStackView.axis = .horizontal
+        addressStackView.spacing = 8
+        addressStackView.alignment = .center
+
+        let locationIcon = UIImageView(image: UIImage(named: "icon_location_orange"))
+        locationIcon.translatesAutoresizingMaskIntoConstraints = false
+        locationIcon.contentMode = .scaleAspectFit
+        locationIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        locationIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
+        let addressLabel = UILabel()
+        addressLabel.text = "경기 양주시 광사로 145 로슈아커피"
+        addressLabel.textColor = .black
+        addressLabel.font = UIFont.systemFont(ofSize: 14)
+        addressLabel.numberOfLines = 0
+
+        addressStackView.addArrangedSubview(locationIcon)
+        addressStackView.addArrangedSubview(addressLabel)
+
+        // 길찾기 버튼
+        let directionButton = UIButton(type: .system)
+        directionButton.setTitle("길찾기", for: .normal)
+        directionButton.setTitleColor(.white, for: .normal)
+        directionButton.backgroundColor = UIColor(red: 0.27, green: 0.36, blue: 0.20, alpha: 1.0) // 녹색
+        directionButton.layer.cornerRadius = 8
+        directionButton.clipsToBounds = true
+        directionButton.translatesAutoresizingMaskIntoConstraints = false
+        directionButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        directionButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
+
+        // 주소지 + 버튼 추가
+        addressAndButtonStackView.addArrangedSubview(addressStackView)
+        addressAndButtonStackView.addArrangedSubview(UIView()) // Spacer
+        addressAndButtonStackView.addArrangedSubview(directionButton)
+
+        // 흰색 컨테이너에 추가
+        whiteContainerView.addArrangedSubview(mapImageView)
+        whiteContainerView.addArrangedSubview(addressAndButtonStackView)
+
+        // 섹션에 추가
+        locationSectionStackView.addArrangedSubview(sectionTitleLabel)
+        locationSectionStackView.addArrangedSubview(whiteContainerView)
+
+        return locationSectionStackView
     }
-    
+
     // 6. 주변 가볼만한 곳 섹션
     private func createNearbyPlacesSection() -> UIStackView {
         return createSectionWithColor(.systemIndigo, title: "주변 가볼만한 곳 섹션")
