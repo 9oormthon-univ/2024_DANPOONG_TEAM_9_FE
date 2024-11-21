@@ -665,9 +665,48 @@ class DetailViewController: UIViewController {
     
     // 4. 상세 정보 섹션
     private func createDetailedInfoSection() -> UIStackView {
-        return createSectionWithColor(.green, title: "상세 정보 섹션")
+        let detailedInfoStackView = UIStackView()
+        detailedInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        detailedInfoStackView.axis = .vertical
+        detailedInfoStackView.distribution = .fill
+        detailedInfoStackView.alignment = .fill
+        detailedInfoStackView.spacing = 16
+        detailedInfoStackView.backgroundColor = .green
+        detailedInfoStackView.clipsToBounds = true
+
+        // 1. 이미지
+        let imageView = UIImageView(image: UIImage(named: "image1")) // "image1" 에셋 이미지
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true // 이미지 높이 설정
+
+        // 2. 텍스트
+        let descriptionLabel = UILabel()
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.text = """
+        커다란 은행나무가 테라스에 있어 멋진 뷰와 함께
+        여유롭게 커피를 마실 수 있는 카페입니다.
+        가을에 가장 아름다운 모습을 뽐내어 가을에
+        꼭 방문해야 하는 공간이에요.
+
+        커다란 은행나무가 테라스에 있어 멋진 뷰와 함께
+        여유롭게 커피를 마실 수 있는 카페입니다.
+        가을에 가장 아름다운 모습을 뽐내어 가을에
+        꼭 방문해야 하는 공간이에요.
+        """
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textColor = .white
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.textAlignment = .center
+
+        // Add components to the stack view
+        detailedInfoStackView.addArrangedSubview(imageView)
+        detailedInfoStackView.addArrangedSubview(descriptionLabel)
+
+        return detailedInfoStackView
     }
-    
+
     // 5. 위치 안내 섹션
     private func createLocationSection() -> UIStackView {
         return createSectionWithColor(.blue, title: "위치 안내 섹션")
