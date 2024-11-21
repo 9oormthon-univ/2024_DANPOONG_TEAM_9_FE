@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -125,6 +125,10 @@
 		C06E3D2E7D854C87C6EC5DA2 /* Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B2DABFEA2CECD064003A0E39 /* Search */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Search; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		8B11EF772CEB2AE9003F92AC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -201,6 +205,7 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				B2DABFEA2CECD064003A0E39 /* Search */,
 				8BF053182CED82EC00A86F2E /* Curate */,
 				8B8C02CB2CEB5B78007F86E6 /* CustomAnimation */,
 				8BC98D572CEB331B005CBE75 /* CustomTabBar */,
@@ -340,6 +345,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B2DABFEA2CECD064003A0E39 /* Search */,
 			);
 			name = LOCC_FE;
 			productName = LOCC_FE;

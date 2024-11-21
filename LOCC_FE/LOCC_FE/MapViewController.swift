@@ -74,6 +74,36 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     
     // kakaomap 추가
     private func setupKakaoMap() {
+        // 배경이 흰색인 뷰 생성
+            let mapBackgroundView = UIView()
+            mapBackgroundView.backgroundColor = .white
+            mapBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+
+            // "Hello, this is map view!" 라벨 생성
+            let label = UILabel()
+            label.text = "Hello, this is map view!"
+            label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+            label.textColor = .black
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+
+            // 뷰를 추가
+            view.addSubview(mapBackgroundView)
+            mapBackgroundView.addSubview(label)
+
+            // 배경 뷰의 제약 조건 설정 (전체 화면 차지)
+            NSLayoutConstraint.activate([
+                mapBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+                mapBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                mapBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                mapBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+
+            // 라벨의 제약 조건 설정 (중앙 배치)
+            NSLayoutConstraint.activate([
+                label.centerXAnchor.constraint(equalTo: mapBackgroundView.centerXAnchor),
+                label.centerYAnchor.constraint(equalTo: mapBackgroundView.centerYAnchor)
+            ])
 //        let mapContainer = KMViewContainer(frame: self.view.bounds)
 //        mapContainer.translatesAutoresizingMaskIntoConstraints = false
 //        mapContainer.backgroundColor = .red
@@ -220,6 +250,10 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // searchField 클릭 시 다른 페이지로 이동하는 액션
     @objc private func searchFieldTapped() {
         print("move to search page")
+        print(navigationController == nil) // true면 UINavigationController에 포함되어 있지 않음
+
+        let searchVC = SearchViewController() // SearchViewController 인스턴스 생성
+        navigationController?.pushViewController(searchVC, animated: true) // 화면 이동
     }
     
     private func setupFilterButtons() {
