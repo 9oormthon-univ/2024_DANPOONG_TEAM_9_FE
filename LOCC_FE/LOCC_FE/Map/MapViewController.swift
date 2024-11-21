@@ -549,6 +549,11 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         imageContainer.spacing = 8
         imageContainer.distribution = .fillEqually
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Image Container에 Gesture Recognizer 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageContainerTapped))
+        imageContainer.addGestureRecognizer(tapGesture)
+        imageContainer.isUserInteractionEnabled = true
 
         for imageName in reviewsImage {
             if let image = UIImage(named: imageName) {
@@ -640,6 +645,24 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             print("북마크 삭제")
             // 북마크 삭제 로직 (예: 서버에 API 호출)
         }
+    }
+
+    @objc private func imageContainerTapped() {
+        print("Image container tapped")
+        
+        // 스토리보드에서 ReviewViewController 인스턴스 생성
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {
+            print("Failed to instantiate ReviewViewController")
+            return
+        }
+        
+        // 화면 전환 스타일 설정
+        reviewVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
+        reviewVC.modalTransitionStyle = .coverVertical // 애니메이션 스타일
+        
+        // 화면 전환 실행
+        self.present(reviewVC, animated: true, completion: nil)
     }
 
     // 필터 버튼 생성 메서드
