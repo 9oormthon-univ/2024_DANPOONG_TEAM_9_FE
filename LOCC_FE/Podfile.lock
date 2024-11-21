@@ -1,17 +1,17 @@
 PODS:
-  - Alamofire (5.10.1)
+  - Alamofire (5.9.1)
   - DropDown (2.3.13)
-  - KakaoSDKAuth (2.21.1):
-    - KakaoSDKCommon (= 2.21.1)
-  - KakaoSDKCommon (2.21.1):
-    - KakaoSDKCommon/Common (= 2.21.1)
-    - KakaoSDKCommon/Network (= 2.21.1)
-  - KakaoSDKCommon/Common (2.21.1)
-  - KakaoSDKCommon/Network (2.21.1):
-    - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.21.1)
-  - KakaoSDKUser (2.21.1):
-    - KakaoSDKAuth (= 2.21.1)
+  - KakaoSDKAuth (2.22.7):
+    - KakaoSDKCommon (= 2.22.7)
+  - KakaoSDKCommon (2.22.7):
+    - KakaoSDKCommon/Common (= 2.22.7)
+    - KakaoSDKCommon/Network (= 2.22.7)
+  - KakaoSDKCommon/Common (2.22.7)
+  - KakaoSDKCommon/Network (2.22.7):
+    - Alamofire (~> 5.9.0)
+    - KakaoSDKCommon/Common (= 2.22.7)
+  - KakaoSDKUser (2.22.7):
+    - KakaoSDKAuth (= 2.22.7)
 
 DEPENDENCIES:
   - Alamofire
@@ -28,12 +28,12 @@ SPEC REPOS:
     - KakaoSDKUser
 
 SPEC CHECKSUMS:
-  Alamofire: 840d2a1ad82355b536ec6ba5f97e5bfa54600ca3
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
-  KakaoSDKAuth: 28343159dd60ee9bbb61ff25d45d9769fcef6b8c
-  KakaoSDKCommon: 7938fce8e5ba3e73490f1928e55b20b510a0685b
-  KakaoSDKUser: 35608bb49bbc644f507561d8b8a33dec1c5eb360
+  KakaoSDKAuth: 45204252ff7c379c0f86c5573f97ec36885afca0
+  KakaoSDKCommon: 132164a6bac8bcd3a4346d3bf777f34f8f39fdca
+  KakaoSDKUser: 4c9cf1da78710d19d0b2c2dd32d1a44c544cdfa4
 
 PODFILE CHECKSUM: 1e1b5d1a5dac492dcb954c0f62c9666da4fa19de
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
