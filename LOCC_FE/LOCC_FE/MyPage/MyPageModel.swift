@@ -7,13 +7,37 @@
 
 import UIKit
 
-struct MyPageResponse: Decodable {
+// MARK: - 모델 정의
+struct MyPageResponse: Codable {
     let code: String
     let data: UserData?
 }
 
-struct UserData: Decodable {
-    let username: String
-    let handle: String
-    let profileImageUrl: URL
+struct UserData: Codable {
+    let username: String?
+    let handle: String?
+    let profileImageUrl: URL?
+    let savedCurations: [Curation]
+    let savedStores: [Store]
+}
+
+struct Curation: Codable {
+    let curationId: Int
+    let title: String
+    let subtitle: String
+    let imageUrl: URL
+}
+
+struct Store: Codable {
+    let storeId: Int
+    let name: String
+    let category: String
+    let province: String
+    let city: String
+    let imageUrl: URL
+    let rating: Double
+    let reviewCount: Int
+    let openTime: String
+    let closeTime: String
+    let businessStatus: String
 }

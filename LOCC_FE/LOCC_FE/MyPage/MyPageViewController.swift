@@ -60,10 +60,10 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSegmentedControlLayout()
-        getMyInfo()
+        getUserInfo()
     }
     
-    func getMyInfo() {
+    func getUserInfo() {
         // UserDefaults에서 서버 AccessToken 가져오기
         guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
             print("Error: No access token found.")
@@ -79,22 +79,34 @@ class MyPageViewController: UIViewController {
             case .success(let myPageResponse):
                 guard let userData = myPageResponse.data else {
                     print("API 응답은 성공했으나 데이터가 없습니다.")
-                    print("전체 응답: \(myPageResponse)")
                     return
                 }
                 
                 // UI 업데이트
                 DispatchQueue.main.async {
                     self.nameLabel.text = userData.username
+                    self.idLabel.text = "@\(userData.handle ?? "")"
+                    
+                    // 프로필 이미지 로드
+                    if let profileImageUrl = userData.profileImageUrl {
+                        self.profileImg.layer.cornerRadius = 40.935
+                        self.profileImg.clipsToBounds = true
+                        self.profileImg.load(from: profileImageUrl)
+                    }
                 }
 
-                print("Username: \(userData.username)")
+                print("Username: \(userData.username ?? "N/A")")
+                print("Handle: \(userData.handle ?? "N/A")")
+                if let profileImageUrl = userData.profileImageUrl {
+                    print("Profile Image URL: \(profileImageUrl)")
+                }
 
             case .failure(let error):
                 print("API 호출 실패: \(error.localizedDescription)")
             }
         }
     }
+
 
     // MARK: - Layout and Style
     private func setupSegmentedControlLayout() {
