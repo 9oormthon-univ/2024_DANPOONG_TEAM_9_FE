@@ -1321,6 +1321,11 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="마이페이지" image="bar_mypage" id="AU2-hp-MWz"/>
+                    <connections>
+                        <outlet property="idLabel" destination="dst-pt-K59" id="Su0-Tt-XAp"/>
+                        <outlet property="nameLabel" destination="WKf-lW-Oph" id="0UK-cl-odz"/>
+                        <outlet property="profileImg" destination="dQf-nF-TtD" id="hWM-ey-vq9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="99u-vY-83d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
