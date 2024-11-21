@@ -1,8 +1,231 @@
-//
-//  ReviewViewController.swift
-//  LOCC_FE
-//
-//  Created by 우은진 on 11/21/24.
-//
+import UIKit
 
-import Foundation
+class ReviewViewController: UIViewController, UIScrollViewDelegate {
+    
+    private let scrollView = UIScrollView()
+    private var reviews: [Review] = [] // 리뷰 데이터
+    
+    // 점들을 담을 스택뷰
+    private let dotsStackView = UIStackView()
+    private var dotViews: [UIView] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupData()
+        setupUI()
+        setupSwipeGesture() // 스와이프 제스처 추가
+    }
+    
+    // 1. 리뷰 데이터 설정
+    private func setupData() {
+        reviews = [
+            Review(image: UIImage(named: "image1"), title: "로슈아커피", date: "2024년 11월 2일 방문", description: "커다란 은행 나무가 테라스에 있어 멋진 뷰와 함께 여유롭게 커피를 마실 수 있는 카페입니다."),
+            Review(image: UIImage(named: "image2"), title: "카페 비안코", date: "2024년 10월 15일 방문", description: "아늑한 분위기와 따뜻한 조명에서 특별한 브런치를 즐길 수 있는 카페."),
+            Review(image: UIImage(named: "image3"), title: "가을 카페", date: "2024년 9월 21일 방문", description: "가을 풍경을 느낄 수 있는 멋진 카페입니다."),
+            Review(image: UIImage(named: "image4"), title: "겨울 커피집", date: "2024년 12월 1일 방문", description: "따뜻한 겨울 느낌을 살릴 수 있는 카페입니다."),
+            Review(image: UIImage(named: "image5"), title: "겨울 커피집", date: "2024년 12월 1일 방문", description: "따뜻한 겨울 느낌을 살릴 수 있는 카페입니다."),
+        ]
+    }
+    
+    // 2. UI 구성
+    private func setupUI() {
+        view.backgroundColor = .black // 배경색 설정
+        
+        // ScrollView 설정
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        // 리뷰 페이지 추가
+        setupReviewPages()
+        
+        // Custom PageControl 설정
+        setupCustomPageControl()
+    }
+    
+    // 3. 리뷰 페이지 추가
+    private func setupReviewPages() {
+        for (index, review) in reviews.enumerated() {
+            let reviewView = createReviewView(for: review)
+            reviewView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview(reviewView)
+            
+            // 각 페이지 위치 설정
+            NSLayoutConstraint.activate([
+                reviewView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                reviewView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+                reviewView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: CGFloat(index) * view.bounds.width),
+                reviewView.topAnchor.constraint(equalTo: scrollView.topAnchor)
+            ])
+        }
+        
+        // ScrollView 콘텐츠 크기 설정
+        scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(reviews.count), height: view.bounds.height)
+    }
+    
+    // 4. Custom PageControl 설정
+    private func setupCustomPageControl() {
+        // StackView 설정
+        dotsStackView.axis = .horizontal
+        dotsStackView.alignment = .center
+        dotsStackView.distribution = .fillEqually
+        dotsStackView.spacing = 4 // 점 사이 간격
+        dotsStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(dotsStackView)
+        
+        NSLayoutConstraint.activate([
+            dotsStackView.heightAnchor.constraint(equalToConstant: 4), // 점 높이
+            dotsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dotsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            dotsStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        ])
+        
+        // 점(dot) 뷰 생성
+        for _ in 0..<reviews.count {
+            let dotView = UIView()
+            dotView.layer.cornerRadius = 2 // 점의 반지름 (동그랗게 만들기)
+            dotView.backgroundColor = UIColor.white.withAlphaComponent(0.5) // 비활성화된 점 색상
+            dotView.translatesAutoresizingMaskIntoConstraints = false
+            dotsStackView.addArrangedSubview(dotView)
+            
+            // 각 점의 가로 길이를 계산하여 설정
+            let dotWidth = (view.bounds.width - 40 - CGFloat(reviews.count - 1) * 12) / CGFloat(reviews.count)
+            NSLayoutConstraint.activate([
+                dotView.widthAnchor.constraint(equalToConstant: dotWidth), // 동적으로 계산된 너비
+                dotView.heightAnchor.constraint(equalToConstant: 4) // 고정된 높이
+            ])
+            
+            dotViews.append(dotView)
+        }
+        
+        // 첫 번째 점 활성화
+        if let firstDot = dotViews.first {
+            firstDot.backgroundColor = .white // 활성화된 점 색상
+        }
+    }
+    
+    // 5. 리뷰 뷰 생성
+    private func createReviewView(for review: Review) -> UIView {
+        let reviewView = UIView()
+        
+        // 배경 이미지
+        let imageView = UIImageView(image: review.image)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: reviewView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: reviewView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: reviewView.bottomAnchor)
+        ])
+        
+        // Gradient View 추가
+        let gradientView = UIView()
+        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(gradientView)
+        
+        NSLayoutConstraint.activate([
+            gradientView.topAnchor.constraint(equalTo: reviewView.topAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: reviewView.trailingAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: reviewView.bottomAnchor)
+        ])
+        
+        // Gradient Layer 설정
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.black.withAlphaComponent(0).cgColor,
+            UIColor.black.withAlphaComponent(0.444).cgColor,
+            UIColor.black.withAlphaComponent(0.6).cgColor
+        ]
+        gradientLayer.locations = [0.0, 0.82, 1.0]
+        
+        // Gradient Layer 크기 업데이트
+        DispatchQueue.main.async {
+            gradientLayer.frame = gradientView.bounds
+            gradientView.layer.addSublayer(gradientLayer)
+        }
+        
+        // 텍스트 오버레이
+        let titleLabel = UILabel()
+        titleLabel.text = review.title
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .white
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(titleLabel)
+        
+        let dateLabel = UILabel()
+        dateLabel.text = review.date
+        dateLabel.font = UIFont.systemFont(ofSize: 14)
+        dateLabel.textColor = .white
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(dateLabel)
+        
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = review.description
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.textColor = .white
+        descriptionLabel.numberOfLines = 2
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        reviewView.addSubview(descriptionLabel)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
+            titleLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -8),
+            
+            dateLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
+            dateLabel.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -8),
+            
+            descriptionLabel.leadingAnchor.constraint(equalTo: reviewView.leadingAnchor, constant: 20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: reviewView.trailingAnchor, constant: -20),
+            descriptionLabel.bottomAnchor.constraint(equalTo: reviewView.safeAreaLayoutGuide.bottomAnchor, constant: -40)
+        ])
+        
+        return reviewView
+    }
+
+    // 6. ScrollView Delegate 메서드
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
+        
+        // 모든 점을 비활성화 색상으로 설정
+        dotViews.forEach { $0.backgroundColor = UIColor.white.withAlphaComponent(0.5) }
+        
+        // 현재 활성화된 점을 활성화 색상으로 설정
+        if pageIndex < dotViews.count {
+            dotViews[pageIndex].backgroundColor = .white
+        }
+    }
+    
+    private func setupSwipeGesture() {
+        // UISwipeGestureRecognizer 설정
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeGesture.direction = .right // 오른쪽으로 스와이프
+        view.addGestureRecognizer(swipeGesture)
+    }
+    
+    @objc private func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+        // 이전 화면으로 돌아가기
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+// 리뷰 데이터 모델
+struct Review {
+    let image: UIImage?
+    let title: String
+    let date: String
+    let description: String
+}
