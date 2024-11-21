@@ -25,7 +25,7 @@ struct Curation: Codable {
     let curationId: Int
     let title: String
     let subtitle: String
-    let imageUrl: URL
+    let imageUrl: String
 }
 
 struct Store: Codable {
@@ -34,7 +34,7 @@ struct Store: Codable {
     let category: String
     let province: String
     let city: String
-    let imageUrl: URL
+    let imageUrl: String
     let rating: Double
     let reviewCount: Int
     let openTime: String

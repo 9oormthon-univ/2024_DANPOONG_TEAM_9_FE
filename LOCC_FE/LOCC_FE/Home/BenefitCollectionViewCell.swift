@@ -12,8 +12,11 @@ class BenefitCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var benefitImg: UIImageView!
     
     @IBOutlet weak var storeName: UILabel!
-    @IBOutlet weak var storeCity: UILabel!
     @IBOutlet weak var storeRate: UILabel!
+    @IBOutlet weak var storeCategory: UILabel!
+    @IBOutlet weak var dot: UILabel!
+    @IBOutlet weak var storeProvince: UILabel!
+    @IBOutlet weak var storeCity: UILabel!
     
     @IBOutlet weak var starBtn: UIButton!
 

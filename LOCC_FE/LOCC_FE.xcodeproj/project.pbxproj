@@ -19,6 +19,7 @@
 		8B11EFC62CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11EFC32CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift */; };
 		8B1898702CEEED17001B9935 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B18986F2CEEED17001B9935 /* MyPageModel.swift */; };
 		8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B219F162CEE3B8C001643A3 /* LoginModel.swift */; };
+		8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EEE2CEF541C00810937 /* HomeModel.swift */; };
 		8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */; };
 		8B8C02CF2CEB64D3007F86E6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C02CE2CEB64D3007F86E6 /* HomeViewController.swift */; };
 		8BB425A52CEB914B00FA3EAB /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB425A42CEB914B00FA3EAB /* MyPageViewController.swift */; };
@@ -92,6 +93,7 @@
 		8B11EFC32CEB2AF5003F92AC /* LOCC_FEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LOCC_FEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		8B18986F2CEEED17001B9935 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		8B219F162CEE3B8C001643A3 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		8B808EEE2CEF541C00810937 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
 		8B8C02CE2CEB64D3007F86E6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8BB425A42CEB914B00FA3EAB /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				8BCCD26C2CED787400F0391C /* AdCollectionViewCell.xib */,
 				8BCCD26F2CED793D00F0391C /* ReviewCollectionViewCell.swift */,
 				8BCCD2702CED793D00F0391C /* ReviewCollectionViewCell.xib */,
+				8B808EEE2CEF541C00810937 /* HomeModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 			files = (
 				8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */,
 				8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */,
+				8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */,
 				8B1898702CEEED17001B9935 /* MyPageModel.swift in Sources */,
 				8BC98D522CEB313D005CBE75 /* LoginViewController.swift in Sources */,
 				8BCCD2722CED793D00F0391C /* ReviewCollectionViewCell.swift in Sources */,

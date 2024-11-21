@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -37,16 +38,34 @@
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" image="icon_star"/>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카페 · 부산 수영구" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePv-6x-6lM">
-                        <rect key="frame" x="35" y="119.66666666666667" width="87" height="15.000000000000014"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
-                        <color key="textColor" name="NameLabel"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOm-8N-B4c">
                         <rect key="frame" x="14" y="119.66666666666667" width="19" height="15.000000000000014"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                         <color key="textColor" name="RateLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카페" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JiG-jk-5Sg">
+                        <rect key="frame" x="35" y="119.66666666666667" width="21" height="15.000000000000014"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="SubLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="·" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWQ-Ru-c0m">
+                        <rect key="frame" x="58" y="119.66666666666667" width="4" height="15.000000000000014"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="SubLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="부산" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtV-gh-bT9">
+                        <rect key="frame" x="64" y="119.66666666666667" width="21" height="15.000000000000014"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="SubLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="수영구" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBv-o6-IeD">
+                        <rect key="frame" x="87" y="119.66666666666667" width="32" height="15.000000000000014"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="SubLabel"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -55,22 +74,31 @@
             <color key="backgroundColor" name="Background"/>
             <constraints>
                 <constraint firstItem="ikq-bp-UGr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="515-qS-g2M"/>
+                <constraint firstItem="HtV-gh-bT9" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="91T-oD-VIz"/>
+                <constraint firstItem="JiG-jk-5Sg" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="B0p-5m-r6C"/>
+                <constraint firstItem="JiG-jk-5Sg" firstAttribute="leading" secondItem="JOm-8N-B4c" secondAttribute="trailing" constant="2" id="CIi-1q-RqT"/>
                 <constraint firstItem="JOm-8N-B4c" firstAttribute="leading" secondItem="ikq-bp-UGr" secondAttribute="trailing" constant="2" id="EkT-OB-Lrf"/>
                 <constraint firstItem="ikq-bp-UGr" firstAttribute="top" secondItem="54K-60-4Sg" secondAttribute="bottom" constant="3" id="Ghi-MY-LA1"/>
+                <constraint firstItem="DBv-o6-IeD" firstAttribute="leading" secondItem="HtV-gh-bT9" secondAttribute="trailing" constant="2" id="Kqp-4v-LdJ"/>
                 <constraint firstItem="54K-60-4Sg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="NRM-OV-Lgd"/>
+                <constraint firstItem="oWQ-Ru-c0m" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="ZqJ-ey-hwZ"/>
                 <constraint firstItem="JOm-8N-B4c" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="agK-zc-vZN"/>
                 <constraint firstItem="54K-60-4Sg" firstAttribute="top" secondItem="Mr4-jN-4fR" secondAttribute="bottom" constant="6" id="cM8-3C-CvS"/>
                 <constraint firstItem="Mr4-jN-4fR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="fSr-5R-GYY"/>
-                <constraint firstItem="ePv-6x-6lM" firstAttribute="leading" secondItem="JOm-8N-B4c" secondAttribute="trailing" constant="2" id="g4G-ML-8So"/>
-                <constraint firstItem="ePv-6x-6lM" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="gGG-VG-D4i"/>
+                <constraint firstItem="DBv-o6-IeD" firstAttribute="centerY" secondItem="ikq-bp-UGr" secondAttribute="centerY" id="jfs-gS-DIb"/>
+                <constraint firstItem="HtV-gh-bT9" firstAttribute="leading" secondItem="oWQ-Ru-c0m" secondAttribute="trailing" constant="2" id="o6f-br-PaM"/>
+                <constraint firstItem="oWQ-Ru-c0m" firstAttribute="leading" secondItem="JiG-jk-5Sg" secondAttribute="trailing" constant="2" id="q8s-FL-A8A"/>
                 <constraint firstItem="Mr4-jN-4fR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tDb-PJ-JTK"/>
                 <constraint firstAttribute="trailing" secondItem="Mr4-jN-4fR" secondAttribute="trailing" id="zA1-ML-j9N"/>
             </constraints>
             <connections>
                 <outlet property="benefitImg" destination="Mr4-jN-4fR" id="rEY-Dx-Nfs"/>
+                <outlet property="dot" destination="oWQ-Ru-c0m" id="WCv-OY-UXl"/>
                 <outlet property="starBtn" destination="ikq-bp-UGr" id="2bb-kw-0Lr"/>
-                <outlet property="storeCity" destination="ePv-6x-6lM" id="ZeO-Mc-he1"/>
+                <outlet property="storeCategory" destination="JiG-jk-5Sg" id="xrY-Kv-vJ8"/>
+                <outlet property="storeCity" destination="DBv-o6-IeD" id="Nii-7R-leu"/>
                 <outlet property="storeName" destination="54K-60-4Sg" id="nlG-8g-1Oe"/>
+                <outlet property="storeProvince" destination="HtV-gh-bT9" id="qIt-RX-6N5"/>
                 <outlet property="storeRate" destination="JOm-8N-B4c" id="lsT-uM-aUO"/>
             </connections>
             <point key="canvasLocation" x="138.1679389312977" y="19.366197183098592"/>
@@ -81,11 +109,11 @@
         <namedColor name="Background">
             <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="NameLabel">
-            <color red="0.51764705882352946" green="0.51372549019607838" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="RateLabel">
             <color red="0.3411764705882353" green="0.3411764705882353" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SubLabel">
+            <color red="0.51764705882352946" green="0.51372549019607838" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
