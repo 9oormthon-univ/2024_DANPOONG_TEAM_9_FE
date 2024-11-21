@@ -491,6 +491,12 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         nameLabel.text = storeName
         nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
         nameLabel.textColor = UIColor(hex: "#111111")
+        
+        // Image Container에 Gesture Recognizer 추가
+        let nameLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(nameLabelTapped))
+        nameLabel.addGestureRecognizer(nameLabelTapGesture)
+        nameLabel.isUserInteractionEnabled = true
+
 
         // Status Label
         let statusLabel = UILabel()
@@ -654,6 +660,24 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {
             print("Failed to instantiate ReviewViewController")
+            return
+        }
+        
+        // 화면 전환 스타일 설정
+        reviewVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
+        reviewVC.modalTransitionStyle = .coverVertical // 애니메이션 스타일
+        
+        // 화면 전환 실행
+        self.present(reviewVC, animated: true, completion: nil)
+    }
+    
+    @objc private func nameLabelTapped() {
+        print("Name label tapped")
+        
+        // 스토리보드에서 ReviewViewController 인스턴스 생성
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else {
+            print("Failed to instantiate DetailViewController")
             return
         }
         
