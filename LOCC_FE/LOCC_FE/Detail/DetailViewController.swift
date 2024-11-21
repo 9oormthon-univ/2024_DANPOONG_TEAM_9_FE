@@ -473,7 +473,194 @@ class DetailViewController: UIViewController {
     
     // 3. 부가 정보 섹션
     private func createAdditionalInfoSection() -> UIStackView {
-        return createSectionWithColor(.yellow, title: "부가 정보 섹션")
+        let additionalInfoStackView = UIStackView()
+        additionalInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        additionalInfoStackView.axis = .vertical
+        additionalInfoStackView.distribution = .fill
+        additionalInfoStackView.alignment = .fill
+        additionalInfoStackView.spacing = 16
+        additionalInfoStackView.backgroundColor = .yellow
+        additionalInfoStackView.clipsToBounds = true
+
+        // 1. 영업 상태 (icon_clock + "영업중" + 토글 아이콘)
+        let businessStatusStack = createBusinessStatusToggleRow()
+
+        // 2. 전화번호 (icon_phone + "070-8807-1987")
+        let phoneNumberStack = createHorizontalInfoRow(iconName: "icon_phone", text: "070-8807-1987")
+
+        // 3. SNS 링크 (icon_sns + "http://instagram.com/loshuacoffee")
+        let snsLinkStack = createHorizontalInfoRow(iconName: "icon_sns", text: "http://instagram.com/loshuacoffee")
+
+        // Add rows to the vertical stack view
+        additionalInfoStackView.addArrangedSubview(businessStatusStack)
+        additionalInfoStackView.addArrangedSubview(phoneNumberStack)
+        additionalInfoStackView.addArrangedSubview(snsLinkStack)
+
+        return additionalInfoStackView
+    }
+
+    // 영업 상태 행 (토글 기능 포함)
+    private func createBusinessStatusToggleRow() -> UIStackView {
+        let containerStackView = UIStackView()
+        containerStackView.translatesAutoresizingMaskIntoConstraints = false
+        containerStackView.axis = .vertical
+        containerStackView.distribution = .fill
+        containerStackView.alignment = .fill
+        containerStackView.spacing = 8
+
+        // Row StackView (icon_clock + "영업중" + toggle)
+        let rowStackView = UIStackView()
+        rowStackView.translatesAutoresizingMaskIntoConstraints = false
+        rowStackView.axis = .horizontal
+        rowStackView.distribution = .fill
+        rowStackView.alignment = .center
+        rowStackView.spacing = 8
+
+        // Icon
+        let iconImageView = UIImageView(image: UIImage(named: "icon_clock"))
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
+        // Label
+        let textLabel = UILabel()
+        textLabel.text = "영업중"
+        textLabel.textColor = .black
+        textLabel.font = UIFont.systemFont(ofSize: 14)
+
+        // Toggle Button
+        let toggleButton = UIButton()
+        toggleButton.setImage(UIImage(named: "icon_toggle_down"), for: .normal)
+        toggleButton.translatesAutoresizingMaskIntoConstraints = false
+        toggleButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        toggleButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
+        // Hidden Container (initially hidden)
+        let hiddenContainer = UIView()
+        hiddenContainer.translatesAutoresizingMaskIntoConstraints = false
+        hiddenContainer.backgroundColor = .white
+        hiddenContainer.layer.cornerRadius = 8
+        hiddenContainer.clipsToBounds = true
+        hiddenContainer.isHidden = true // Initially hidden
+
+        // Add vertical stack view for days and times
+        let scheduleStackView = UIStackView()
+        scheduleStackView.translatesAutoresizingMaskIntoConstraints = false
+        scheduleStackView.axis = .vertical
+        scheduleStackView.spacing = 8
+        scheduleStackView.alignment = .fill
+
+        // Add rows for each day
+        let days = ["월", "화", "수", "목", "금", "토", "일"]
+        let time = "11:00-23:00"
+        for day in days {
+            let dayRowStackView = createHorizontalDayRow(day: day, time: time)
+            scheduleStackView.addArrangedSubview(dayRowStackView)
+        }
+
+        // Add schedule stack view to hidden container
+        hiddenContainer.addSubview(scheduleStackView)
+        NSLayoutConstraint.activate([
+            scheduleStackView.topAnchor.constraint(equalTo: hiddenContainer.topAnchor, constant: 8),
+            scheduleStackView.leadingAnchor.constraint(equalTo: hiddenContainer.leadingAnchor, constant: 16),
+            scheduleStackView.trailingAnchor.constraint(equalTo: hiddenContainer.trailingAnchor, constant: -16),
+            scheduleStackView.bottomAnchor.constraint(equalTo: hiddenContainer.bottomAnchor, constant: -8)
+        ])
+
+        // Add action to toggle button
+        toggleButton.addTarget(self, action: #selector(toggleHiddenContainer(_:)), for: .touchUpInside)
+
+        // Add views to the row stack view
+        rowStackView.addArrangedSubview(iconImageView)
+        rowStackView.addArrangedSubview(textLabel)
+        rowStackView.addArrangedSubview(UIView()) // Spacer
+        rowStackView.addArrangedSubview(toggleButton)
+
+        // Add rowStackView and hiddenContainer to the containerStackView
+        containerStackView.addArrangedSubview(rowStackView)
+        containerStackView.addArrangedSubview(hiddenContainer)
+
+        // Connect hiddenContainer for toggling
+        toggleButton.accessibilityHint = "hiddenContainer" // 연결을 위해 힌트를 사용
+        toggleButton.tag = hiddenContainer.hash // 고유 ID로 컨테이너를 식별
+
+        return containerStackView
+    }
+
+    // 하루의 영업 시간을 나타내는 Horizontal Row 생성
+    private func createHorizontalDayRow(day: String, time: String) -> UIStackView {
+        let rowStackView = UIStackView()
+        rowStackView.translatesAutoresizingMaskIntoConstraints = false
+        rowStackView.axis = .horizontal
+        rowStackView.spacing = 16
+        rowStackView.alignment = .center
+
+        // Day Label
+        let dayLabel = UILabel()
+        dayLabel.text = day
+        dayLabel.textColor = .black
+        dayLabel.font = UIFont.systemFont(ofSize: 14)
+        dayLabel.textAlignment = .left
+
+        // Time Label
+        let timeLabel = UILabel()
+        timeLabel.text = time
+        timeLabel.textColor = .black
+        timeLabel.font = UIFont.systemFont(ofSize: 14)
+        timeLabel.textAlignment = .right
+
+        // Add to row stack view
+        rowStackView.addArrangedSubview(dayLabel)
+        rowStackView.addArrangedSubview(UIView()) // Spacer
+        rowStackView.addArrangedSubview(timeLabel)
+
+        return rowStackView
+    }
+
+    // 토글 동작
+    @objc private func toggleHiddenContainer(_ sender: UIButton) {
+        guard let superview = sender.superview?.superview as? UIStackView, // containerStackView를 찾기 위해 두 단계 상위로 접근
+              let hiddenContainer = superview.arrangedSubviews.first(where: { $0.hash == sender.tag }) as? UIView else {
+            return
+        }
+
+        if hiddenContainer.isHidden {
+            hiddenContainer.isHidden = false
+            sender.setImage(UIImage(named: "icon_toggle_up"), for: .normal)
+        } else {
+            hiddenContainer.isHidden = true
+            sender.setImage(UIImage(named: "icon_toggle_down"), for: .normal)
+        }
+    }
+
+    // 공통으로 사용할 Horizontal Row 생성 함수
+    private func createHorizontalInfoRow(iconName: String, text: String) -> UIStackView {
+        let rowStackView = UIStackView()
+        rowStackView.translatesAutoresizingMaskIntoConstraints = false
+        rowStackView.axis = .horizontal
+        rowStackView.distribution = .fill
+        rowStackView.alignment = .center
+        rowStackView.spacing = 8
+
+        // Icon
+        let iconImageView = UIImageView(image: UIImage(named: iconName))
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
+        // Label
+        let textLabel = UILabel()
+        textLabel.text = text
+        textLabel.textColor = .black
+        textLabel.font = UIFont.systemFont(ofSize: 14)
+
+        // Add to the row stack view
+        rowStackView.addArrangedSubview(iconImageView)
+        rowStackView.addArrangedSubview(textLabel)
+
+        return rowStackView
     }
     
     // 4. 상세 정보 섹션
