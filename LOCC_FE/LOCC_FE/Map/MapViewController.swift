@@ -23,6 +23,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
 //    private var mapController: KMController?
     
     // 검색 필드 컨테이너 뷰와 내부 요소들
+    private let handleIconView = UIImageView()
     private let searchContainerView = UIView()
     private let searchIconView = UIImageView(image: UIImage(named: "icon_search"))
     private let searchTextField = UITextField()
@@ -200,10 +201,26 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     
     // 바텀 시트 내부 요소 설정
     private func setupBottomSheetContents() {
+        setupHandleIcon()
         setupSearchBar()
         setupFilterButtons()
         setupBottomBorder()
         setupStoreDetailsSection()
+    }
+    
+    // 바텀 시트 가장 위쪽 핸들 아이콘 설정
+    private func setupHandleIcon() {
+        handleIconView.image = UIImage(named: "icon_handle")
+        handleIconView.contentMode = .scaleAspectFit
+        handleIconView.translatesAutoresizingMaskIntoConstraints = false
+        bottomSheet.addSubview(handleIconView)
+        
+        NSLayoutConstraint.activate([
+            handleIconView.topAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 8),
+            handleIconView.centerXAnchor.constraint(equalTo: bottomSheet.centerXAnchor),
+            handleIconView.widthAnchor.constraint(equalToConstant: 50),
+            handleIconView.heightAnchor.constraint(equalToConstant: 8)
+        ])
     }
     
     // 바텀 시트 내부 검색 바
@@ -228,7 +245,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         searchContainerView.addSubview(clearButton)
         
         NSLayoutConstraint.activate([
-            searchContainerView.topAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 16),
+            searchContainerView.topAnchor.constraint(equalTo: handleIconView.bottomAnchor, constant: 16),
             searchContainerView.leadingAnchor.constraint(equalTo: bottomSheet.leadingAnchor, constant: 20),
             searchContainerView.trailingAnchor.constraint(equalTo: bottomSheet.trailingAnchor, constant: -20),
             searchContainerView.heightAnchor.constraint(equalToConstant: 36),
@@ -250,10 +267,6 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // searchField 클릭 시 다른 페이지로 이동하는 액션
     @objc private func searchFieldTapped() {
         print("move to search page")
-//        print(navigationController == nil) // true면 UINavigationController에 포함되어 있지 않음
-//
-//        let searchVC = SearchViewController() // SearchViewController 인스턴스 생성
-//        navigationController?.pushViewController(searchVC, animated: true) // 화면 이동
         // 스토리보드에서 SearchViewController 인스턴스 생성
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else {
