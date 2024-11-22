@@ -26,16 +26,40 @@ class CurationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var curationImg1: UIImageView!
     @IBOutlet weak var curationImg2: UIImageView!
     
+    var toggleBookmark: (() -> Void)? // 북마크 상태를 토글하는 클로저
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        curateBaseView.layer.cornerRadius = 15
+        curateBaseView.layer.masksToBounds = true
+        
+        category.layer.cornerRadius = 9
+        category.layer.borderWidth = 1
+        category.layer.borderColor = UIColor.category.cgColor
+        
+        curationImg1.layer.cornerRadius = 5
+        curationImg1.clipsToBounds = true
+        curationImg2.layer.cornerRadius = 5
+        curationImg2.clipsToBounds = true
+    }
+    
+    func configureSummaryText(_ text: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = summary.font.lineHeight * 0.5 // 행간 간격을 150%로 설정
+
+        let attributedString = NSAttributedString(
+            string: text,
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .font: summary.font ?? UIFont(name: "Pretendard-Regular", size: 16) ?? "설명 없음",
+                .foregroundColor: summary.textColor ?? UIColor.black
+            ]
+        )
+        summary.attributedText = attributedString
     }
 
     @IBAction func bookmarkTapped(_ sender: Any) {
-        if bookmarkBtn.isSelected {
-            bookmarkBtn.isSelected = false
-        }
-        else {
-            bookmarkBtn.isSelected = true
-        }
+        toggleBookmark?() // 북마크 상태를 부모에게 알림
     }
 }

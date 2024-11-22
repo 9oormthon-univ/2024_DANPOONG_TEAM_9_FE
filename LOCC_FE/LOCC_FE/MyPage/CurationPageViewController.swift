@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class CurationPageViewController: UIViewController {
 
@@ -19,7 +20,7 @@ class CurationPageViewController: UIViewController {
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
-    private let curationData = ["낙엽도 맛집이\n있나요 TOP5", "낙엽도 맛집이\n있나요 TOP5", "낙엽도 맛집이\n있나요 TOP53", "낙엽도 맛집이\n있나요 TOP5", "낙엽도 맛집이\n있나요 TOP5"] // 임시 데이터
+    private var bookmarkedCurations: [Curation] = [] // 북마크된 큐레이션 데이터
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -31,6 +32,8 @@ class CurationPageViewController: UIViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        fetchBookmarkedCurations()
     }
 
     private func registerNib() {
@@ -54,12 +57,36 @@ class CurationPageViewController: UIViewController {
         
         collectionView.backgroundColor = .white
     }
+    
+    private func fetchBookmarkedCurations() {
+        // API 요청으로 데이터 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
+
+        let endpoint = "/api/v1/users/me/profile"
+
+        APIClient.getRequest(endpoint: endpoint, parameters: nil, token: token, headerType: .authorization) { (result: Result<MyPageResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                if let curations = response.data?.savedCurations {
+                    self.bookmarkedCurations = curations
+                }
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("Error fetching bookmarked curations: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension CurationPageViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return curationData.count
+        return bookmarkedCurations.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -67,24 +94,16 @@ extension CurationPageViewController: UICollectionViewDelegate, UICollectionView
             return UICollectionViewCell()
         }
         
-        // 데이터 설정
-        cell.curationTitle.text = curationData[indexPath.item]
-        cell.curationImg.image = UIImage(named: "test_image") // 임시 이미지 설정
+        let curation = bookmarkedCurations[indexPath.item]
         
-        cell.bookmarkBtn.isSelected = false // 기본 버튼 상태
-        cell.bookmarkBtn.addTarget(self, action: #selector(bookmarkTapped(_:)), for: .touchUpInside)
+        // 데이터 설정
+        cell.curationTitle.text = curation.title
+        cell.curationImg.load(from: curation.imageUrl) // 이미지 로드 메서드 사용
         
         return cell
     }
     
-    @objc private func bookmarkTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        // 북마크 로직 추가
-        print("Bookmark button tapped, isSelected: \(sender.isSelected)")
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 컬렉션 뷰에서 셀 너비 계산
         let totalHorizontalSpacing = CGFloat(20 * 2) + 15 // 좌우 여백 (20 * 2) + 열 간격 (15)
         let cellWidth = (collectionView.bounds.width - totalHorizontalSpacing) / 2 // 셀 너비 (2열 기준)
         let cellHeight: CGFloat = 197.72 // 셀 높이
@@ -95,12 +114,7 @@ extension CurationPageViewController: UICollectionViewDelegate, UICollectionView
         return 13.72 // 행 간 간격
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 15 // 열 간 간격
-    }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20) // 컬렉션 뷰 전체 여백
     }
-
 }

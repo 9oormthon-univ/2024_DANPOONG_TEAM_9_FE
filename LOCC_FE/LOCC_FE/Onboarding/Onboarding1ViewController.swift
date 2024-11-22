@@ -263,14 +263,14 @@ class Onboarding1ViewController: UIViewController {
         
         if isTownStoreSelected {
             didTapCnt -= 1
-            townstoreButton.setImage(UIImage(named: "on_town_store")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            townstoreButton.setImage(UIImage(named: "on_online")?.withRenderingMode(.alwaysTemplate), for: .normal)
             townstoreButton.tintColor = UIColor(named: "DefaultGreen")
             townstoreView.layer.borderColor = UIColor(named: "DefaultGreen")?.cgColor
             townstoreView.backgroundColor = UIColor(named: "ButtonBackground")
         }
         else {
             didTapCnt += 1
-            townstoreButton.setImage(UIImage(named: "on_town_store")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            townstoreButton.setImage(UIImage(named: "on_online")?.withRenderingMode(.alwaysTemplate), for: .normal)
             townstoreButton.tintColor = .white
             townstoreView.layer.borderColor = UIColor.clear.cgColor
             townstoreView.backgroundColor = UIColor(named: "SelectedGreen")
@@ -287,14 +287,14 @@ class Onboarding1ViewController: UIViewController {
         
         if isBookstoreSelected {
             didTapCnt -= 1
-            bookstoreButton.setImage(UIImage(named: "on_bookstore")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            bookstoreButton.setImage(UIImage(named: "on_culture")?.withRenderingMode(.alwaysTemplate), for: .normal)
             bookstoreButton.tintColor = UIColor(named: "DefaultGreen")
             bookstoreView.layer.borderColor = UIColor(named: "DefaultGreen")?.cgColor
             bookstoreView.backgroundColor = UIColor(named: "ButtonBackground")
         }
         else {
             didTapCnt += 1
-            bookstoreButton.setImage(UIImage(named: "on_bookstore")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            bookstoreButton.setImage(UIImage(named: "on_culture")?.withRenderingMode(.alwaysTemplate), for: .normal)
             bookstoreButton.tintColor = .white
             bookstoreView.layer.borderColor = UIColor.clear.cgColor
             bookstoreView.backgroundColor = UIColor(named: "SelectedGreen")

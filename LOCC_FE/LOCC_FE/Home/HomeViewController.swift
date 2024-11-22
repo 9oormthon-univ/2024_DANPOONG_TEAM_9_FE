@@ -54,6 +54,13 @@ class HomeViewController: UIViewController {
         
         fetchHome()
         
+        // 지역 이름 설정
+        if let selectedRegion = UserDefaults.standard.string(forKey: "selectedRegion") {
+            regionBtn.setTitle(selectedRegion, for: .normal)
+        } else {
+            regionBtn.setTitle("전국", for: .normal) // 기본값
+        }
+        
         self.curateView.delegate = self
         self.curateView.dataSource = self
         
@@ -130,6 +137,18 @@ class HomeViewController: UIViewController {
         reviewLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
         watchReviewLabel.font = UIFont(name: "Pretendard-Medium", size: 15)
         watchReviewLabel.textColor = UIColor.subLabel
+    }
+    
+    private func splitSubtitleIntoTwoLines(_ subtitle: String) -> String {
+        let words = subtitle.split(separator: " ")
+        let midpoint = words.count / 2
+        
+        guard midpoint > 0 else { return subtitle }
+        
+        let firstLine = words.prefix(midpoint).joined(separator: " ")
+        let secondLine = words.suffix(from: midpoint).joined(separator: " ")
+        
+        return "\(firstLine)\n\(secondLine)"
     }
 
     private func setupBtn() {
@@ -236,12 +255,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let curation = curations[indexPath.item]
             cell.curateTitle.text = curation.title
-            cell.curateSubTitle.text = curation.subtitle
+            
+            // subtitle을 두 줄로 나누어 설정
+            let formattedSubtitle = splitSubtitleIntoTwoLines(curation.subtitle)
+            cell.curateSubTitle.text = formattedSubtitle
+            
             cell.curateImg.load(from: curation.imageUrl)
 
             // 스타일 적용
             cell.curateTitle.font = UIFont(name: "Pretendard-Bold", size: 24)
             cell.curateSubTitle.font = UIFont(name: "Pretendard-Regular", size: 16)
+            cell.curateSubTitle.lineBreakMode = .byWordWrapping
+            cell.curateSubTitle.numberOfLines = 2
             cell.curateImg.layer.cornerRadius = 32
             cell.curateImg.layer.masksToBounds = true
 
@@ -372,20 +397,41 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return UIEdgeInsets.zero
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == curateView {
+            print("curateView 셀이 선택되었습니다.") // 디버깅용 로그
+            // 선택한 큐레이션의 ID 가져오기
+            let selectedCuration = curations[indexPath.item]
+            let storyboard = UIStoryboard(name: "Main", bundle: nil) // Storyboard 이름이 "Main"이라고 가정
+            guard let detailVC = storyboard.instantiateViewController(withIdentifier: "CurateViewController") as? CurateViewController else { return }
+            
+            // curationId 전달
+            detailVC.curationId = selectedCuration.curationId
+            
+            // 화면 전환 (모달 방식)
+            detailVC.modalPresentationStyle = .fullScreen // 전체 화면 모달
+            self.present(detailVC, animated: true, completion: nil)
+        }
+    }
 
 }
 
 extension UIImageView {
     func load(from urlString: String?) {
         guard let urlString = urlString, let url = URL(string: urlString) else {
-            self.image = nil // 기본 이미지를 설정하거나 초기화
+            self.image = UIImage(named: "placeholder_image") // 기본 이미지 설정
             return
         }
 
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    self?.image = image
+                    self.image = image
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.image = UIImage(named: "placeholder_image") // 로드 실패 시 기본 이미지
                 }
             }
         }

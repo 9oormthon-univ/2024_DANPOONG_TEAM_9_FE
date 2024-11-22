@@ -6,16 +6,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class MyListPageViewController: UIViewController {
 
     // MARK: - Properties
     private let tableView = UITableView()
-    private let myListData = [
-        ["storeName": "로슈아커피", "category": "카페", "province": "서울", "city": "강남구", "status": "영업중", "closeTime": "10:00", "rating": "4.5", "reviewCnt": "120"],
-        ["storeName": "로슈아커피", "category": "카페", "province": "경기", "city": "성남시", "status": "영업중", "closeTime": "8:00", "rating": "4.7", "reviewCnt": "80"],
-        ["storeName": "로슈아커피", "category": "카페", "province": "부산", "city": "해운대구", "status": "영업중", "closeTime": "11:00", "rating": "4.8", "reviewCnt": "200"]
-    ] // 임시 데이터
+    private var bookmarkedStores: [Store] = [] // 북마크된 가게 데이터
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -24,10 +21,10 @@ class MyListPageViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         registerNib()
-        
         setupTableView()
+        
+        fetchBookmarkedStores()
     }
 
     private func registerNib() {
@@ -51,12 +48,35 @@ class MyListPageViewController: UIViewController {
         tableView.separatorStyle = .singleLine // 구분선 스타일
         tableView.backgroundColor = UIColor.buttonBackground
     }
+    
+    private func fetchBookmarkedStores() {
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
+
+        let endpoint = "/api/v1/users/me/profile"
+
+        APIClient.getRequest(endpoint: endpoint, parameters: nil, token: token, headerType: .authorization) { (result: Result<MyPageResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                if let stores = response.data?.savedStores {
+                    self.bookmarkedStores = stores
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print("Error fetching bookmarked stores: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension MyListPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myListData.count
+        return bookmarkedStores.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,24 +84,18 @@ extension MyListPageViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let data = myListData[indexPath.row]
+        let store = bookmarkedStores[indexPath.row]
         
         // 데이터 설정
-        cell.storeName.text = data["storeName"]
-        cell.category.text = data["category"]
-        cell.province.text = data["province"]
-        cell.city.text = data["city"]
-        cell.status.text = data["status"]
-        cell.closeTime.text = data["closeTime"]
-        cell.rating.text = data["rating"]
-        cell.reviewCnt.text = "(\(data["reviewCnt"] ?? "0"))"
-        
-        // 이미지 설정 (임시 이미지)
-        cell.mylistImg.image = UIImage(named: "test_image")
-        cell.mylistImg.layer.cornerRadius = 15
-        cell.mylistImg.layer.masksToBounds = true
-        
-        cell.selectionStyle = .none
+        cell.storeName.text = store.name
+        cell.category.text = store.category
+        cell.province.text = store.province
+        cell.city.text = store.city
+        cell.status.text = store.businessStatus
+        cell.closeTime.text = store.closeTime
+        cell.rating.text = "\(store.rating)"
+        cell.reviewCnt.text = "(\(store.reviewCount))"
+        cell.mylistImg.load(from: store.imageUrl) // 이미지 로드 메서드 사용
         
         return cell
     }
