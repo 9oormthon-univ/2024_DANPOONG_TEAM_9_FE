@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class Onboarding1ViewController: UIViewController {
     
@@ -52,6 +53,8 @@ class Onboarding1ViewController: UIViewController {
     var isAccomodationSelected = false
     var didTapCnt : Int = 0
     
+    // instance
+    var onboardingData = OnboardingData()
 
     
     override func viewDidLoad() {
@@ -354,12 +357,26 @@ class Onboarding1ViewController: UIViewController {
             return
         }
         
-        guard let toOn2VC = self.storyboard?.instantiateViewController(withIdentifier: "Onboarding2ViewController") as? Onboarding2ViewController else { return }
+        // 선택된 카테고리를 저장
+        var selectedCategories = [String]()
+        if isFoodSelected { selectedCategories.append("식품") }
+        if isRestaurantSelected { selectedCategories.append("맛집") }
+        if isCafeSelected { selectedCategories.append("카페") }
+        if isCraftSelected { selectedCategories.append("체험/공방") }
+        if isShoppingSelected { selectedCategories.append("쇼핑") }
+        if isTownStoreSelected { selectedCategories.append("온라인") }
+        if isBookstoreSelected { selectedCategories.append("문화") }
+        if isSpaceSelected { selectedCategories.append("공간") }
+        if isAccomodationSelected { selectedCategories.append("숙소") }
         
+        onboardingData.selectedCategories = selectedCategories
+        
+        // 다음 화면으로 데이터 전달
+        guard let toOn2VC = storyboard?.instantiateViewController(withIdentifier: "Onboarding2ViewController") as? Onboarding2ViewController else { return }
+        toOn2VC.onboardingData = onboardingData
         toOn2VC.modalPresentationStyle = .fullScreen
         toOn2VC.transitioningDelegate = self
-
-        self.present(toOn2VC, animated: true, completion: nil)
+        present(toOn2VC, animated: true, completion: nil)
     }
 }
 

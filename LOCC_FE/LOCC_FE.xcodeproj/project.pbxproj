@@ -23,6 +23,7 @@
 		8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B219F162CEE3B8C001643A3 /* LoginModel.swift */; };
 		8B5E0A972CEFAEC700A42F46 /* MyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5E0A962CEFAEC700A42F46 /* MyListTableViewCell.xib */; };
 		8B5E0A982CEFAEC700A42F46 /* MyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E0A952CEFAEC700A42F46 /* MyListTableViewCell.swift */; };
+		8B6736932CF061C3001B8CDE /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6736922CF061C3001B8CDE /* OnboardingModel.swift */; };
 		8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EEE2CEF541C00810937 /* HomeModel.swift */; };
 		8B808EF32CEF9CFE00810937 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EF22CEF9CFE00810937 /* BookmarkModel.swift */; };
 		8B808EF52CEFA17000810937 /* CurationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EF42CEFA17000810937 /* CurationPageViewController.swift */; };
@@ -104,6 +105,7 @@
 		8B219F162CEE3B8C001643A3 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		8B5E0A952CEFAEC700A42F46 /* MyListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListTableViewCell.swift; sourceTree = "<group>"; };
 		8B5E0A962CEFAEC700A42F46 /* MyListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyListTableViewCell.xib; sourceTree = "<group>"; };
+		8B6736922CF061C3001B8CDE /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		8B808EEE2CEF541C00810937 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		8B808EF22CEF9CFE00810937 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		8B808EF42CEFA17000810937 /* CurationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationPageViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				8BC98D532CEB319D005CBE75 /* Onboarding1ViewController.swift */,
 				8BC98D552CEB31A4005CBE75 /* Onboarding2ViewController.swift */,
+				8B6736922CF061C3001B8CDE /* OnboardingModel.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */,
 				8B0E7A372CEFA71F00603FBC /* BookmarkCollectionViewCell.swift in Sources */,
 				8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */,
+				8B6736932CF061C3001B8CDE /* OnboardingModel.swift in Sources */,
 				8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */,
 				8B808EF72CEFA18000810937 /* MyListPageViewController.swift in Sources */,
 				8B1898702CEEED17001B9935 /* MyPageModel.swift in Sources */,
