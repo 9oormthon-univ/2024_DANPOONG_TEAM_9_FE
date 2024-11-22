@@ -1068,7 +1068,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="icon_back"/>
                                                 <connections>
-                                                    <action selector="backBtn:" destination="ufd-Ii-CKk" eventType="touchUpInside" id="Mc2-ef-9o9"/>
+                                                    <action selector="tapBack:" destination="ufd-Ii-CKk" eventType="touchUpInside" id="oDh-dw-vif"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUY-GQ-6n9">
@@ -1077,7 +1077,7 @@
                                                 <state key="normal" image="icon_scrap_unselected"/>
                                                 <state key="selected" image="icon_scrape"/>
                                                 <connections>
-                                                    <action selector="curationBookmark:" destination="ufd-Ii-CKk" eventType="touchUpInside" id="Uzx-qQ-edJ"/>
+                                                    <action selector="tapBookmarkBtn:" destination="ufd-Ii-CKk" eventType="touchUpInside" id="rTz-jn-UOr"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="낙엽도 맛집이 있나요 TOP5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWw-UT-gDn">
@@ -1174,8 +1174,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backBtn" destination="Bt4-7n-pyS" id="42z-Uz-Kfp"/>
-                        <outlet property="bookmarkBtn" destination="SUY-GQ-6n9" id="aUC-f2-Z44"/>
+                        <outlet property="backBtn" destination="Bt4-7n-pyS" id="UID-tA-To0"/>
+                        <outlet property="bookmarkBtn" destination="SUY-GQ-6n9" id="Zgp-sL-svd"/>
                         <outlet property="content" destination="14Q-SW-2eD" id="8WN-py-DnF"/>
                         <outlet property="curateImg" destination="xTu-2k-hLt" id="MgF-Lc-agA"/>
                         <outlet property="curationSubTitle" destination="eeb-AS-Yvj" id="eF0-ex-7HI"/>

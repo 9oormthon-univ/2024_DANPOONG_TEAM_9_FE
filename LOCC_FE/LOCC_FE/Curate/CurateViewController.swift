@@ -146,6 +146,25 @@ class CurateViewController: UIViewController {
             }
         }
     }
+    
+    // action
+    @IBAction func tapBack(_ sender: Any) {
+        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+            
+        toHomeVC.modalPresentationStyle = .fullScreen
+        
+        // 전환 애니메이션 설정
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = .push
+        transition.subtype = .fromLeft
+        view.window?.layer.add(transition, forKey: kCATransition)
+        
+        self.present(toHomeVC, animated: false, completion: nil)
+    }
+    
+    @IBAction func tapBookmarkBtn(_ sender: Any) {
+    }
 }
 
 extension CurateViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
