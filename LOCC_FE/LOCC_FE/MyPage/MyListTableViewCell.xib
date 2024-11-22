@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="mylistCell" id="KGk-i7-Jjw" customClass="MyListTableViewCell" customModule="LOCC_FE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="137.66667175292969"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="137.66667175292969"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k0A-Gf-t0e">
+                        <rect key="frame" x="21.999999999999993" y="20.666666666666671" width="103.33333333333331" height="97"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="103.17" id="0oW-Ej-d9s"/>
+                            <constraint firstAttribute="height" constant="96.75" id="fvq-ZW-Jhg"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로슈아커피" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMM-7L-rYn">
+                        <rect key="frame" x="145.33333333333334" y="25.666666666666671" width="61" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카페" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Xg-Iv-8xL">
+                        <rect key="frame" x="145.33333333333334" y="47.666666666666664" width="21" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="·" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfe-uT-mxw">
+                        <rect key="frame" x="168.33333333333334" y="47.666666666666664" width="4" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="경기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNU-pL-Rqf">
+                        <rect key="frame" x="174.33333333333334" y="47.666666666666664" width="21" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="양주시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tR4-7R-E8o">
+                        <rect key="frame" x="197.33333333333334" y="47.666666666666664" width="32" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영업중" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RlI-Kb-xIc">
+                        <rect key="frame" x="145.33333333333334" y="69.666666666666671" width="32" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="OnSale"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kI9-1e-Ts3">
+                        <rect key="frame" x="179.33333333333334" y="71.333333333333329" width="18" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Z8-ld-KBJ">
+                        <rect key="frame" x="199.33333333333334" y="71.333333333333329" width="28" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영업종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAK-Ob-3NZ">
+                        <rect key="frame" x="238.33333333333334" y="71.333333333333329" width="35.000000000000028" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="에" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVE-Bf-doa">
+                        <rect key="frame" x="227.33333333333334" y="71.333333333333329" width="9" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lh7-TG-pH0">
+                        <rect key="frame" x="145.33333333333334" y="92.666666666666671" width="12" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="8tm-Rb-rwX"/>
+                            <constraint firstAttribute="width" constant="12" id="joM-wm-9L6"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="icon_star"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sn-5u-j4J">
+                        <rect key="frame" x="159.33333333333334" y="91.333333333333329" width="27" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(273)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIZ-ve-o23">
+                        <rect key="frame" x="188.33333333333334" y="92.666666666666671" width="27" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" name="TimeLabel"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="tR4-7R-E8o" firstAttribute="leading" secondItem="SNU-pL-Rqf" secondAttribute="trailing" constant="2" id="0oA-lE-eFe"/>
+                    <constraint firstItem="7Sn-5u-j4J" firstAttribute="centerY" secondItem="lh7-TG-pH0" secondAttribute="centerY" id="2Di-kg-eR9"/>
+                    <constraint firstItem="SNU-pL-Rqf" firstAttribute="leading" secondItem="cfe-uT-mxw" secondAttribute="trailing" constant="2" id="8jf-Ey-fW2"/>
+                    <constraint firstItem="RlI-Kb-xIc" firstAttribute="top" secondItem="1Xg-Iv-8xL" secondAttribute="bottom" constant="7" id="9BG-Qh-Sgz"/>
+                    <constraint firstItem="lh7-TG-pH0" firstAttribute="top" secondItem="RlI-Kb-xIc" secondAttribute="bottom" constant="8" id="Azq-R5-c4O"/>
+                    <constraint firstItem="k0A-Gf-t0e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22.030000000000001" id="Bxu-MB-Bfc"/>
+                    <constraint firstItem="SNU-pL-Rqf" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="Cgh-D8-Bm1"/>
+                    <constraint firstItem="cfe-uT-mxw" firstAttribute="leading" secondItem="1Xg-Iv-8xL" secondAttribute="trailing" constant="2" id="D5y-o2-beU"/>
+                    <constraint firstItem="kI9-1e-Ts3" firstAttribute="leading" secondItem="RlI-Kb-xIc" secondAttribute="trailing" constant="2" id="KJb-i7-Vdz"/>
+                    <constraint firstItem="yMM-7L-rYn" firstAttribute="leading" secondItem="k0A-Gf-t0e" secondAttribute="trailing" constant="20.140000000000001" id="OQu-ZY-YQe"/>
+                    <constraint firstItem="IVE-Bf-doa" firstAttribute="leading" secondItem="2Z8-ld-KBJ" secondAttribute="trailing" id="PAa-0K-OL9"/>
+                    <constraint firstItem="2Z8-ld-KBJ" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="RDn-MI-6Zc"/>
+                    <constraint firstItem="k0A-Gf-t0e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20.75" id="Rg1-jr-LBK"/>
+                    <constraint firstItem="kI9-1e-Ts3" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="TjW-cy-yjB"/>
+                    <constraint firstItem="1Xg-Iv-8xL" firstAttribute="top" secondItem="yMM-7L-rYn" secondAttribute="bottom" constant="5" id="Tsh-RT-gTb"/>
+                    <constraint firstItem="1Xg-Iv-8xL" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="WEl-tH-NVD"/>
+                    <constraint firstItem="kAK-Ob-3NZ" firstAttribute="leading" secondItem="IVE-Bf-doa" secondAttribute="trailing" constant="2" id="WXb-mF-v9L"/>
+                    <constraint firstItem="oIZ-ve-o23" firstAttribute="leading" secondItem="7Sn-5u-j4J" secondAttribute="trailing" constant="2" id="XKb-bH-3bA"/>
+                    <constraint firstItem="IVE-Bf-doa" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="biO-qa-cYV"/>
+                    <constraint firstItem="2Z8-ld-KBJ" firstAttribute="leading" secondItem="kI9-1e-Ts3" secondAttribute="trailing" constant="2" id="fqP-al-W3r"/>
+                    <constraint firstItem="tR4-7R-E8o" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="fsE-fh-4o7"/>
+                    <constraint firstItem="oIZ-ve-o23" firstAttribute="centerY" secondItem="lh7-TG-pH0" secondAttribute="centerY" id="lwT-aF-qi8"/>
+                    <constraint firstItem="lh7-TG-pH0" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="paQ-OM-bOj"/>
+                    <constraint firstItem="7Sn-5u-j4J" firstAttribute="leading" secondItem="lh7-TG-pH0" secondAttribute="trailing" constant="2" id="rFW-Qm-Hry"/>
+                    <constraint firstItem="kAK-Ob-3NZ" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="sAY-v6-Fz2"/>
+                    <constraint firstItem="RlI-Kb-xIc" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="saF-sa-HC7"/>
+                    <constraint firstItem="yMM-7L-rYn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25.670000000000002" id="tfY-cD-2QZ"/>
+                    <constraint firstItem="cfe-uT-mxw" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="zHe-Yu-lOF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="category" destination="1Xg-Iv-8xL" id="98J-4m-gwK"/>
+                <outlet property="city" destination="tR4-7R-E8o" id="I2W-NL-Tg8"/>
+                <outlet property="closeTime" destination="2Z8-ld-KBJ" id="xvP-yh-kdM"/>
+                <outlet property="mylistImg" destination="k0A-Gf-t0e" id="cz8-wv-QmN"/>
+                <outlet property="province" destination="SNU-pL-Rqf" id="B0z-Gm-3zK"/>
+                <outlet property="rating" destination="7Sn-5u-j4J" id="7gb-Ux-h2Z"/>
+                <outlet property="reviewCnt" destination="oIZ-ve-o23" id="i3g-aF-VvF"/>
+                <outlet property="starBtn" destination="lwT-aF-qi8" id="CZe-di-kGT"/>
+                <outlet property="status" destination="RlI-Kb-xIc" id="AO6-wb-JeF"/>
+                <outlet property="storeName" destination="yMM-7L-rYn" id="Ogg-my-ber"/>
+            </connections>
+            <point key="canvasLocation" x="138.1679389312977" y="19.718309859154932"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_star" width="12" height="11"/>
+        <namedColor name="OnSale">
+            <color red="0.24705882352941178" green="0.50196078431372548" blue="0.031372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TimeLabel">
+            <color red="0.41176470588235292" green="0.41176470588235292" blue="0.41176470588235292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

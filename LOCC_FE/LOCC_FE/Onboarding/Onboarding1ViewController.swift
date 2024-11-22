@@ -212,14 +212,14 @@ class Onboarding1ViewController: UIViewController {
         
         if isCraftSelected {
             didTapCnt -= 1
-            craftButton.setImage(UIImage(named: "on_craft")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            craftButton.setImage(UIImage(named: "on_craft2")?.withRenderingMode(.alwaysTemplate), for: .normal)
             craftButton.tintColor = UIColor(named: "DefaultGreen")
             craftView.layer.borderColor = UIColor(named: "DefaultGreen")?.cgColor
             craftView.backgroundColor = UIColor(named: "ButtonBackground")
         }
         else {
             didTapCnt += 1
-            craftButton.setImage(UIImage(named: "on_craft")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            craftButton.setImage(UIImage(named: "on_craft2")?.withRenderingMode(.alwaysTemplate), for: .normal)
             craftButton.tintColor = .white
             craftView.layer.borderColor = UIColor.clear.cgColor
             craftView.backgroundColor = UIColor(named: "SelectedGreen")
