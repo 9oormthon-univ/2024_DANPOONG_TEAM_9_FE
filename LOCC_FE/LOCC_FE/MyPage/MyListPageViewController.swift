@@ -45,6 +45,8 @@ class MyListPageViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
+        tableView.showsVerticalScrollIndicator = false
+        
         tableView.rowHeight = 137.98 // 행 높이 설정
         tableView.separatorStyle = .singleLine // 구분선 스타일
         tableView.backgroundColor = UIColor.buttonBackground

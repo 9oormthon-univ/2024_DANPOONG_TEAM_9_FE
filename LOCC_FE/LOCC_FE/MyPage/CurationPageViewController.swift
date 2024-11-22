@@ -25,10 +25,19 @@ class CurationPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        registerNib()
         setupCollectionView()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 
-    // MARK: - Setup
+    private func registerNib() {
+        let bookmarkNib = UINib(nibName: "BookmarkCollectionViewCell", bundle: nil)
+        collectionView.register(bookmarkNib, forCellWithReuseIdentifier: "bookmarkCell")
+    }
+    
     private func setupCollectionView() {
         // 컬렉션 뷰 추가
         view.addSubview(collectionView)
@@ -40,10 +49,9 @@ class CurationPageViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        // Cell 등록
-        collectionView.register(UINib(nibName: "BookmarkCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "bookmarkCell")
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        
         collectionView.backgroundColor = .white
     }
 }

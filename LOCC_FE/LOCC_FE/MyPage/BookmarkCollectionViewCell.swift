@@ -25,5 +25,15 @@ class BookmarkCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 15
         self.layer.masksToBounds = true
     }
+    
+    // action
+    @IBAction func bookmarkTapped(_ sender: Any) {
+        if bookmarkBtn.isSelected {
+            bookmarkBtn.isSelected = true
+        }
+        else {
+            bookmarkBtn.isSelected = false
+        }
+    }
 
 }

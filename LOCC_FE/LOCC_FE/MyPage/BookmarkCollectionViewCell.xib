@@ -34,6 +34,10 @@
                         <rect key="frame" x="132" y="14.666666666666664" width="21" height="23"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" image="icon_scrape"/>
+                        <state key="selected" image="icon_scrap_unselected"/>
+                        <connections>
+                            <action selector="bookmarkTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="mvJ-YB-bKs"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
@@ -58,6 +62,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="icon_scrap_unselected" width="21" height="23"/>
         <image name="icon_scrape" width="21" height="23"/>
         <namedColor name="Background">
             <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
