@@ -162,7 +162,6 @@ class MyPageViewController: UIViewController {
     
     // MARK: - Child View Controller
     private func loadChildViewController(for index: Int) {
-        print("Loading child view controller for index: \(index)") // 디버깅용 로그
         let viewController: UIViewController
         if index == 0 {
             viewController = CurationPageViewController() // 직접 생성
