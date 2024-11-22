@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class Onboarding2ViewController: UIViewController {
 
@@ -49,6 +50,9 @@ class Onboarding2ViewController: UIViewController {
     var isUlsanSelected = false
     var isJejuSelected = false
     var didTapCnt : Int = 0
+    
+    // instance
+    var onboardingData: OnboardingData!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -448,12 +452,52 @@ class Onboarding2ViewController: UIViewController {
             return
         }
         
-        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
+        // 선택된 지역 저장
+        if isSeoulSelected { onboardingData.selectedRegion = "서울" }
+        if isGyeonggiSelected { onboardingData.selectedRegion = "경기" }
+        if isIncheonSelected { onboardingData.selectedRegion = "인천" }
+        if isGangwonSelected { onboardingData.selectedRegion = "강원" }
+        if isDaejeonSelected { onboardingData.selectedRegion = "대전" }
+        if isChungcheongSelected { onboardingData.selectedRegion = "충청" }
+        if isJeollaSelected { onboardingData.selectedRegion = "전라" }
+        if isGwangjuSelected { onboardingData.selectedRegion = "광주" }
+        if isGyeongsangSelected { onboardingData.selectedRegion = "경상" }
+        if isDaeguSelected { onboardingData.selectedRegion = "대구" }
+        if isBusanSelected { onboardingData.selectedRegion = "부산" }
+        if isUlsanSelected { onboardingData.selectedRegion = "울산" }
+        if isJejuSelected { onboardingData.selectedRegion = "제주" }
         
-        toHomeVC.modalPresentationStyle = .fullScreen
-        toHomeVC.transitioningDelegate = self
+        // 서버로 데이터 전송
+        let preferencesRequest = PreferencesRequest(
+            categories: onboardingData.selectedCategories,
+            province: onboardingData.selectedRegion ?? ""
+        )
+        
+        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
 
-        self.present(toHomeVC, animated: true, completion: nil)
+        // API 엔드포인트 설정
+        let endpoint = "/api/v1/users/me/preferences"
+        
+        APIClient.postRequest(endpoint: endpoint, parameters: preferencesRequest,token: token, headerType: .authorization) { (result: Result<PreferencesResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                print("Success: \(response.message)")
+                self.navigateToHome()
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // 홈 화면으로 이동
+    private func navigateToHome() {
+        guard let toHomeVC = storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
+        toHomeVC.modalPresentationStyle = .fullScreen
+        present(toHomeVC, animated: true, completion: nil)
     }
 }
 
