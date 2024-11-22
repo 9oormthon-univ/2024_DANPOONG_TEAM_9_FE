@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HomeViewController: UIViewController {
     
@@ -20,8 +21,6 @@ class HomeViewController: UIViewController {
     // button
     @IBOutlet weak var logoBtn: UIButton!
     @IBOutlet weak var regionBtn: UIButton!
-    @IBOutlet weak var allBtn1: UIButton!
-    @IBOutlet weak var allBtn2: UIButton!
     
     // label
     @IBOutlet weak var todayCurate: UILabel!
@@ -37,6 +36,13 @@ class HomeViewController: UIViewController {
     let adLayout = UICollectionViewFlowLayout()
     let reviewLayout = UICollectionViewFlowLayout()
     
+    // property
+    private var curations: [HomeCuration] = []
+    private var benefits: [HomeBenefit] = []
+    private var provinces: [HomeProvince] = []
+    private var advertisements: [HomeAdvertisement] = []
+    private var reviews: [HomeReview] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +51,15 @@ class HomeViewController: UIViewController {
         setupConstraints()
         registerNib()
         setupLayout()
+        
+        fetchHome()
+        
+        // 지역 이름 설정
+        if let selectedRegion = UserDefaults.standard.string(forKey: "selectedRegion") {
+            regionBtn.setTitle(selectedRegion, for: .normal)
+        } else {
+            regionBtn.setTitle("전국", for: .normal) // 기본값
+        }
         
         self.curateView.delegate = self
         self.curateView.dataSource = self
@@ -62,6 +77,41 @@ class HomeViewController: UIViewController {
         self.reviewView.dataSource = self
     }
     
+    // MARK: - 큐레이션 데이터 가져오기
+    private func fetchHome() {
+        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
+
+        // API 엔드포인트 설정
+        let endpoint = "/api/v1/home"
+
+        APIClient.getRequest(endpoint: endpoint, token: token, headerType: .authorization) { (result: Result<HomeResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.curations = response.data.curations
+                    self.benefits = response.data.benefits
+                    self.provinces = response.data.provinces
+                    self.advertisements = response.data.advertisements
+                    self.reviews = response.data.reviews
+                    
+                    self.curateView.reloadData()
+                    self.benefitView.reloadData()
+                    self.provinceView.reloadData()
+                    self.adView.reloadData()
+                    self.reviewView.reloadData()
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("Error fetching home data: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
     private func setupLayout() {
         curateLayout.scrollDirection = .horizontal
         curateView.collectionViewLayout = curateLayout
@@ -75,6 +125,7 @@ class HomeViewController: UIViewController {
         adLayout.scrollDirection = .horizontal
         adView.collectionViewLayout = adLayout
         
+        reviewLayout.scrollDirection = .horizontal
         reviewView.collectionViewLayout = reviewLayout
     }
     
@@ -86,6 +137,18 @@ class HomeViewController: UIViewController {
         reviewLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
         watchReviewLabel.font = UIFont(name: "Pretendard-Medium", size: 15)
         watchReviewLabel.textColor = UIColor.subLabel
+    }
+    
+    private func splitSubtitleIntoTwoLines(_ subtitle: String) -> String {
+        let words = subtitle.split(separator: " ")
+        let midpoint = words.count / 2
+        
+        guard midpoint > 0 else { return subtitle }
+        
+        let firstLine = words.prefix(midpoint).joined(separator: " ")
+        let secondLine = words.suffix(from: midpoint).joined(separator: " ")
+        
+        return "\(firstLine)\n\(secondLine)"
     }
 
     private func setupBtn() {
@@ -150,6 +213,21 @@ class HomeViewController: UIViewController {
         let reviewNib = UINib(nibName: "ReviewCollectionViewCell", bundle: nil)
         reviewView.register(reviewNib, forCellWithReuseIdentifier: "reviewCell")
     }
+    
+    private func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data, let image = UIImage(data: data) {
+                completion(image)
+            } else {
+                completion(nil)
+            }
+        }.resume()
+    }
 }
 
 // extension
@@ -157,15 +235,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == curateView {
-            return 3
+            return curations.count
         } else if collectionView == benefitView {
-            return 4
+            return benefits.count
         } else if collectionView == provinceView {
-            return 14
+            return provinces.count
         } else if collectionView == adView {
-            return 3
+            return advertisements.count
         } else if collectionView == reviewView {
-            return 2
+            return reviews.count
         }
         return 0
     }
@@ -175,100 +253,88 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "curateCell", for: indexPath) as? CurateCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            let curation = curations[indexPath.item]
+            cell.curateTitle.text = curation.title
+            
+            // subtitle을 두 줄로 나누어 설정
+            let formattedSubtitle = splitSubtitleIntoTwoLines(curation.subtitle)
+            cell.curateSubTitle.text = formattedSubtitle
+            
+            cell.curateImg.load(from: curation.imageUrl)
 
-            // 임시 데이터 설정 (curateView용)
-            let images = ["test_image", "test_image", "test_image"]
-            let titles = ["강원도 감자 특선 3곳", "강원도 감자 특선 3곳", "강원도 감자 특선 3곳"]
-            let subtitles = ["강원도 감자 코스\n모든 게 감자 감자 감자", "강원도 감자 코스\n모든 게 감자 감자 감자", "강원도 감자 코스\n모든 게 감자 감자 감자"]
-
-            cell.curateImg.image = UIImage(named: images[indexPath.item])
-            cell.curateTitle.text = titles[indexPath.item]
-            cell.curateSubTitle.text = subtitles[indexPath.item]
-
+            // 스타일 적용
             cell.curateTitle.font = UIFont(name: "Pretendard-Bold", size: 24)
             cell.curateSubTitle.font = UIFont(name: "Pretendard-Regular", size: 16)
-            
+            cell.curateSubTitle.lineBreakMode = .byWordWrapping
+            cell.curateSubTitle.numberOfLines = 2
             cell.curateImg.layer.cornerRadius = 32
             cell.curateImg.layer.masksToBounds = true
-            
+
             return cell
-        } else if collectionView == benefitView {
+        }
+        else if collectionView == benefitView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "benefitCell", for: indexPath) as? BenefitCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+                    return UICollectionViewCell()
+                }
 
-            // 여기에 benefitView용 데이터 및 스타일 설정
-            let images = ["test_image", "test_image", "test_image", "test_image"] // 이미지 이름 배열
-            let storeNames = ["까사부사노", "웨스턴조선서울 라운지", "까사부사노", "웨스턴조선서울 라운지"] // 상점 이름 배열
-            let storeCities = ["서울", "부산", "대구", "광주"] // 상점 도시 배열
-            let storeRates = ["4.5", "4.0", "4.8", "3.9"] // 별점 배열
-            
-            cell.benefitImg.image = UIImage(named: images[indexPath.item]) // 이미지 설정
-            cell.storeName.text = storeNames[indexPath.item] // 상점 이름 설정
-            cell.storeCity.text = storeCities[indexPath.item] // 상점 도시 설정
-            cell.storeRate.text = storeRates[indexPath.item] // 별점 설정
-            
-            // 셀의 UI 스타일 설정
-            cell.storeName.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-            cell.storeCity.font = UIFont(name: "Pretendard-Medium", size: 12)
-            cell.storeRate.font = UIFont(name: "Pretendard-Medium", size: 12)
-            
-            // cornerRadius 설정
-            cell.benefitImg.layer.cornerRadius = 5
-            cell.benefitImg.layer.masksToBounds = true // 경계가 둥글게 잘리도록 설정
+                // benefits 배열에서 데이터 가져오기
+                let benefit = benefits[indexPath.item]
+                cell.storeName.text = benefit.name
+                cell.storeRate.text = String(format: "%.1f", benefit.rating)
+                cell.storeProvince.text = benefit.province
+                cell.storeCity.text = benefit.city
+                cell.benefitImg.load(from: benefit.imageUrl) // URL에서 이미지 로드
 
-            return cell
-        } else if collectionView == provinceView {
+                // 스타일 적용
+                cell.storeName.font = UIFont(name: "Pretendard-SemiBold", size: 14)
+                cell.storeRate.font = UIFont(name: "Pretendard-Medium", size: 12)
+                cell.storeProvince.font = UIFont(name: "Pretendard-Medium", size: 12)
+                cell.storeCity.font = UIFont(name: "Pretendard-Medium", size: 12)
+                cell.benefitImg.layer.cornerRadius = 5
+                cell.benefitImg.layer.masksToBounds = true
+
+                return cell
+        }
+        else if collectionView == provinceView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "provinceCell", for: indexPath) as? ProvinceCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
-            // 여기에 benefitView용 데이터 및 스타일 설정
-            let images = ["test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image", "test_image"] // 이미지 이름 배열
-            
-            cell.provinceImg.image = UIImage(named: images[indexPath.item]) // 이미지 설정
+            let province = provinces[indexPath.item]
+            cell.provinceImg.load(from: province.imageUrl)
             
             cell.provinceImg.layer.cornerRadius = 19.26
             cell.provinceImg.layer.masksToBounds = true // 경계가 둥글게 잘리도록 설정
 
             return cell
-        } else if collectionView == adView {
+        }
+        else if collectionView == adView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "adCell", for: indexPath) as? AdCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
-            // 여기에 benefitView용 데이터 및 스타일 설정
-            let images = ["test_image", "test_image", "test_image"] // 이미지 이름 배열
-            let adTitle = ["쏘카 3시간 할인 지역 보기", "쏘카 3시간 할인 지역 보기", "쏘카 3시간 할인 지역 보기"] // 상점 이름 배열
-            let adSubTitle = ["이동할 때부터 지칠 수는 없으니까\n친구들이랑 편하게", "이동할 때부터 지칠 수는 없으니까\n친구들이랑 편하게", "이동할 때부터 지칠 수는 없으니까\n친구들이랑 편하게"]
-            
-            cell.adImg.image = UIImage(named: images[indexPath.item]) // 이미지 설정
-            cell.adTitle.text = adTitle[indexPath.item] // 상점 이름 설정
-            cell.adSubTitle.text = adSubTitle[indexPath.item] // 상점 이름 설정
+            let advertisement = advertisements[indexPath.item]
+            cell.adTitle.text = advertisement.title
+            cell.adSubTitle.text = advertisement.subtitle
+            cell.adImg.load(from: advertisement.imageUrl) // URL에서 이미지 로드
             
             cell.adTitle.font = UIFont(name: "Pretendard-Bold", size: 24)
             cell.adSubTitle.font = UIFont(name: "Pretendard-Regular", size: 16)
             
             return cell
-        } else if collectionView == reviewView {
+        }
+        else if collectionView == reviewView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reviewCell", for: indexPath) as? ReviewCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
-            // 여기에 benefitView용 데이터 및 스타일 설정
-            let images = ["test_image", "test_image"]
-            let names = ["우수한탐방러_457", "우수한탐방러_457"]
-            let reviewStoreNames = ["양지경성 광안 본점", "양지경성 광안 본점"]
-            let reviewCategorys = ["카페", "카페"]
-            let reviewRates = ["4.4", "4.4"]
-            let reviewCnts = ["(274)", "(274)"]
-            
-            cell.reviewImg.image = UIImage(named: images[indexPath.item])
-            cell.userName.text = names[indexPath.item]
-            cell.reviewStoreName.text = reviewStoreNames[indexPath.item]
-            cell.category.text = reviewCategorys[indexPath.item]
-            cell.reviewRate.text = reviewRates[indexPath.item]
-            cell.reviewCnt.text = reviewCnts[indexPath.item]
+            let review = reviews[indexPath.item]
+            cell.reviewImg.load(from: review.imageUrl)
+            cell.userName.text = review.reviewerName
+            cell.reviewStoreName.text = review.storeName
+            cell.category.text = review.category
+            cell.reviewRate.text = String(review.rating)
+            cell.reviewCnt.text = String(format: "(%d)", review.reviewCount)
             
             cell.userName.font = UIFont(name: "Pretendard-SemiBold", size: 10)
             cell.reviewStoreName.font = UIFont(name: "Pretendard-SemiBold", size: 14)
@@ -295,7 +361,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         } else if collectionView == provinceView {
             return CGSize(width: 61, height: 61)
         } else if collectionView == adView {
-            return CGSize(width: 393, height: 204)
+            return CGSize(width: 403, height: 204)
         } else if collectionView == reviewView {
             return CGSize(width: 169, height: 188)
         }
@@ -331,5 +397,43 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return UIEdgeInsets.zero
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == curateView {
+            print("curateView 셀이 선택되었습니다.") // 디버깅용 로그
+            // 선택한 큐레이션의 ID 가져오기
+            let selectedCuration = curations[indexPath.item]
+            let storyboard = UIStoryboard(name: "Main", bundle: nil) // Storyboard 이름이 "Main"이라고 가정
+            guard let detailVC = storyboard.instantiateViewController(withIdentifier: "CurateViewController") as? CurateViewController else { return }
+            
+            // curationId 전달
+            detailVC.curationId = selectedCuration.curationId
+            
+            // 화면 전환 (모달 방식)
+            detailVC.modalPresentationStyle = .fullScreen // 전체 화면 모달
+            self.present(detailVC, animated: true, completion: nil)
+        }
+    }
 
+}
+
+extension UIImageView {
+    func load(from urlString: String?) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            self.image = UIImage(named: "placeholder_image") // 기본 이미지 설정
+            return
+        }
+
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.image = UIImage(named: "placeholder_image") // 로드 실패 시 기본 이미지
+                }
+            }
+        }
+    }
 }

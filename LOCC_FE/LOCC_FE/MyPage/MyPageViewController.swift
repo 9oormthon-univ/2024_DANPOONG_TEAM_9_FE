@@ -16,6 +16,12 @@ class MyPageViewController: UIViewController {
     // label
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
+    
+    // view
+    @IBOutlet weak var containerView: UIView!
+    
+    // instance
+    private var currentViewController: UIViewController?
 
     // MARK: - Constants
     private enum Constants {
@@ -60,10 +66,11 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSegmentedControlLayout()
-        getMyInfo()
+        loadChildViewController(for: 0) // 초기 페이지 로드
+        getUserInfo()
     }
     
-    func getMyInfo() {
+    func getUserInfo() {
         // UserDefaults에서 서버 AccessToken 가져오기
         guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
             print("Error: No access token found.")
@@ -79,22 +86,34 @@ class MyPageViewController: UIViewController {
             case .success(let myPageResponse):
                 guard let userData = myPageResponse.data else {
                     print("API 응답은 성공했으나 데이터가 없습니다.")
-                    print("전체 응답: \(myPageResponse)")
                     return
                 }
                 
                 // UI 업데이트
                 DispatchQueue.main.async {
                     self.nameLabel.text = userData.username
+                    self.idLabel.text = "@\(userData.handle ?? "")"
+                    
+                    // 프로필 이미지 로드
+                    if let profileImageUrl = userData.profileImageUrl {
+                        self.profileImg.layer.cornerRadius = 40.935
+                        self.profileImg.clipsToBounds = true
+                        self.profileImg.load(from: profileImageUrl)
+                    }
                 }
 
-                print("Username: \(userData.username)")
+                print("Username: \(userData.username ?? "N/A")")
+                print("Handle: \(userData.handle ?? "N/A")")
+                if let profileImageUrl = userData.profileImageUrl {
+                    print("Profile Image URL: \(profileImageUrl)")
+                }
 
             case .failure(let error):
                 print("API 호출 실패: \(error.localizedDescription)")
             }
         }
     }
+
 
     // MARK: - Layout and Style
     private func setupSegmentedControlLayout() {
@@ -140,9 +159,38 @@ class MyPageViewController: UIViewController {
         control.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
         control.setDividerImage(backgroundImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }
+    
+    // MARK: - Child View Controller
+    private func loadChildViewController(for index: Int) {
+        let viewController: UIViewController
+        if index == 0 {
+            viewController = CurationPageViewController() // 직접 생성
+        } else {
+            viewController = MyListPageViewController() // 직접 생성
+        }
+        
+        // 기존 ViewController 제거
+        if let currentViewController = currentViewController {
+            currentViewController.willMove(toParent: nil)
+            currentViewController.view.removeFromSuperview()
+            currentViewController.removeFromParent()
+        }
+
+        // 새 ViewController 추가
+        addChild(viewController)
+        containerView.addSubview(viewController.view)
+        viewController.view.frame = containerView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+
+        // 현재 ViewController 업데이트
+        currentViewController = viewController
+    }
 
     // MARK: - Actions
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        print("Segmented control changed to index: \(sender.selectedSegmentIndex)") // 디버깅용 로그
+        loadChildViewController(for: sender.selectedSegmentIndex)
         changeSegmentedControlLinePosition()
     }
 

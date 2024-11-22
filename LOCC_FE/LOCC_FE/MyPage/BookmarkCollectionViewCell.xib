@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="bookmarkCell" id="gTV-IL-0wX" customClass="BookmarkCollectionViewCell" customModule="LOCC_FE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="169" height="197.66666666666666"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="169" height="197.66666666666666"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fc1-aQ-llc">
+                        <rect key="frame" x="0.0" y="0.0" width="169" height="197.66666666666666"/>
+                        <color key="backgroundColor" name="Background"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uKK-Yg-ytd">
+                        <rect key="frame" x="19.333333333333336" y="134.33333333333334" width="90.666666666666657" height="38.333333333333343"/>
+                        <string key="text">낙엽도 맛집이 
+있나요 TOP5</string>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <color key="textColor" name="ButtonBackground"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQJ-Fw-ds8">
+                        <rect key="frame" x="132" y="14.666666666666664" width="21" height="23"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="icon_scrape"/>
+                        <state key="selected" image="icon_scrap_unselected"/>
+                        <connections>
+                            <action selector="bookmarkTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="mvJ-YB-bKs"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="Fc1-aQ-llc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="3uh-zp-9IR"/>
+                <constraint firstItem="uKK-Yg-ytd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="19.27" id="8dh-rm-fYj"/>
+                <constraint firstAttribute="trailing" secondItem="SQJ-Fw-ds8" secondAttribute="trailing" constant="16" id="HfT-hE-XXW"/>
+                <constraint firstAttribute="trailing" secondItem="Fc1-aQ-llc" secondAttribute="trailing" id="IpS-pP-T3e"/>
+                <constraint firstAttribute="bottom" secondItem="uKK-Yg-ytd" secondAttribute="bottom" constant="25" id="PsQ-SW-haZ"/>
+                <constraint firstAttribute="bottom" secondItem="Fc1-aQ-llc" secondAttribute="bottom" id="SeF-8X-m5q"/>
+                <constraint firstItem="SQJ-Fw-ds8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="14.66" id="ihp-2R-nL3"/>
+                <constraint firstItem="Fc1-aQ-llc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pWb-eU-c2U"/>
+            </constraints>
+            <connections>
+                <outlet property="bookmarkBtn" destination="SQJ-Fw-ds8" id="V2j-c6-ge5"/>
+                <outlet property="curationImg" destination="Fc1-aQ-llc" id="j4a-r4-dW4"/>
+                <outlet property="curationTitle" destination="uKK-Yg-ytd" id="has-V9-NKS"/>
+            </connections>
+            <point key="canvasLocation" x="138.1679389312977" y="19.718309859154932"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="icon_scrap_unselected" width="21" height="23"/>
+        <image name="icon_scrape" width="21" height="23"/>
+        <namedColor name="Background">
+            <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonBackground">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

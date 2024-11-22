@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class Onboarding2ViewController: UIViewController {
 
@@ -49,6 +50,9 @@ class Onboarding2ViewController: UIViewController {
     var isUlsanSelected = false
     var isJejuSelected = false
     var didTapCnt : Int = 0
+    
+    // instance
+    var onboardingData: OnboardingData!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -448,12 +452,56 @@ class Onboarding2ViewController: UIViewController {
             return
         }
         
-        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
+        // 선택된 지역 저장
+        var selectedRegion: String = ""
+        if isSeoulSelected { selectedRegion = "서울" }
+        if isGyeonggiSelected { selectedRegion = "경기" }
+        if isIncheonSelected { selectedRegion = "인천" }
+        if isGangwonSelected { selectedRegion = "강원" }
+        if isDaejeonSelected { selectedRegion = "대전" }
+        if isChungcheongSelected { selectedRegion = "충청" }
+        if isJeollaSelected { selectedRegion = "전라" }
+        if isGwangjuSelected { selectedRegion = "광주" }
+        if isGyeongsangSelected { selectedRegion = "경상" }
+        if isDaeguSelected { selectedRegion = "대구" }
+        if isBusanSelected { selectedRegion = "부산" }
+        if isUlsanSelected { selectedRegion = "울산" }
+        if isJejuSelected { selectedRegion = "제주" }
         
-        toHomeVC.modalPresentationStyle = .fullScreen
-        toHomeVC.transitioningDelegate = self
+        // 지역 이름을 UserDefaults에 저장
+        UserDefaults.standard.set(selectedRegion, forKey: "selectedRegion")
+        
+        // 서버로 데이터 전송
+        let preferencesRequest = PreferencesRequest(
+            categories: onboardingData.selectedCategories,
+            province: selectedRegion
+        )
+        
+        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
 
-        self.present(toHomeVC, animated: true, completion: nil)
+        // API 엔드포인트 설정
+        let endpoint = "/api/v1/users/me/preferences"
+        
+        APIClient.postRequest(endpoint: endpoint, parameters: preferencesRequest, token: token, headerType: .authorization) { (result: Result<PreferencesResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                print("Success: \(response.message)")
+                self.navigateToHome()
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // 홈 화면으로 이동
+    private func navigateToHome() {
+        guard let toHomeVC = storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
+        toHomeVC.modalPresentationStyle = .fullScreen
+        present(toHomeVC, animated: true, completion: nil)
     }
 }
 
