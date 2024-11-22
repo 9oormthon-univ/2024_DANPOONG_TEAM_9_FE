@@ -23,6 +23,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
 //    private var mapController: KMController?
     
     // 검색 필드 컨테이너 뷰와 내부 요소들
+    private let handleIconView = UIImageView()
     private let searchContainerView = UIView()
     private let searchIconView = UIImageView(image: UIImage(named: "icon_search"))
     private let searchTextField = UITextField()
@@ -200,10 +201,26 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     
     // 바텀 시트 내부 요소 설정
     private func setupBottomSheetContents() {
+        setupHandleIcon()
         setupSearchBar()
         setupFilterButtons()
         setupBottomBorder()
         setupStoreDetailsSection()
+    }
+    
+    // 바텀 시트 가장 위쪽 핸들 아이콘 설정
+    private func setupHandleIcon() {
+        handleIconView.image = UIImage(named: "icon_handle")
+        handleIconView.contentMode = .scaleAspectFit
+        handleIconView.translatesAutoresizingMaskIntoConstraints = false
+        bottomSheet.addSubview(handleIconView)
+        
+        NSLayoutConstraint.activate([
+            handleIconView.topAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 8),
+            handleIconView.centerXAnchor.constraint(equalTo: bottomSheet.centerXAnchor),
+            handleIconView.widthAnchor.constraint(equalToConstant: 50),
+            handleIconView.heightAnchor.constraint(equalToConstant: 8)
+        ])
     }
     
     // 바텀 시트 내부 검색 바
@@ -228,7 +245,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         searchContainerView.addSubview(clearButton)
         
         NSLayoutConstraint.activate([
-            searchContainerView.topAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 16),
+            searchContainerView.topAnchor.constraint(equalTo: handleIconView.bottomAnchor, constant: 16),
             searchContainerView.leadingAnchor.constraint(equalTo: bottomSheet.leadingAnchor, constant: 20),
             searchContainerView.trailingAnchor.constraint(equalTo: bottomSheet.trailingAnchor, constant: -20),
             searchContainerView.heightAnchor.constraint(equalToConstant: 36),
@@ -250,10 +267,6 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // searchField 클릭 시 다른 페이지로 이동하는 액션
     @objc private func searchFieldTapped() {
         print("move to search page")
-//        print(navigationController == nil) // true면 UINavigationController에 포함되어 있지 않음
-//
-//        let searchVC = SearchViewController() // SearchViewController 인스턴스 생성
-//        navigationController?.pushViewController(searchVC, animated: true) // 화면 이동
         // 스토리보드에서 SearchViewController 인스턴스 생성
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else {
@@ -478,6 +491,12 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         nameLabel.text = storeName
         nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
         nameLabel.textColor = UIColor(hex: "#111111")
+        
+        // Image Container에 Gesture Recognizer 추가
+        let nameLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(nameLabelTapped))
+        nameLabel.addGestureRecognizer(nameLabelTapGesture)
+        nameLabel.isUserInteractionEnabled = true
+
 
         // Status Label
         let statusLabel = UILabel()
@@ -536,6 +555,11 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         imageContainer.spacing = 8
         imageContainer.distribution = .fillEqually
         imageContainer.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Image Container에 Gesture Recognizer 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageContainerTapped))
+        imageContainer.addGestureRecognizer(tapGesture)
+        imageContainer.isUserInteractionEnabled = true
 
         for imageName in reviewsImage {
             if let image = UIImage(named: imageName) {
@@ -627,6 +651,42 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             print("북마크 삭제")
             // 북마크 삭제 로직 (예: 서버에 API 호출)
         }
+    }
+
+    @objc private func imageContainerTapped() {
+        print("Image container tapped")
+        
+        // 스토리보드에서 ReviewViewController 인스턴스 생성
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController else {
+            print("Failed to instantiate ReviewViewController")
+            return
+        }
+        
+        // 화면 전환 스타일 설정
+        reviewVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
+        reviewVC.modalTransitionStyle = .coverVertical // 애니메이션 스타일
+        
+        // 화면 전환 실행
+        self.present(reviewVC, animated: true, completion: nil)
+    }
+    
+    @objc private func nameLabelTapped() {
+        print("Name label tapped")
+        
+        // 스토리보드에서 ReviewViewController 인스턴스 생성
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else {
+            print("Failed to instantiate DetailViewController")
+            return
+        }
+        
+        // 화면 전환 스타일 설정
+        reviewVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
+        reviewVC.modalTransitionStyle = .coverVertical // 애니메이션 스타일
+        
+        // 화면 전환 실행
+        self.present(reviewVC, animated: true, completion: nil)
     }
 
     // 필터 버튼 생성 메서드
