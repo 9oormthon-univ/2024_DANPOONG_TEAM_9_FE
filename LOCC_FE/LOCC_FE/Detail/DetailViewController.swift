@@ -883,11 +883,11 @@ class DetailViewController: UIViewController {
         let sectionTitleLabel = UILabel()
         sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         sectionTitleLabel.text = "위치 안내"
-        sectionTitleLabel.textColor = .black
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        sectionTitleLabel.textColor = UIColor(hex: "1E1E1E")
+        sectionTitleLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
         sectionTitleLabel.textAlignment = .left
         
-        let sectionTitleLabelView = wrapWithMargins(view: sectionTitleLabel, top: 36, leading: 32, trailing: 32, bottom: 48)
+        let sectionTitleLabelView = wrapWithMargins(view: sectionTitleLabel, top: 24, leading: 20, trailing: 20, bottom: 0)
 
         // 2. 흰색 컨테이너
         let whiteContainerView = UIStackView()
@@ -899,8 +899,10 @@ class DetailViewController: UIViewController {
         whiteContainerView.layer.cornerRadius = 20
         whiteContainerView.clipsToBounds = true
         whiteContainerView.isLayoutMarginsRelativeArrangement = true
-        whiteContainerView.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        whiteContainerView.layoutMargins = UIEdgeInsets(top:16, left: 16, bottom: 16, right: 16)
 
+        let whiteContainerViewView = wrapWithMargins(view: whiteContainerView, top: 0, leading: 20, trailing: 20, bottom: 24)
+        
         // 2-1. 지도 이미지
         let mapImageView = UIImageView(image: UIImage(named: "image4")) // "map_sample" 에셋 이미지
         mapImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -926,13 +928,13 @@ class DetailViewController: UIViewController {
         let locationIcon = UIImageView(image: UIImage(named: "icon_location_orange"))
         locationIcon.translatesAutoresizingMaskIntoConstraints = false
         locationIcon.contentMode = .scaleAspectFit
-        locationIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        locationIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        locationIcon.widthAnchor.constraint(equalToConstant: 10).isActive = true
+        locationIcon.heightAnchor.constraint(equalToConstant: 13).isActive = true
 
         let addressLabel = UILabel()
         addressLabel.text = "경기 양주시 광사로 145 로슈아커피"
-        addressLabel.textColor = .black
-        addressLabel.font = UIFont.systemFont(ofSize: 14)
+        addressLabel.textColor = UIColor(hex: "333332")
+        addressLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
         addressLabel.numberOfLines = 0
 
         addressStackView.addArrangedSubview(locationIcon)
@@ -942,12 +944,13 @@ class DetailViewController: UIViewController {
         let directionButton = UIButton(type: .system)
         directionButton.setTitle("길찾기", for: .normal)
         directionButton.setTitleColor(.white, for: .normal)
-        directionButton.backgroundColor = UIColor(red: 0.27, green: 0.36, blue: 0.20, alpha: 1.0) // 녹색
-        directionButton.layer.cornerRadius = 8
+        directionButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 12) // 폰트 이름과 크기 설정
+        directionButton.backgroundColor = UIColor(hex: "365C16") // 녹색
+        directionButton.layer.cornerRadius = 12
         directionButton.clipsToBounds = true
         directionButton.translatesAutoresizingMaskIntoConstraints = false
-        directionButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        directionButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        directionButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
+        directionButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
 
         // 주소지 + 버튼 추가
         addressAndButtonStackView.addArrangedSubview(addressStackView)
@@ -959,8 +962,8 @@ class DetailViewController: UIViewController {
         whiteContainerView.addArrangedSubview(addressAndButtonStackView)
 
         // 섹션에 추가
-        locationSectionStackView.addArrangedSubview(sectionTitleLabel)
-        locationSectionStackView.addArrangedSubview(whiteContainerView)
+        locationSectionStackView.addArrangedSubview(sectionTitleLabelView)
+        locationSectionStackView.addArrangedSubview(whiteContainerViewView)
 
         return locationSectionStackView
     }
@@ -971,16 +974,18 @@ class DetailViewController: UIViewController {
         nearbyPlacesStackView.translatesAutoresizingMaskIntoConstraints = false
         nearbyPlacesStackView.axis = .vertical
         nearbyPlacesStackView.spacing = 16
-        nearbyPlacesStackView.backgroundColor = .lightGray
+        nearbyPlacesStackView.backgroundColor = UIColor(hex: "F8F7F0")
         nearbyPlacesStackView.alignment = .fill
 
         // 1. "주변 가볼만한 곳" 제목 레이블
         let sectionTitleLabel = UILabel()
         sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         sectionTitleLabel.text = "주변 가볼만한 곳"
-        sectionTitleLabel.textColor = .black
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        sectionTitleLabel.textColor = UIColor(hex: "1E1E1E")
+        sectionTitleLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
         sectionTitleLabel.textAlignment = .left
+        
+        let sectionTitleLabelView = wrapWithMargins(view: sectionTitleLabel, top: 24, leading: 20, trailing: 20, bottom: 0)
 
         // 2. 스크롤 뷰
         let scrollView = UIScrollView()
@@ -991,7 +996,7 @@ class DetailViewController: UIViewController {
         let contentView = UIStackView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.axis = .vertical
-        contentView.spacing = 16
+        contentView.spacing = 0
         contentView.alignment = .fill
         scrollView.addSubview(contentView)
 
@@ -1043,7 +1048,7 @@ class DetailViewController: UIViewController {
         }
 
         // 6. 섹션에 추가
-        nearbyPlacesStackView.addArrangedSubview(sectionTitleLabel)
+        nearbyPlacesStackView.addArrangedSubview(sectionTitleLabelView)
         nearbyPlacesStackView.addArrangedSubview(scrollView)
 
         // 스크롤뷰의 높이 고정 (화면 크기에 따라 조정 가능)
@@ -1068,17 +1073,17 @@ class DetailViewController: UIViewController {
 
         let cardView = UIView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.layer.cornerRadius = 12
         cardView.layer.borderWidth = 1
-        cardView.layer.borderColor = UIColor.lightGray.cgColor
+        cardView.layer.borderColor = UIColor(hex: "111111").withAlphaComponent(0.1).cgColor
+        cardView.layer.borderWidth = 0.5
         cardView.layer.masksToBounds = true
         cardView.backgroundColor = .white
 
         // 1. 상단 레이블 + 북마크 버튼
         let nameLabel = UILabel()
         nameLabel.text = storeName
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        nameLabel.textColor = .black
+        nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
+        nameLabel.textColor = UIColor(hex: "111111")
 
         let bookmarkButton = UIButton(type: .custom)
         bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal)
@@ -1092,25 +1097,25 @@ class DetailViewController: UIViewController {
 
         // 북마크 버튼 크기 설정
         NSLayoutConstraint.activate([
-            bookmarkButton.widthAnchor.constraint(equalToConstant: 24),
-            bookmarkButton.heightAnchor.constraint(equalToConstant: 24)
+            bookmarkButton.widthAnchor.constraint(equalToConstant: 21),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: 25)
         ])
 
         // 2. 상태 + 종료 시간 (왼쪽 정렬)
         let statusLabel = UILabel()
         statusLabel.text = isClosed
-        statusLabel.font = UIFont.systemFont(ofSize: 14)
-        statusLabel.textColor = .systemGreen
+        statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
+        statusLabel.textColor = UIColor(hex: "3F8008")
 
         let closeTimeLabel = UILabel()
         closeTimeLabel.text = closeTime
-        closeTimeLabel.font = UIFont.systemFont(ofSize: 12)
-        closeTimeLabel.textColor = .gray
+        closeTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
+        closeTimeLabel.textColor = UIColor(hex: "696969")
 
         let statusStackView = UIStackView(arrangedSubviews: [statusLabel, closeTimeLabel])
         statusStackView.axis = .horizontal
         statusStackView.spacing = 8
-        statusStackView.alignment = .leading
+        statusStackView.alignment = .trailing
         statusStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let statusContainer = UIView()
@@ -1125,20 +1130,25 @@ class DetailViewController: UIViewController {
         ])
 
         // 3. 별점과 후기 (왼쪽 정렬)
+        let starIcon = UIImageView(image: UIImage(named: "icon_star"))
+        starIcon.translatesAutoresizingMaskIntoConstraints = false
+        starIcon.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        starIcon.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        
         let starLabel = UILabel()
-        starLabel.text = "★ \(starRate)"
-        starLabel.font = UIFont.systemFont(ofSize: 14)
-        starLabel.textColor = .orange
+        starLabel.text = "\(starRate)"
+        starLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
+        starLabel.textColor = UIColor(hex: "696969")
 
         let reviewNumLabel = UILabel()
         reviewNumLabel.text = "(\(reviewNum))"
-        reviewNumLabel.font = UIFont.systemFont(ofSize: 12)
-        reviewNumLabel.textColor = .gray
+        reviewNumLabel.font = UIFont(name: "Pretendard-Regular", size: 10)
+        reviewNumLabel.textColor = UIColor(hex: "9C9B97")
 
-        let starStackView = UIStackView(arrangedSubviews: [starLabel, reviewNumLabel])
+        let starStackView = UIStackView(arrangedSubviews: [starIcon, starLabel, reviewNumLabel])
         starStackView.axis = .horizontal
         starStackView.spacing = 4
-        starStackView.alignment = .leading
+        starStackView.alignment = .center
         starStackView.translatesAutoresizingMaskIntoConstraints = false
 
         let starContainer = UIView()
@@ -1170,13 +1180,15 @@ class DetailViewController: UIViewController {
         NSLayoutConstraint.activate([
             imageStackView.heightAnchor.constraint(equalToConstant: 154)
         ])
+        
+        let imageStackViewView = wrapWithMargins(view: imageStackView, top: 8, leading: 0, trailing: 0, bottom: 12)
 
         // 5. 설명
         let descriptionLabel = UILabel()
         descriptionLabel.text = reviewsSummary
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 14)
         descriptionLabel.numberOfLines = 2
-        descriptionLabel.textColor = .gray
+        descriptionLabel.textColor = UIColor(hex: "575754")
 
         let reviewIcon = UIImageView(image: UIImage(named: "icon_review"))
         reviewIcon.contentMode = .scaleAspectFit
@@ -1184,27 +1196,28 @@ class DetailViewController: UIViewController {
 
         let descriptionStackView = UIStackView(arrangedSubviews: [reviewIcon, descriptionLabel])
         descriptionStackView.axis = .horizontal
-        descriptionStackView.spacing = 4
-        descriptionStackView.alignment = .center
+        descriptionStackView.spacing = 12
+        descriptionStackView.alignment = .leading
 
         // 리뷰 아이콘 크기 설정
         NSLayoutConstraint.activate([
-            reviewIcon.widthAnchor.constraint(equalToConstant: 16),
-            reviewIcon.heightAnchor.constraint(equalToConstant: 16)
+            reviewIcon.widthAnchor.constraint(equalToConstant: 20),
+            reviewIcon.heightAnchor.constraint(equalToConstant: 20)
         ])
 
         // 6. 전체 스택 뷰
-        let verticalStackView = UIStackView(arrangedSubviews: [nameStackView, statusContainer, starContainer, imageStackView, descriptionStackView])
+        let verticalStackView = UIStackView(arrangedSubviews: [nameStackView, statusContainer, starContainer, imageStackViewView, descriptionStackView])
         verticalStackView.axis = .vertical
-        verticalStackView.spacing = 8
+        verticalStackView.spacing = 4
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
 
         cardView.addSubview(verticalStackView)
+        
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
-            verticalStackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-            verticalStackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
-            verticalStackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16)
+            verticalStackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 28),
+            verticalStackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
+            verticalStackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -30),
+            verticalStackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -28)
         ])
 
         return cardView
