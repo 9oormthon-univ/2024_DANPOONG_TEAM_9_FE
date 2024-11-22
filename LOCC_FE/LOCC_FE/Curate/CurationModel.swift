@@ -7,7 +7,6 @@
 
 import Foundation
 
-// 응답 모델
 struct CurationDetailResponse: Codable {
     let code: String
     let data: CurationDetailData
@@ -15,7 +14,8 @@ struct CurationDetailResponse: Codable {
 
 struct CurationDetailData: Codable {
     let curationInfo: CurationInfo
-    let stores: [CurationStore] // 이름 변경
+    let stores: [CurationStore]
+    var bookmarked: Bool // 여기 추가
 }
 
 struct CurationInfo: Codable {
@@ -25,24 +25,21 @@ struct CurationInfo: Codable {
     let imageUrl: String
 }
 
-struct CurationStore: Codable { // 이름 변경
+struct CurationStore: Codable {
     let storeInfo: StoreInfo
-    var isBookmarked: Bool
-    let distance: Int
-    let summary: String
+    let summary: String?
+    var bookmarked: Bool // 수정: API 응답에서의 "bookmarked"와 매칭
 }
 
 struct StoreInfo: Codable {
     let storeId: Int
     let name: String
     let category: String
-    let province: String
-    let city: String
-    let imageUrl: String
+    let images: [String]
     let rating: Double
     let reviewCount: Int
-    let openTime: String? // null 값을 허용
-    let closeTime: String? // null 값을 허용
+    let openTime: String?
+    let closeTime: String?
     let businessStatus: String
 }
 

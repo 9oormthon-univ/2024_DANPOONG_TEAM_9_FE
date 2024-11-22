@@ -73,6 +73,7 @@
                                 <rect key="frame" x="308" y="25" width="21" height="23"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="icon_scrap_unselected"/>
+                                <state key="selected" image="icon_scrape"/>
                                 <connections>
                                     <action selector="bookmarkTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="WVZ-ga-sId"/>
                                 </connections>
@@ -112,7 +113,7 @@
 가장 아름다운 모습을 뽐내어 가을에 꼭 방문해야 
 하는 공간이에요.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" name="SegmentedGray"/>
+                                <color key="textColor" name="TimeLabel"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -128,6 +129,7 @@
                             <constraint firstItem="Fzy-vw-USp" firstAttribute="leading" secondItem="puH-cP-Rx5" secondAttribute="leading" id="ZeY-Hb-1qB"/>
                             <constraint firstAttribute="trailing" secondItem="DLb-zM-oVq" secondAttribute="trailing" constant="24" id="bRT-Ca-hdk"/>
                             <constraint firstItem="RcZ-KZ-3AY" firstAttribute="leading" secondItem="Fzy-vw-USp" secondAttribute="leading" id="dHi-hz-LdS"/>
+                            <constraint firstAttribute="trailing" secondItem="6d3-Fy-eum" secondAttribute="trailing" constant="22.670000000000002" id="eHi-ci-an4"/>
                             <constraint firstItem="VPn-WO-U7d" firstAttribute="centerY" secondItem="Hdl-Mm-ISo" secondAttribute="centerY" id="fzp-WF-5JA"/>
                             <constraint firstItem="6d3-Fy-eum" firstAttribute="top" secondItem="dHG-Ti-3uq" secondAttribute="bottom" constant="10" id="gMc-sE-LhD"/>
                             <constraint firstItem="hk4-tR-Y19" firstAttribute="centerY" secondItem="Fzy-vw-USp" secondAttribute="centerY" id="hev-Pt-16B"/>
@@ -172,6 +174,7 @@
     </objects>
     <resources>
         <image name="icon_scrap_unselected" width="21" height="23"/>
+        <image name="icon_scrape" width="21" height="23"/>
         <image name="icon_star" width="12" height="11"/>
         <image name="icon_“" width="45" height="33"/>
         <namedColor name="Background">

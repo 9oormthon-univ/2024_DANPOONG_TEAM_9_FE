@@ -131,6 +131,18 @@ class HomeViewController: UIViewController {
         watchReviewLabel.font = UIFont(name: "Pretendard-Medium", size: 15)
         watchReviewLabel.textColor = UIColor.subLabel
     }
+    
+    private func splitSubtitleIntoTwoLines(_ subtitle: String) -> String {
+        let words = subtitle.split(separator: " ")
+        let midpoint = words.count / 2
+        
+        guard midpoint > 0 else { return subtitle }
+        
+        let firstLine = words.prefix(midpoint).joined(separator: " ")
+        let secondLine = words.suffix(from: midpoint).joined(separator: " ")
+        
+        return "\(firstLine)\n\(secondLine)"
+    }
 
     private func setupBtn() {
         // 버튼 스타일 설정
@@ -236,12 +248,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             let curation = curations[indexPath.item]
             cell.curateTitle.text = curation.title
-            cell.curateSubTitle.text = curation.subtitle
+            
+            // subtitle을 두 줄로 나누어 설정
+            let formattedSubtitle = splitSubtitleIntoTwoLines(curation.subtitle)
+            cell.curateSubTitle.text = formattedSubtitle
+            
             cell.curateImg.load(from: curation.imageUrl)
 
             // 스타일 적용
             cell.curateTitle.font = UIFont(name: "Pretendard-Bold", size: 24)
             cell.curateSubTitle.font = UIFont(name: "Pretendard-Regular", size: 16)
+            cell.curateSubTitle.lineBreakMode = .byWordWrapping
+            cell.curateSubTitle.numberOfLines = 2
             cell.curateImg.layer.cornerRadius = 32
             cell.curateImg.layer.masksToBounds = true
 
@@ -395,14 +413,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension UIImageView {
     func load(from urlString: String?) {
         guard let urlString = urlString, let url = URL(string: urlString) else {
-            self.image = nil // 기본 이미지를 설정하거나 초기화
+            self.image = UIImage(named: "placeholder_image") // 기본 이미지 설정
             return
         }
 
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    self?.image = image
+                    self.image = image
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.image = UIImage(named: "placeholder_image") // 로드 실패 시 기본 이미지
                 }
             }
         }

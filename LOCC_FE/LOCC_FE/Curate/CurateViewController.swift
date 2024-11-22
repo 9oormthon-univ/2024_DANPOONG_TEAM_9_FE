@@ -28,59 +28,83 @@ class CurateViewController: UIViewController {
     // instance
     let curationLayout = UICollectionViewFlowLayout()
     var curationId: Int?
-    private var stores: [CurationStore] = [] // 서버에서 가져올 가게 데이터 배열
-    
+    private var stores: [CurationStore] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         registerNib()
         fetchCurationDetail()
-        
+
         self.curationView.delegate = self
         self.curationView.dataSource = self
     }
-    
+
     private func setupUI() {
         curationTitle.font = UIFont(name: "Pretendard-Bold", size: 28)
         curationSubTitle.font = UIFont(name: "Pretendard-Regular", size: 18)
+        curationSubTitle.lineBreakMode = .byWordWrapping
+        curationSubTitle.numberOfLines = 2
         content.font = UIFont(name: "Pretendard-Regular", size: 16)
     }
     
+    private func splitSubtitleIntoTwoLines(_ subtitle: String) -> String {
+        let words = subtitle.split(separator: " ")
+        let midpoint = words.count / 2
+        
+        guard midpoint > 0 else { return subtitle }
+        
+        let firstLine = words.prefix(midpoint).joined(separator: " ")
+        let secondLine = words.suffix(from: midpoint).joined(separator: " ")
+        
+        return "\(firstLine)\n\(secondLine)"
+    }
+
     private func setupLayout() {
         curationLayout.scrollDirection = .vertical
         curationView.collectionViewLayout = curationLayout
     }
-    
+
     private func registerNib() {
         let curationNib = UINib(nibName: "CurationCollectionViewCell", bundle: nil)
         curationView.register(curationNib, forCellWithReuseIdentifier: "curationCell")
     }
-    
+
     private func fetchCurationDetail() {
-        guard let curationId = curationId else { return }
-        
-        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let curationId = curationId else {
+            print("Error: curationId is nil")
+            return
+        }
+
         guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
             print("Error: No access token found.")
             return
         }
-        
-        // API 엔드포인트 설정
+
         let endpoint = "/api/v1/curations/\(curationId)"
-        
-        // GET 요청 호출
+
         APIClient.getRequest(endpoint: endpoint, parameters: nil, token: token, headerType: .authorization) { (result: Result<CurationDetailResponse, AFError>) in
             switch result {
             case .success(let response):
+                print("API Success: \(response)")
+
                 let curationInfo = response.data.curationInfo
                 self.stores = response.data.stores
-                
+                let isBookmarked = response.data.bookmarked // bookmarked 상태 가져오기
+
                 DispatchQueue.main.async {
-                    // UI 업데이트
                     self.curationTitle.text = curationInfo.title
-                    self.curationSubTitle.text = curationInfo.subtitle
+
+                    let formattedSubtitle = self.splitSubtitleIntoTwoLines(curationInfo.subtitle)
+                    self.curationSubTitle.text = formattedSubtitle
+
                     self.curateImg.load(from: curationInfo.imageUrl)
                     self.curationView.reloadData()
+
+                    // 북마크 버튼 상태 업데이트
+                    self.bookmarkBtn.isSelected = isBookmarked
+                    let bookmarkImage = isBookmarked ? "icon_scrap" : "icon_scrap_unselected"
+                    self.bookmarkBtn.setImage(UIImage(named: bookmarkImage), for: .normal)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -89,39 +113,35 @@ class CurateViewController: UIViewController {
             }
         }
     }
-    
-    private func toggleBookmark(for storeId: Int, at indexPath: IndexPath) {
+
+    private func toggleStoreBookmark(for storeId: Int, at indexPath: IndexPath) {
         guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
             print("Error: No access token found.")
             return
         }
 
         // API 엔드포인트 설정
-        let endpoint = "/api/v1/curations/\(storeId)/bookmark/toggle"
+        let endpoint = "/api/v1/stores/\(storeId)/bookmark/toggle"
 
         // PUT 요청 호출
         APIClient.putRequest(endpoint: endpoint, token: token, headerType: .authorization) { (result: Result<BookmarkToggleResponse, AFError>) in
             switch result {
             case .success(let response):
-                // 응답 데이터 처리
                 let isBookmarked = response.data.bookmarked
                 print("Bookmark toggled successfully: \(isBookmarked)")
 
-                // 데이터 업데이트
                 DispatchQueue.main.async {
-                    // 상태 업데이트 및 즉시 UI 반영
-                    self.stores[indexPath.row].isBookmarked = isBookmarked
+                    self.stores[indexPath.row].bookmarked = isBookmarked
 
+                    // 셀을 업데이트
                     if let cell = self.curationView.cellForItem(at: indexPath) as? CurationCollectionViewCell {
                         cell.bookmarkBtn.isSelected = isBookmarked
-                        cell.bookmarkBtn.setImage(
-                            UIImage(named: isBookmarked ? "icon_scrap" : "icon_scrap_unselected"),
-                            for: .normal
-                        )
+                        let newImageName = isBookmarked ? "icon_scrap" : "icon_scrap_unselected"
+                        cell.bookmarkBtn.setImage(UIImage(named: newImageName), for: .normal)
+                        print("Bookmark button updated with image: \(newImageName)")
                     }
                 }
             case .failure(let error):
-                // 에러 디버깅
                 print("Error toggling bookmark: \(error.localizedDescription)")
             }
         }
@@ -138,56 +158,45 @@ extension CurateViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "curationCell", for: indexPath) as? CurationCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+
         let store = stores[indexPath.item]
-        
-        // 데이터 설정
-        cell.curationImg1.load(from: store.storeInfo.imageUrl)
+
+        let images = store.storeInfo.images
+        let firstImage = images.first ?? ""
+        let secondImage = images.count > 1 ? images[1] : ""
+
+        cell.curationImg1.load(from: firstImage)
+        cell.curationImg2.load(from: secondImage)
+
         cell.storeName.text = store.storeInfo.name
-        cell.summary.text = store.summary
         cell.category.text = store.storeInfo.category
         cell.rating.text = "\(store.storeInfo.rating)"
         cell.reviewCount.text = "(\(store.storeInfo.reviewCount))"
         cell.onSale.text = store.storeInfo.businessStatus
         cell.closeTime.text = store.storeInfo.closeTime ?? "N/A"
-        
-        // 북마크 버튼 상태 설정
-        cell.bookmarkBtn.isSelected = store.isBookmarked
-        cell.bookmarkBtn.setImage(UIImage(named: "icon_scrap"), for: .selected) // 북마크된 상태 이미지
-        cell.bookmarkBtn.setImage(UIImage(named: "icon_scrap_unselected"), for: .normal)    // 북마크되지 않은 상태 이미지
-        
-        cell.toggleBookmark = { [weak self] in
-        guard let self = self else { return }
-        print("Toggling bookmark for Store ID: \(store.storeInfo.storeId)")
 
-        // API 호출 및 상태 업데이트
-        self.toggleBookmark(for: store.storeInfo.storeId, at: indexPath)
-    }
-        
-        // UI 스타일 설정
-        cell.category.layer.cornerRadius = 9
-        cell.category.layer.borderWidth = 1
-        cell.category.layer.borderColor = UIColor.category.cgColor
-        cell.category.layer.masksToBounds = true
-        cell.category.font = UIFont(name: "Pretendard-Medium", size: 12)
-        
-        cell.bookmarkBtn.setImage(UIImage(named: "icon_scrape"), for: .selected)
-        cell.bookmarkBtn.setImage(UIImage(named: "icon_scrap_unselected"), for: .normal)
-        
-        cell.storeName.font = UIFont(name: "Pretendard-Bold", size: 18)
-        cell.onSale.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        cell.closeTime.font = UIFont(name: "Pretendard-Regular", size: 10)
-        cell.rating.font = UIFont(name: "Pretendard-Regular", size: 12)
-        cell.reviewCount.font = UIFont(name: "Pretendard-Regular", size: 9)
+        cell.configureSummaryText(store.summary ?? "설명 없음")
         cell.summary.font = UIFont(name: "Pretendard-Regular", size: 16)
-        
+
+        cell.bookmarkBtn.isSelected = store.bookmarked
+        if store.bookmarked {
+            cell.bookmarkBtn.setImage(UIImage(named: "icon_scrap"), for: .normal)
+        } else {
+            cell.bookmarkBtn.setImage(UIImage(named: "icon_scrap_unselected"), for: .normal)
+        }
+
+        cell.toggleBookmark = { [weak self] in
+            guard let self = self else { return }
+            self.toggleStoreBookmark(for: store.storeInfo.storeId, at: indexPath)
+        }
+
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewHeight = collectionView.bounds.height
-        let cellHeight = (collectionViewHeight - (20 * 6)) / 5 // 20은 셀 간격
-        return CGSize(width: collectionView.bounds.width - 40, height: cellHeight) // 40은 좌우 여백
+        let cellHeight = (collectionViewHeight - (20 * 6)) / 5
+        return CGSize(width: collectionView.bounds.width - 40, height: cellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
