@@ -43,7 +43,7 @@ class DetailViewController: UIViewController {
         ])
 
         // 섹션 배치
-        var previousSection: UIStackView?
+        var previousSection: UIView?
         for section in sections {
             NSLayoutConstraint.activate([
                 section.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -71,18 +71,33 @@ class DetailViewController: UIViewController {
     }
 
     // 1. 가게 기본 정보 섹션
-    private func createBasicInfoSection() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.backgroundColor = .red
-        stackView.layer.cornerRadius = 0
-        stackView.clipsToBounds = true
+    private func createBasicInfoSection() -> UIView {
+        // Main Container View
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = true
 
-        // 고정 높이 설정 (324)
-        stackView.heightAnchor.constraint(equalToConstant: 324).isActive = true
+        // 배경 이미지
+        let backgroundImageView = UIImageView()
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundImageView.image = UIImage(named: "image1") // 배경 이미지 이름
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.clipsToBounds = true
+        containerView.addSubview(backgroundImageView)
+
+        // 반투명 레이어
+        let overlayView = UIView()
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.3) // 검정색, 투명도 30%
+        containerView.addSubview(overlayView)
+
+        // 상세 정보 StackView
+        let contentStackView = UIStackView()
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.axis = .vertical
+        contentStackView.distribution = .fill
+        contentStackView.alignment = .fill
+        contentStackView.spacing = 16
 
         // Header Container View
         let headerContainerView = UIView()
@@ -121,34 +136,45 @@ class DetailViewController: UIViewController {
             headerStackView.topAnchor.constraint(equalTo: headerContainerView.topAnchor),
             headerStackView.leadingAnchor.constraint(equalTo: headerContainerView.leadingAnchor),
             headerStackView.trailingAnchor.constraint(equalTo: headerContainerView.trailingAnchor),
-            headerStackView.bottomAnchor.constraint(equalTo: headerContainerView.bottomAnchor, constant: -8),
             headerStackView.heightAnchor.constraint(equalToConstant: 44)
         ])
 
-        // Header Container View를 StackView에 추가
-        stackView.addArrangedSubview(headerContainerView)
+        contentStackView.addArrangedSubview(headerContainerView)
 
-        // Basic Info Container View
-        let basicInfoContainerView = UIView()
-        basicInfoContainerView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Vertical StackView for Basic Info
+        // Basic Info StackView
         let basicInfoStackView = UIStackView()
         basicInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         basicInfoStackView.axis = .vertical
-        basicInfoStackView.distribution = .fill
-        basicInfoStackView.alignment = .fill
+        basicInfoStackView.alignment = .leading
         basicInfoStackView.spacing = 8
 
-        // 가게 카테고리 Label
+        // 카테고리 Container
+        let categoryContainerView = UIView()
+        categoryContainerView.translatesAutoresizingMaskIntoConstraints = false
+        categoryContainerView.backgroundColor = .clear
+        categoryContainerView.layer.borderColor = UIColor.orange.cgColor
+        categoryContainerView.layer.borderWidth = 1
+        categoryContainerView.layer.cornerRadius = 12
+
         let categoryLabel = UILabel()
         categoryLabel.text = "카페"
-        categoryLabel.textAlignment = .left
-        categoryLabel.textColor = .white
+        categoryLabel.textAlignment = .center
+        categoryLabel.textColor = .orange
         categoryLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        basicInfoStackView.addArrangedSubview(categoryLabel)
+        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        // 가게 이름 Label
+        categoryContainerView.addSubview(categoryLabel)
+
+        NSLayoutConstraint.activate([
+            categoryLabel.topAnchor.constraint(equalTo: categoryContainerView.topAnchor, constant: 4),
+            categoryLabel.leadingAnchor.constraint(equalTo: categoryContainerView.leadingAnchor, constant: 8),
+            categoryLabel.trailingAnchor.constraint(equalTo: categoryContainerView.trailingAnchor, constant: -8),
+            categoryLabel.bottomAnchor.constraint(equalTo: categoryContainerView.bottomAnchor, constant: -4)
+        ])
+
+        basicInfoStackView.addArrangedSubview(categoryContainerView)
+
+        // 가게 이름
         let nameLabel = UILabel()
         nameLabel.text = "로슈아커피"
         nameLabel.textAlignment = .left
@@ -156,19 +182,12 @@ class DetailViewController: UIViewController {
         nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         basicInfoStackView.addArrangedSubview(nameLabel)
 
-        // Status Container View
-        let statusContainerView = UIView()
-        statusContainerView.translatesAutoresizingMaskIntoConstraints = false
-
-        // Horizontal StackView for Status
+        // 영업 상태
         let statusStackView = UIStackView()
         statusStackView.translatesAutoresizingMaskIntoConstraints = false
         statusStackView.axis = .horizontal
-        statusStackView.distribution = .fill
-        statusStackView.alignment = .center
         statusStackView.spacing = 8
 
-        // 영업중 Label
         let statusLabel = UILabel()
         statusLabel.text = "영업중"
         statusLabel.textAlignment = .left
@@ -176,7 +195,6 @@ class DetailViewController: UIViewController {
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         statusStackView.addArrangedSubview(statusLabel)
 
-        // 영업 종료 시간 Label
         let closingTimeLabel = UILabel()
         closingTimeLabel.text = "오후 10:00에 영업 종료"
         closingTimeLabel.textAlignment = .left
@@ -184,34 +202,34 @@ class DetailViewController: UIViewController {
         closingTimeLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
         statusStackView.addArrangedSubview(closingTimeLabel)
 
-        // Status StackView를 Status Container View에 추가
-        statusContainerView.addSubview(statusStackView)
+        basicInfoStackView.addArrangedSubview(statusStackView)
 
-        // Status StackView 레이아웃 설정
+        contentStackView.addArrangedSubview(basicInfoStackView)
+
+        containerView.addSubview(contentStackView)
+
+        // 레이아웃 제약 조건 설정
         NSLayoutConstraint.activate([
-            statusStackView.topAnchor.constraint(equalTo: statusContainerView.topAnchor),
-            statusStackView.leadingAnchor.constraint(equalTo: statusContainerView.leadingAnchor),
-            statusStackView.trailingAnchor.constraint(lessThanOrEqualTo: statusContainerView.trailingAnchor), // 왼쪽 정렬
-            statusStackView.bottomAnchor.constraint(equalTo: statusContainerView.bottomAnchor)
+            // 배경 이미지
+            backgroundImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+            // 반투명 오버레이
+            overlayView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            overlayView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+
+            // 상세 정보 컨텐츠
+            contentStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            contentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -28)
         ])
 
-        // Status Container View를 Basic Info StackView에 추가
-        basicInfoStackView.addArrangedSubview(statusContainerView)
-
-        // Basic Info StackView를 Basic Info Container View에 추가
-        basicInfoContainerView.addSubview(basicInfoStackView)
-
-        // Basic Info StackView 레이아웃 설정
-        NSLayoutConstraint.activate([
-            basicInfoStackView.leadingAnchor.constraint(equalTo: basicInfoContainerView.leadingAnchor),
-            basicInfoStackView.trailingAnchor.constraint(equalTo: basicInfoContainerView.trailingAnchor),
-            basicInfoStackView.bottomAnchor.constraint(equalTo: basicInfoContainerView.bottomAnchor)
-        ])
-
-        // Basic Info Container View를 StackView의 맨 아래에 추가
-        stackView.addArrangedSubview(basicInfoContainerView)
-
-        return stackView
+        return containerView
     }
 
     // 2. 후기 섹션
