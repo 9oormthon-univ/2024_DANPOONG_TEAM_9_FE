@@ -147,9 +147,41 @@ class CurateViewController: UIViewController {
         }
     }
     
+    private func toggleCurationBookmark() {
+        guard let curationId = curationId else {
+            print("Error: curationId is nil")
+            return
+        }
+
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
+
+        let endpoint = "/api/v1/curations/\(curationId)/bookmark/toggle"
+
+        // PUT 요청 호출
+        APIClient.putRequest(endpoint: endpoint, token: token, headerType: .authorization) { (result: Result<BookmarkToggleResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                let isBookmarked = response.data.bookmarked
+                print("Curation bookmark toggled successfully: \(isBookmarked)")
+
+                DispatchQueue.main.async {
+                    // 북마크 버튼 상태 업데이트
+                    self.bookmarkBtn.isSelected = isBookmarked
+                    let bookmarkImage = isBookmarked ? "icon_scrap" : "icon_scrap_unselected"
+                    self.bookmarkBtn.setImage(UIImage(named: bookmarkImage), for: .normal)
+                }
+            case .failure(let error):
+                print("Error toggling curation bookmark: \(error.localizedDescription)")
+            }
+        }
+    }
+    
     // action
     @IBAction func tapBack(_ sender: Any) {
-        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else { return }
+        guard let toHomeVC = self.storyboard?.instantiateViewController(withIdentifier: "CustomTabBarViewController") as? CustomTabBarViewController else { return }
             
         toHomeVC.modalPresentationStyle = .fullScreen
         
@@ -164,6 +196,7 @@ class CurateViewController: UIViewController {
     }
     
     @IBAction func tapBookmarkBtn(_ sender: Any) {
+        toggleCurationBookmark()
     }
 }
 
