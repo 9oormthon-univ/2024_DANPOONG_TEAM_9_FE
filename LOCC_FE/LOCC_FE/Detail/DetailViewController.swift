@@ -802,9 +802,249 @@ class DetailViewController: UIViewController {
 
     // 6. 주변 가볼만한 곳 섹션
     private func createNearbyPlacesSection() -> UIStackView {
-        return createSectionWithColor(.systemIndigo, title: "주변 가볼만한 곳 섹션")
+        let nearbyPlacesStackView = UIStackView()
+        nearbyPlacesStackView.translatesAutoresizingMaskIntoConstraints = false
+        nearbyPlacesStackView.axis = .vertical
+        nearbyPlacesStackView.spacing = 16
+        nearbyPlacesStackView.backgroundColor = .lightGray
+        nearbyPlacesStackView.alignment = .fill
+
+        // 1. "주변 가볼만한 곳" 제목 레이블
+        let sectionTitleLabel = UILabel()
+        sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        sectionTitleLabel.text = "주변 가볼만한 곳"
+        sectionTitleLabel.textColor = .black
+        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        sectionTitleLabel.textAlignment = .left
+
+        // 2. 스크롤 뷰
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = true
+
+        // 3. 콘텐츠 뷰
+        let contentView = UIStackView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.axis = .vertical
+        contentView.spacing = 16
+        contentView.alignment = .fill
+        scrollView.addSubview(contentView)
+
+        // 스크롤뷰와 콘텐츠 뷰의 제약 조건 설정
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // 폭 고정
+        ])
+
+        // 4. 가게 정보 카드 데이터
+        let storeData: [[String: Any]] = [
+            [
+                "storeName": "로슈아커피",
+                "isClosed": "영업중",
+                "closeTime": "오후 10:00에 영업 종료",
+                "star_rate": 4.40,
+                "reviewNum": 237,
+                "reviews_summary": "커다란 은행나무가 테라스에 있어 멋진 뷰와 함께 여유롭게 커피를 마실 수 있는 카페입니다.",
+                "reviews_image": ["image1", "image2"]
+            ],
+            [
+                "storeName": "몬슈아커피",
+                "isClosed": "영업중",
+                "closeTime": "오후 10:00에 영업 종료",
+                "star_rate": 4.30,
+                "reviewNum": 237,
+                "reviews_summary": "가을에 더욱 매력적인 분위기를 느낄 수 있는 카페입니다.",
+                "reviews_image": ["image3", "image4"]
+            ],
+            [
+                "storeName": "바리스타하우스",
+                "isClosed": "영업중",
+                "closeTime": "오후 11:00에 영업 종료",
+                "star_rate": 4.50,
+                "reviewNum": 237,
+                "reviews_summary": "도심 속에서 조용히 커피를 즐길 수 있는 공간입니다.",
+                "reviews_image": ["image5", "image6"]
+            ]
+        ]
+
+        // 5. 가게 정보 카드 생성
+        for data in storeData {
+            if let storeCard = createStoreCard(from: data) {
+                contentView.addArrangedSubview(storeCard)
+            }
+        }
+
+        // 6. 섹션에 추가
+        nearbyPlacesStackView.addArrangedSubview(sectionTitleLabel)
+        nearbyPlacesStackView.addArrangedSubview(scrollView)
+
+        // 스크롤뷰의 높이 고정 (화면 크기에 따라 조정 가능)
+        scrollView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+
+        return nearbyPlacesStackView
     }
-    
+
+    // 가게 정보 카드 생성
+    private func createStoreCard(from data: [String: Any]) -> UIView? {
+        guard
+            let storeName = data["storeName"] as? String,
+            let isClosed = data["isClosed"] as? String,
+            let closeTime = data["closeTime"] as? String,
+            let starRate = data["star_rate"] as? Double,
+            let reviewNum = data["reviewNum"] as? Int,
+            let reviewsSummary = data["reviews_summary"] as? String,
+            let reviewsImage = data["reviews_image"] as? [String]
+        else {
+            return nil
+        }
+
+        let cardView = UIView()
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.layer.cornerRadius = 12
+        cardView.layer.borderWidth = 1
+        cardView.layer.borderColor = UIColor.lightGray.cgColor
+        cardView.layer.masksToBounds = true
+        cardView.backgroundColor = .white
+
+        // 1. 상단 레이블 + 북마크 버튼
+        let nameLabel = UILabel()
+        nameLabel.text = storeName
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        nameLabel.textColor = .black
+
+        let bookmarkButton = UIButton(type: .custom)
+        bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal)
+        bookmarkButton.setImage(UIImage(named: "icon_scrape"), for: .selected)
+        bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
+
+        let nameStackView = UIStackView(arrangedSubviews: [nameLabel, bookmarkButton])
+        nameStackView.axis = .horizontal
+        nameStackView.spacing = 8
+        nameStackView.alignment = .center
+
+        // 북마크 버튼 크기 설정
+        NSLayoutConstraint.activate([
+            bookmarkButton.widthAnchor.constraint(equalToConstant: 24),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: 24)
+        ])
+
+        // 2. 상태 + 종료 시간 (왼쪽 정렬)
+        let statusLabel = UILabel()
+        statusLabel.text = isClosed
+        statusLabel.font = UIFont.systemFont(ofSize: 14)
+        statusLabel.textColor = .systemGreen
+
+        let closeTimeLabel = UILabel()
+        closeTimeLabel.text = closeTime
+        closeTimeLabel.font = UIFont.systemFont(ofSize: 12)
+        closeTimeLabel.textColor = .gray
+
+        let statusStackView = UIStackView(arrangedSubviews: [statusLabel, closeTimeLabel])
+        statusStackView.axis = .horizontal
+        statusStackView.spacing = 8
+        statusStackView.alignment = .leading
+        statusStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        let statusContainer = UIView()
+        statusContainer.translatesAutoresizingMaskIntoConstraints = false
+        statusContainer.addSubview(statusStackView)
+
+        NSLayoutConstraint.activate([
+            statusStackView.topAnchor.constraint(equalTo: statusContainer.topAnchor),
+            statusStackView.leadingAnchor.constraint(equalTo: statusContainer.leadingAnchor),
+            statusStackView.trailingAnchor.constraint(lessThanOrEqualTo: statusContainer.trailingAnchor), // 내부 콘텐츠 길이에 맞춤
+            statusStackView.bottomAnchor.constraint(equalTo: statusContainer.bottomAnchor)
+        ])
+
+        // 3. 별점과 후기 (왼쪽 정렬)
+        let starLabel = UILabel()
+        starLabel.text = "★ \(starRate)"
+        starLabel.font = UIFont.systemFont(ofSize: 14)
+        starLabel.textColor = .orange
+
+        let reviewNumLabel = UILabel()
+        reviewNumLabel.text = "(\(reviewNum))"
+        reviewNumLabel.font = UIFont.systemFont(ofSize: 12)
+        reviewNumLabel.textColor = .gray
+
+        let starStackView = UIStackView(arrangedSubviews: [starLabel, reviewNumLabel])
+        starStackView.axis = .horizontal
+        starStackView.spacing = 4
+        starStackView.alignment = .leading
+        starStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        let starContainer = UIView()
+        starContainer.translatesAutoresizingMaskIntoConstraints = false
+        starContainer.addSubview(starStackView)
+
+        NSLayoutConstraint.activate([
+            starStackView.topAnchor.constraint(equalTo: starContainer.topAnchor),
+            starStackView.leadingAnchor.constraint(equalTo: starContainer.leadingAnchor),
+            starStackView.trailingAnchor.constraint(lessThanOrEqualTo: starContainer.trailingAnchor), // 내부 콘텐츠 길이에 맞춤
+            starStackView.bottomAnchor.constraint(equalTo: starContainer.bottomAnchor)
+        ])
+
+        // 4. 이미지 뷰
+        let imageStackView = UIStackView()
+        imageStackView.axis = .horizontal
+        imageStackView.spacing = 8
+        imageStackView.distribution = .fillEqually
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        for imageName in reviewsImage {
+            let imageView = UIImageView(image: UIImage(named: imageName))
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = 8
+            imageStackView.addArrangedSubview(imageView)
+        }
+
+        NSLayoutConstraint.activate([
+            imageStackView.heightAnchor.constraint(equalToConstant: 154)
+        ])
+
+        // 5. 설명
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = reviewsSummary
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.numberOfLines = 2
+        descriptionLabel.textColor = .gray
+
+        let reviewIcon = UIImageView(image: UIImage(named: "icon_review"))
+        reviewIcon.contentMode = .scaleAspectFit
+        reviewIcon.translatesAutoresizingMaskIntoConstraints = false
+
+        let descriptionStackView = UIStackView(arrangedSubviews: [reviewIcon, descriptionLabel])
+        descriptionStackView.axis = .horizontal
+        descriptionStackView.spacing = 4
+        descriptionStackView.alignment = .center
+
+        // 리뷰 아이콘 크기 설정
+        NSLayoutConstraint.activate([
+            reviewIcon.widthAnchor.constraint(equalToConstant: 16),
+            reviewIcon.heightAnchor.constraint(equalToConstant: 16)
+        ])
+
+        // 6. 전체 스택 뷰
+        let verticalStackView = UIStackView(arrangedSubviews: [nameStackView, statusContainer, starContainer, imageStackView, descriptionStackView])
+        verticalStackView.axis = .vertical
+        verticalStackView.spacing = 8
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        cardView.addSubview(verticalStackView)
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
+            verticalStackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
+            verticalStackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
+            verticalStackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16)
+        ])
+
+        return cardView
+    }
+
     // 공통 섹션 생성
     private func createSectionWithColor(_ color: UIColor, title: String) -> UIStackView {
         let stackView = UIStackView()
@@ -815,13 +1055,6 @@ class DetailViewController: UIViewController {
         stackView.backgroundColor = color
         stackView.layer.cornerRadius = 0
         stackView.clipsToBounds = true
-        
-        let label = UILabel()
-        label.text = title
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        stackView.addArrangedSubview(label)
         
         return stackView
     }
