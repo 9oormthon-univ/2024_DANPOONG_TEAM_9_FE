@@ -453,24 +453,28 @@ class Onboarding2ViewController: UIViewController {
         }
         
         // 선택된 지역 저장
-        if isSeoulSelected { onboardingData.selectedRegion = "서울" }
-        if isGyeonggiSelected { onboardingData.selectedRegion = "경기" }
-        if isIncheonSelected { onboardingData.selectedRegion = "인천" }
-        if isGangwonSelected { onboardingData.selectedRegion = "강원" }
-        if isDaejeonSelected { onboardingData.selectedRegion = "대전" }
-        if isChungcheongSelected { onboardingData.selectedRegion = "충청" }
-        if isJeollaSelected { onboardingData.selectedRegion = "전라" }
-        if isGwangjuSelected { onboardingData.selectedRegion = "광주" }
-        if isGyeongsangSelected { onboardingData.selectedRegion = "경상" }
-        if isDaeguSelected { onboardingData.selectedRegion = "대구" }
-        if isBusanSelected { onboardingData.selectedRegion = "부산" }
-        if isUlsanSelected { onboardingData.selectedRegion = "울산" }
-        if isJejuSelected { onboardingData.selectedRegion = "제주" }
+        var selectedRegion: String = ""
+        if isSeoulSelected { selectedRegion = "서울" }
+        if isGyeonggiSelected { selectedRegion = "경기" }
+        if isIncheonSelected { selectedRegion = "인천" }
+        if isGangwonSelected { selectedRegion = "강원" }
+        if isDaejeonSelected { selectedRegion = "대전" }
+        if isChungcheongSelected { selectedRegion = "충청" }
+        if isJeollaSelected { selectedRegion = "전라" }
+        if isGwangjuSelected { selectedRegion = "광주" }
+        if isGyeongsangSelected { selectedRegion = "경상" }
+        if isDaeguSelected { selectedRegion = "대구" }
+        if isBusanSelected { selectedRegion = "부산" }
+        if isUlsanSelected { selectedRegion = "울산" }
+        if isJejuSelected { selectedRegion = "제주" }
+        
+        // 지역 이름을 UserDefaults에 저장
+        UserDefaults.standard.set(selectedRegion, forKey: "selectedRegion")
         
         // 서버로 데이터 전송
         let preferencesRequest = PreferencesRequest(
             categories: onboardingData.selectedCategories,
-            province: onboardingData.selectedRegion ?? ""
+            province: selectedRegion
         )
         
         // UserDefaults에서 서버 AccessToken 가져오기
@@ -482,7 +486,7 @@ class Onboarding2ViewController: UIViewController {
         // API 엔드포인트 설정
         let endpoint = "/api/v1/users/me/preferences"
         
-        APIClient.postRequest(endpoint: endpoint, parameters: preferencesRequest,token: token, headerType: .authorization) { (result: Result<PreferencesResponse, AFError>) in
+        APIClient.postRequest(endpoint: endpoint, parameters: preferencesRequest, token: token, headerType: .authorization) { (result: Result<PreferencesResponse, AFError>) in
             switch result {
             case .success(let response):
                 print("Success: \(response.message)")

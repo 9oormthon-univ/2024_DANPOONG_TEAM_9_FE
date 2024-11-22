@@ -54,6 +54,13 @@ class HomeViewController: UIViewController {
         
         fetchHome()
         
+        // 지역 이름 설정
+        if let selectedRegion = UserDefaults.standard.string(forKey: "selectedRegion") {
+            regionBtn.setTitle(selectedRegion, for: .normal)
+        } else {
+            regionBtn.setTitle("전국", for: .normal) // 기본값
+        }
+        
         self.curateView.delegate = self
         self.curateView.dataSource = self
         
