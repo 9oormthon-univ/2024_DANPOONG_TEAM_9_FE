@@ -111,7 +111,7 @@ class DetailViewController: UIViewController {
         headerStackView.alignment = .center
 
         let backButton = UIButton()
-        backButton.setImage(UIImage(named: "icon_back"), for: .normal)
+        backButton.setImage(UIImage(named: "icon_back_detail"), for: .normal)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
@@ -133,9 +133,9 @@ class DetailViewController: UIViewController {
 
         // Header StackView 레이아웃 설정
         NSLayoutConstraint.activate([
-            headerStackView.topAnchor.constraint(equalTo: headerContainerView.topAnchor),
-            headerStackView.leadingAnchor.constraint(equalTo: headerContainerView.leadingAnchor),
-            headerStackView.trailingAnchor.constraint(equalTo: headerContainerView.trailingAnchor),
+            headerStackView.topAnchor.constraint(equalTo: headerContainerView.topAnchor, constant: 16),
+            headerStackView.leadingAnchor.constraint(equalTo: headerContainerView.leadingAnchor, constant: 4),
+            headerStackView.trailingAnchor.constraint(equalTo: headerContainerView.trailingAnchor, constant: -4),
             headerStackView.heightAnchor.constraint(equalToConstant: 44)
         ])
 
@@ -146,21 +146,21 @@ class DetailViewController: UIViewController {
         basicInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         basicInfoStackView.axis = .vertical
         basicInfoStackView.alignment = .leading
-        basicInfoStackView.spacing = 8
+        basicInfoStackView.spacing = 6
 
         // 카테고리 Container
         let categoryContainerView = UIView()
         categoryContainerView.translatesAutoresizingMaskIntoConstraints = false
-        categoryContainerView.backgroundColor = .clear
-        categoryContainerView.layer.borderColor = UIColor.orange.cgColor
+        categoryContainerView.backgroundColor = UIColor(hex: "#FFB13C").withAlphaComponent(0.12)
+        categoryContainerView.layer.borderColor = UIColor(hex: "FA9F16").cgColor
         categoryContainerView.layer.borderWidth = 1
         categoryContainerView.layer.cornerRadius = 12
 
         let categoryLabel = UILabel()
         categoryLabel.text = "카페"
         categoryLabel.textAlignment = .center
-        categoryLabel.textColor = .orange
-        categoryLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        categoryLabel.textColor = UIColor(hex: "DC8F1C")
+        categoryLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
 
         categoryContainerView.addSubview(categoryLabel)
@@ -179,7 +179,7 @@ class DetailViewController: UIViewController {
         nameLabel.text = "로슈아커피"
         nameLabel.textAlignment = .left
         nameLabel.textColor = .white
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        nameLabel.font = UIFont(name: "Pretendard-Bold", size: 24)
         basicInfoStackView.addArrangedSubview(nameLabel)
 
         // 영업 상태
@@ -191,15 +191,15 @@ class DetailViewController: UIViewController {
         let statusLabel = UILabel()
         statusLabel.text = "영업중"
         statusLabel.textAlignment = .left
-        statusLabel.textColor = .white
-        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        statusLabel.textColor = UIColor(hex: "3F8008")
+        statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         statusStackView.addArrangedSubview(statusLabel)
 
         let closingTimeLabel = UILabel()
         closingTimeLabel.text = "오후 10:00에 영업 종료"
         closingTimeLabel.textAlignment = .left
         closingTimeLabel.textColor = .white
-        closingTimeLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        closingTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
         statusStackView.addArrangedSubview(closingTimeLabel)
 
         basicInfoStackView.addArrangedSubview(statusStackView)
@@ -240,29 +240,29 @@ class DetailViewController: UIViewController {
         reviewStackView.distribution = .fill
         reviewStackView.alignment = .fill
         reviewStackView.spacing = 8
-        reviewStackView.backgroundColor = .orange
+        reviewStackView.backgroundColor = UIColor(hex: "F8F7F0")
         reviewStackView.clipsToBounds = true
 
         // Section Title Container
         let sectionTitleContainer = UIView()
         sectionTitleContainer.translatesAutoresizingMaskIntoConstraints = false
-        sectionTitleContainer.heightAnchor.constraint(equalToConstant: 40).isActive = true // 컨테이너 높이 설정
+        sectionTitleContainer.heightAnchor.constraint(equalToConstant: 52).isActive = true // 컨테이너 높이 설정
 
         // 섹션 제목
         let sectionTitleLabel = UILabel()
         sectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         sectionTitleLabel.text = "후기"
         sectionTitleLabel.textAlignment = .left
-        sectionTitleLabel.textColor = .white
-        sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        sectionTitleLabel.textColor = UIColor(hex: "1E1E1E")
+        sectionTitleLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
 
         // Section Title Layout
         sectionTitleContainer.addSubview(sectionTitleLabel)
         NSLayoutConstraint.activate([
-            sectionTitleLabel.topAnchor.constraint(equalTo: sectionTitleContainer.topAnchor),
-            sectionTitleLabel.leadingAnchor.constraint(equalTo: sectionTitleContainer.leadingAnchor, constant: 16),
-            sectionTitleLabel.trailingAnchor.constraint(equalTo: sectionTitleContainer.trailingAnchor, constant: -16),
-            sectionTitleLabel.bottomAnchor.constraint(equalTo: sectionTitleContainer.bottomAnchor)
+            sectionTitleLabel.topAnchor.constraint(equalTo: sectionTitleContainer.topAnchor, constant: 0),
+            sectionTitleLabel.leadingAnchor.constraint(equalTo: sectionTitleContainer.leadingAnchor, constant: 24),
+            sectionTitleLabel.trailingAnchor.constraint(equalTo: sectionTitleContainer.trailingAnchor, constant: -24),
+            sectionTitleLabel.bottomAnchor.constraint(equalTo: sectionTitleContainer.bottomAnchor, constant: 32)
         ])
 
         // Section Title을 가장 위에 추가
@@ -273,8 +273,20 @@ class DetailViewController: UIViewController {
         reviewStackView.addArrangedSubview(ratingInfoStackView)
 
         // 가로 스크롤 가능한 후기 카드
+        let reviewCardContainer = UIView()
+        reviewCardContainer.translatesAutoresizingMaskIntoConstraints = false
+
         let reviewCardScrollView = createReviewCardScrollView()
-        reviewStackView.addArrangedSubview(reviewCardScrollView)
+        reviewCardContainer.addSubview(reviewCardScrollView)
+
+        NSLayoutConstraint.activate([
+            reviewCardScrollView.topAnchor.constraint(equalTo: reviewCardContainer.topAnchor, constant: 0), // 위쪽 마진
+            reviewCardScrollView.leadingAnchor.constraint(equalTo: reviewCardContainer.leadingAnchor, constant: 20), // 왼쪽 마진
+            reviewCardScrollView.trailingAnchor.constraint(equalTo: reviewCardContainer.trailingAnchor, constant: -0), // 오른쪽 마진
+            reviewCardScrollView.bottomAnchor.constraint(equalTo: reviewCardContainer.bottomAnchor, constant: -40) // 아래쪽 마진
+        ])
+
+        reviewStackView.addArrangedSubview(reviewCardContainer)
 
         return reviewStackView
     }
@@ -287,6 +299,10 @@ class DetailViewController: UIViewController {
         ratingInfoStackView.distribution = .fill
         ratingInfoStackView.alignment = .center
         ratingInfoStackView.spacing = 8
+        
+        // 마진 설정
+        ratingInfoStackView.isLayoutMarginsRelativeArrangement = true
+        ratingInfoStackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 4, right: 20)
 
         // 별점 Horizontal StackView
         let starStackView = UIStackView()
@@ -297,38 +313,38 @@ class DetailViewController: UIViewController {
         for _ in 1...5 {
             let starImageView = UIImageView(image: UIImage(named: "icon_star"))
             starImageView.translatesAutoresizingMaskIntoConstraints = false
-            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+            starImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
             starStackView.addArrangedSubview(starImageView)
         }
 
         // 별점 정보
         let ratingLabel = UILabel()
         ratingLabel.text = "4.4"
-        ratingLabel.textColor = .white
-        ratingLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        ratingLabel.textColor = UIColor(hex: "696969")
+        ratingLabel.font = UIFont(name: "Pretendard-Medium", size: 16)
 
         let maxRatingLabel = UILabel()
         maxRatingLabel.text = "/5"
-        maxRatingLabel.textColor = .white
-        maxRatingLabel.font = UIFont.systemFont(ofSize: 14)
+        maxRatingLabel.textColor = UIColor(hex: "9C9B97")
+        maxRatingLabel.font = UIFont(name: "Pretendard-Medium", size: 16)
 
         // 총 후기 개수
         let reviewCountLabel = UILabel()
         reviewCountLabel.text = "(273)"
-        reviewCountLabel.textColor = .white
-        reviewCountLabel.font = UIFont.systemFont(ofSize: 14)
+        reviewCountLabel.textColor = UIColor(hex: "9C9B97")
+        reviewCountLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
 
         // 전체 보기 버튼
         let viewAllButton = UIButton()
         viewAllButton.setTitle("전체보기 >", for: .normal)
-        viewAllButton.setTitleColor(.white, for: .normal)
-        viewAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        viewAllButton.setTitleColor(UIColor(hex: "9C9B97"), for: .normal)
+        viewAllButton.titleLabel?.font = UIFont(name: "Pretendard-Medium", size: 12)
 
         // 왼쪽 정보 스택
         let leftInfoStackView = UIStackView(arrangedSubviews: [starStackView, ratingLabel, maxRatingLabel, reviewCountLabel])
         leftInfoStackView.axis = .horizontal
-        leftInfoStackView.spacing = 8
+        leftInfoStackView.spacing = 6
         leftInfoStackView.alignment = .center
 
         // 오른쪽 버튼
@@ -377,7 +393,7 @@ class DetailViewController: UIViewController {
             )
             contentView.addArrangedSubview(cardView)
         }
-
+        
         return scrollView
     }
 
@@ -385,11 +401,11 @@ class DetailViewController: UIViewController {
     private func createReviewCard(profileImage: UIImage?, userName: String, rating: Double, reviewText: String, images: [UIImage]) -> UIView {
         let cardView = UIView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.backgroundColor = .darkGray
+        cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 8
         cardView.clipsToBounds = true
         cardView.heightAnchor.constraint(equalToConstant: 224).isActive = true
-        cardView.widthAnchor.constraint(equalToConstant: 240).isActive = true
+        cardView.widthAnchor.constraint(equalToConstant: 218).isActive = true
 
         let verticalStackView = UIStackView()
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -399,52 +415,96 @@ class DetailViewController: UIViewController {
         cardView.addSubview(verticalStackView)
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
-            verticalStackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-            verticalStackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
-            verticalStackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16)
+            verticalStackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 0),
+            verticalStackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 0),
+            verticalStackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -0),
+            verticalStackView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -0)
         ])
 
         // 1. 유저 정보 (프로필 사진, 유저 이름, 별점)
+        let userInfoContainer = UIView() // 컨테이너 뷰 생성
+        userInfoContainer.translatesAutoresizingMaskIntoConstraints = false
+        userInfoContainer.backgroundColor = UIColor(hex: "DCE7D4")
+
         let userInfoStackView = UIStackView()
+        userInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         userInfoStackView.axis = .horizontal
         userInfoStackView.spacing = 8
-        userInfoStackView.alignment = .center
+        userInfoStackView.alignment = .center // 콘텐츠 가운데 정렬
+        userInfoStackView.distribution = .equalSpacing // 내부 콘텐츠 간 간격 균등 배치
+        userInfoStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         let profileImageView = UIImageView(image: profileImage)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
-        profileImageView.layer.cornerRadius = 20
+        profileImageView.layer.cornerRadius = 14
         profileImageView.clipsToBounds = true
         profileImageView.contentMode = .scaleAspectFill
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 26).isActive = true
 
         let userNameLabel = UILabel()
         userNameLabel.text = userName
-        userNameLabel.textColor = .white
-        userNameLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        userNameLabel.textColor = UIColor(hex: "575754")
+        userNameLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
+        
+        // Profile Image와 User Name을 감싸는 StackView 생성
+        let profileInfoStackView = UIStackView()
+        profileInfoStackView.axis = .horizontal
+        profileInfoStackView.spacing = 8
+        profileInfoStackView.alignment = .center
+        profileInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Profile Image 추가
+        profileInfoStackView.addArrangedSubview(profileImageView)
+
+        // User Name 추가
+        profileInfoStackView.addArrangedSubview(userNameLabel)
 
         let starStackView = UIStackView()
         starStackView.axis = .horizontal
         starStackView.spacing = 2
+        starStackView.translatesAutoresizingMaskIntoConstraints = false
         for _ in 0..<5 {
             let starImageView = UIImageView(image: UIImage(named: "icon_star"))
             starImageView.translatesAutoresizingMaskIntoConstraints = false
-            starImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-            starImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+            starImageView.widthAnchor.constraint(equalToConstant: 14).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 14).isActive = true
             starStackView.addArrangedSubview(starImageView)
         }
 
-        userInfoStackView.addArrangedSubview(profileImageView)
-        userInfoStackView.addArrangedSubview(userNameLabel)
+        // StackView에 추가
+        userInfoStackView.addArrangedSubview(profileInfoStackView)
         userInfoStackView.addArrangedSubview(starStackView)
-        verticalStackView.addArrangedSubview(userInfoStackView)
 
-        // 2. 후기 텍스트와 아이콘
+        // userInfoStackView를 userInfoContainer에 추가
+        userInfoContainer.addSubview(userInfoStackView)
+
+        // userInfoStackView 제약 조건 설정 (마진 적용)
+        NSLayoutConstraint.activate([
+            userInfoStackView.topAnchor.constraint(equalTo: userInfoContainer.topAnchor, constant: 0), // 위쪽 마진
+            userInfoStackView.leadingAnchor.constraint(equalTo: userInfoContainer.leadingAnchor, constant: 12), // 왼쪽 마진
+            userInfoStackView.trailingAnchor.constraint(equalTo: userInfoContainer.trailingAnchor, constant: -12), // 오른쪽 마진
+            userInfoStackView.bottomAnchor.constraint(equalTo: userInfoContainer.bottomAnchor, constant: -4) // 아래쪽 마진
+        ])
+
+        // userInfoContainer를 verticalStackView에 추가
+        verticalStackView.addArrangedSubview(userInfoContainer)
+
+        // 내부 콘텐츠의 높이에 따라 컨테이너의 높이가 조정되도록 설정
+        NSLayoutConstraint.activate([
+            userInfoContainer.heightAnchor.constraint(equalTo: userInfoStackView.heightAnchor)
+        ])
+
+        // 2. 후기 텍스트와 아이콘 컨테이너
+        let reviewTextOuterContainer = UIView()
+        reviewTextOuterContainer.translatesAutoresizingMaskIntoConstraints = false
+        reviewTextOuterContainer.backgroundColor = .clear // 배경색 필요 시 설정
+
+        // 후기 텍스트와 아이콘을 감쌀 StackView
         let reviewTextContainer = UIStackView()
         reviewTextContainer.translatesAutoresizingMaskIntoConstraints = false
         reviewTextContainer.axis = .vertical
-        reviewTextContainer.spacing = 8
+        reviewTextContainer.spacing = 12
         reviewTextContainer.alignment = .leading
 
         // 아이콘 (icon_)
@@ -457,21 +517,41 @@ class DetailViewController: UIViewController {
         // 후기 텍스트
         let reviewTextLabel = UILabel()
         reviewTextLabel.text = reviewText
-        reviewTextLabel.textColor = .white
-        reviewTextLabel.font = UIFont.systemFont(ofSize: 14)
+        reviewTextLabel.textColor = UIColor(hex: "696969")
+        reviewTextLabel.font = UIFont(name: "Pretendard-Regular", size: 13)
         reviewTextLabel.numberOfLines = 0
-        reviewTextLabel.textAlignment = .center
+        reviewTextLabel.textAlignment = .left
 
-        // 컨테이너에 추가
+        // 컨테이너에 아이콘과 텍스트 추가
         reviewTextContainer.addArrangedSubview(reviewIcon)
         reviewTextContainer.addArrangedSubview(reviewTextLabel)
-        verticalStackView.addArrangedSubview(reviewTextContainer)
 
-        // 3. 이미지 컨테이너
+        // Outer Container에 StackView 추가
+        reviewTextOuterContainer.addSubview(reviewTextContainer)
+
+        // 제약 조건: Padding 추가
+        NSLayoutConstraint.activate([
+            reviewTextContainer.topAnchor.constraint(equalTo: reviewTextOuterContainer.topAnchor, constant: 12),
+            reviewTextContainer.leadingAnchor.constraint(equalTo: reviewTextOuterContainer.leadingAnchor, constant: 16),
+            reviewTextContainer.trailingAnchor.constraint(equalTo: reviewTextOuterContainer.trailingAnchor, constant: -16),
+            reviewTextContainer.bottomAnchor.constraint(equalTo: reviewTextOuterContainer.bottomAnchor, constant: -12)
+        ])
+
+        // Vertical StackView에 Outer Container 추가
+        verticalStackView.addArrangedSubview(reviewTextOuterContainer)
+
+
+        // 3. 이미지 컨테이너 Outer View
+        let imageOuterContainer = UIView()
+        imageOuterContainer.translatesAutoresizingMaskIntoConstraints = false
+        imageOuterContainer.backgroundColor = .clear // 배경색 필요 시 설정
+
+        // 이미지 컨테이너 StackView
         let imageStackView = UIStackView()
         imageStackView.axis = .horizontal
-        imageStackView.spacing = 8
+        imageStackView.spacing = 3
         imageStackView.alignment = .center
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
 
         for image in images {
             let imageView = UIImageView(image: image)
@@ -484,7 +564,20 @@ class DetailViewController: UIViewController {
             imageStackView.addArrangedSubview(imageView)
         }
 
-        verticalStackView.addArrangedSubview(imageStackView)
+        // Outer Container에 StackView 추가
+        imageOuterContainer.addSubview(imageStackView)
+
+        // 마진 설정
+        NSLayoutConstraint.activate([
+            imageStackView.topAnchor.constraint(equalTo: imageOuterContainer.topAnchor, constant: 0),
+            imageStackView.leadingAnchor.constraint(equalTo: imageOuterContainer.leadingAnchor, constant: 16),
+            imageStackView.trailingAnchor.constraint(equalTo: imageOuterContainer.trailingAnchor, constant: -16),
+            imageStackView.bottomAnchor.constraint(equalTo: imageOuterContainer.bottomAnchor, constant: -16)
+        ])
+
+        // Vertical StackView에 Outer Container 추가
+        verticalStackView.addArrangedSubview(imageOuterContainer)
+
 
         return cardView
     }
