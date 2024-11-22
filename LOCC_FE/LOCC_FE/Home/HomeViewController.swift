@@ -372,6 +372,23 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         return UIEdgeInsets.zero
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == curateView {
+            print("curateView 셀이 선택되었습니다.") // 디버깅용 로그
+            // 선택한 큐레이션의 ID 가져오기
+            let selectedCuration = curations[indexPath.item]
+            let storyboard = UIStoryboard(name: "Main", bundle: nil) // Storyboard 이름이 "Main"이라고 가정
+            guard let detailVC = storyboard.instantiateViewController(withIdentifier: "CurateViewController") as? CurateViewController else { return }
+            
+            // curationId 전달
+            detailVC.curationId = selectedCuration.curationId
+            
+            // 화면 전환 (모달 방식)
+            detailVC.modalPresentationStyle = .fullScreen // 전체 화면 모달
+            self.present(detailVC, animated: true, completion: nil)
+        }
+    }
 
 }
 

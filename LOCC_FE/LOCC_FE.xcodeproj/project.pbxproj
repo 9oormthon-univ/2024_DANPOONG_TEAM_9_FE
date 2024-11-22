@@ -24,8 +24,8 @@
 		8B5E0A972CEFAEC700A42F46 /* MyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5E0A962CEFAEC700A42F46 /* MyListTableViewCell.xib */; };
 		8B5E0A982CEFAEC700A42F46 /* MyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E0A952CEFAEC700A42F46 /* MyListTableViewCell.swift */; };
 		8B6736932CF061C3001B8CDE /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6736922CF061C3001B8CDE /* OnboardingModel.swift */; };
+		8B6736952CF08FFA001B8CDE /* CurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6736942CF08FFA001B8CDE /* CurationModel.swift */; };
 		8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EEE2CEF541C00810937 /* HomeModel.swift */; };
-		8B808EF32CEF9CFE00810937 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EF22CEF9CFE00810937 /* BookmarkModel.swift */; };
 		8B808EF52CEFA17000810937 /* CurationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EF42CEFA17000810937 /* CurationPageViewController.swift */; };
 		8B808EF72CEFA18000810937 /* MyListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B808EF62CEFA18000810937 /* MyListPageViewController.swift */; };
 		8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */; };
@@ -106,8 +106,8 @@
 		8B5E0A952CEFAEC700A42F46 /* MyListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListTableViewCell.swift; sourceTree = "<group>"; };
 		8B5E0A962CEFAEC700A42F46 /* MyListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyListTableViewCell.xib; sourceTree = "<group>"; };
 		8B6736922CF061C3001B8CDE /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
+		8B6736942CF08FFA001B8CDE /* CurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationModel.swift; sourceTree = "<group>"; };
 		8B808EEE2CEF541C00810937 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
-		8B808EF22CEF9CFE00810937 /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		8B808EF42CEFA17000810937 /* CurationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationPageViewController.swift; sourceTree = "<group>"; };
 		8B808EF62CEFA18000810937 /* MyListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListPageViewController.swift; sourceTree = "<group>"; };
 		8B8C02CC2CEB5B9B007F86E6 /* CustomTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransition.swift; sourceTree = "<group>"; };
@@ -342,7 +342,7 @@
 				8BF053192CED831400A86F2E /* CurateViewController.swift */,
 				8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */,
 				8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */,
-				8B808EF22CEF9CFE00810937 /* BookmarkModel.swift */,
+				8B6736942CF08FFA001B8CDE /* CurationModel.swift */,
 			);
 			path = Curate;
 			sourceTree = "<group>";
@@ -633,6 +633,7 @@
 				8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */,
 				8B0E7A372CEFA71F00603FBC /* BookmarkCollectionViewCell.swift in Sources */,
 				8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */,
+				8B6736952CF08FFA001B8CDE /* CurationModel.swift in Sources */,
 				8B6736932CF061C3001B8CDE /* OnboardingModel.swift in Sources */,
 				8B808EEF2CEF541C00810937 /* HomeModel.swift in Sources */,
 				8B808EF72CEFA18000810937 /* MyListPageViewController.swift in Sources */,
@@ -654,7 +655,6 @@
 				8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */,
 				8B11EFB92CEB2AF0003F92AC /* SceneDelegate.swift in Sources */,
 				8BCCD26E2CED787400F0391C /* AdCollectionViewCell.swift in Sources */,
-				8B808EF32CEF9CFE00810937 /* BookmarkModel.swift in Sources */,
 				8BCCD2662CED75D000F0391C /* BenefitCollectionViewCell.swift in Sources */,
 				8B8C02CD2CEB5BA4007F86E6 /* CustomTransition.swift in Sources */,
 			);

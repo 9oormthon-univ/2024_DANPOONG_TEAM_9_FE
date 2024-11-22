@@ -26,16 +26,16 @@ class CurationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var curationImg1: UIImageView!
     @IBOutlet weak var curationImg2: UIImageView!
     
+    var toggleBookmark: (() -> Void)? // 북마크 상태를 토글하는 클로저
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        curateBaseView.layer.cornerRadius = 15
+        curateBaseView.layer.masksToBounds = true
     }
 
     @IBAction func bookmarkTapped(_ sender: Any) {
-        if bookmarkBtn.isSelected {
-            bookmarkBtn.isSelected = false
-        }
-        else {
-            bookmarkBtn.isSelected = true
-        }
+        toggleBookmark?() // 북마크 상태를 부모에게 알림
     }
 }
