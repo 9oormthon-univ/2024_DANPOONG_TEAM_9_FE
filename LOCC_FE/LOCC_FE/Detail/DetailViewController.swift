@@ -825,7 +825,7 @@ class DetailViewController: UIViewController {
         detailedInfoStackView.distribution = .fill
         detailedInfoStackView.alignment = .fill
         detailedInfoStackView.spacing = 16
-        detailedInfoStackView.backgroundColor = .green
+        detailedInfoStackView.backgroundColor = UIColor(hex: "F8F7F0")
         detailedInfoStackView.clipsToBounds = true
 
         // 1. 이미지
@@ -833,7 +833,7 @@ class DetailViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.heightAnchor.constraint(equalToConstant: 200).isActive = true // 이미지 높이 설정
+        imageView.heightAnchor.constraint(equalToConstant: 246).isActive = true // 이미지 높이 설정
 
         // 2. 텍스트
         let descriptionLabel = UILabel()
@@ -850,13 +850,22 @@ class DetailViewController: UIViewController {
         꼭 방문해야 하는 공간이에요.
         """
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.textColor = .white
-        descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        descriptionLabel.textColor = UIColor(hex: "696969")
+        descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 16)
         descriptionLabel.textAlignment = .center
+        
+        let descriptionLabelView = wrapWithMargins(view: descriptionLabel, top: 36, leading: 32, trailing: 32, bottom: 48)
+        
+        // 3. 하단 경계선
+        let bottomBorder = UIView()
+        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
+        bottomBorder.backgroundColor = UIColor(hex: "9C9B97").withAlphaComponent(0.21)
+        bottomBorder.heightAnchor.constraint(equalToConstant: 5).isActive = true
 
         // Add components to the stack view
         detailedInfoStackView.addArrangedSubview(imageView)
-        detailedInfoStackView.addArrangedSubview(descriptionLabel)
+        detailedInfoStackView.addArrangedSubview(descriptionLabelView)
+        detailedInfoStackView.addArrangedSubview(bottomBorder)
 
         return detailedInfoStackView
     }
@@ -867,7 +876,7 @@ class DetailViewController: UIViewController {
         locationSectionStackView.translatesAutoresizingMaskIntoConstraints = false
         locationSectionStackView.axis = .vertical
         locationSectionStackView.spacing = 16
-        locationSectionStackView.backgroundColor = .gray
+        locationSectionStackView.backgroundColor = UIColor(hex: "F8F7F0")
         locationSectionStackView.alignment = .fill
 
         // 1. "위치 안내" 레이블
@@ -877,6 +886,8 @@ class DetailViewController: UIViewController {
         sectionTitleLabel.textColor = .black
         sectionTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         sectionTitleLabel.textAlignment = .left
+        
+        let sectionTitleLabelView = wrapWithMargins(view: sectionTitleLabel, top: 36, leading: 32, trailing: 32, bottom: 48)
 
         // 2. 흰색 컨테이너
         let whiteContainerView = UIStackView()
