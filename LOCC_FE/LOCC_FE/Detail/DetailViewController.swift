@@ -590,17 +590,17 @@ class DetailViewController: UIViewController {
         additionalInfoStackView.distribution = .fill
         additionalInfoStackView.alignment = .fill
         additionalInfoStackView.spacing = 16
-        additionalInfoStackView.backgroundColor = .yellow
+        additionalInfoStackView.backgroundColor = .white
         additionalInfoStackView.clipsToBounds = true
 
         // 1. 영업 상태 (icon_clock + "영업중" + 토글 아이콘)
         let businessStatusStack = createBusinessStatusToggleRow()
 
         // 2. 전화번호 (icon_phone + "070-8807-1987")
-        let phoneNumberStack = createHorizontalInfoRow(iconName: "icon_phone", text: "070-8807-1987")
+        let phoneNumberStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_phone", text: "070-8807-1987"), top: 8, leading: 24, trailing: 16, bottom: 4)
 
         // 3. SNS 링크 (icon_sns + "http://instagram.com/loshuacoffee")
-        let snsLinkStack = createHorizontalInfoRow(iconName: "icon_sns", text: "http://instagram.com/loshuacoffee")
+        let snsLinkStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_sns", text: "http://instagram.com/loshuacoffee"), top: 8, leading: 24, trailing: 16, bottom: 20)
 
         // Add rows to the vertical stack view
         additionalInfoStackView.addArrangedSubview(businessStatusStack)
@@ -609,9 +609,30 @@ class DetailViewController: UIViewController {
 
         return additionalInfoStackView
     }
+    
+    // Helper function to wrap a view with margins
+    private func wrapWithMargins(view: UIView, top: CGFloat, leading: CGFloat, trailing: CGFloat, bottom: CGFloat) -> UIView {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
+        containerView.addSubview(view)
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: containerView.topAnchor, constant: top),
+            view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: leading),
+            view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -trailing),
+            view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -bottom)
+        ])
+
+        return containerView
+    }
 
     // 영업 상태 행 (토글 기능 포함)
-    private func createBusinessStatusToggleRow() -> UIStackView {
+    private func createBusinessStatusToggleRow() -> UIView {
+        // Outer container to handle margins
+        let outerContainer = UIView()
+        outerContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        // Vertical container stack view
         let containerStackView = UIStackView()
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         containerStackView.axis = .vertical
@@ -625,33 +646,32 @@ class DetailViewController: UIViewController {
         rowStackView.axis = .horizontal
         rowStackView.distribution = .fill
         rowStackView.alignment = .center
-        rowStackView.spacing = 8
+        rowStackView.spacing = 16
 
         // Icon
         let iconImageView = UIImageView(image: UIImage(named: "icon_clock"))
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
         // Label
         let textLabel = UILabel()
         textLabel.text = "영업중"
-        textLabel.textColor = .black
-        textLabel.font = UIFont.systemFont(ofSize: 14)
+        textLabel.textColor = UIColor(hex: "FA9F16")
+        textLabel.font = UIFont(name: "Pretendard-Semibold", size: 16)
 
         // Toggle Button
         let toggleButton = UIButton()
         toggleButton.setImage(UIImage(named: "icon_toggle_down"), for: .normal)
         toggleButton.translatesAutoresizingMaskIntoConstraints = false
-        toggleButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        toggleButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        toggleButton.widthAnchor.constraint(equalToConstant: 13.6).isActive = true
+        toggleButton.heightAnchor.constraint(equalToConstant: 6.8).isActive = true
 
         // Hidden Container (initially hidden)
         let hiddenContainer = UIView()
         hiddenContainer.translatesAutoresizingMaskIntoConstraints = false
-        hiddenContainer.backgroundColor = .white
-        hiddenContainer.layer.cornerRadius = 8
+        hiddenContainer.backgroundColor = UIColor(hex: "F9F9F9")
         hiddenContainer.clipsToBounds = true
         hiddenContainer.isHidden = true // Initially hidden
 
@@ -673,10 +693,10 @@ class DetailViewController: UIViewController {
         // Add schedule stack view to hidden container
         hiddenContainer.addSubview(scheduleStackView)
         NSLayoutConstraint.activate([
-            scheduleStackView.topAnchor.constraint(equalTo: hiddenContainer.topAnchor, constant: 8),
-            scheduleStackView.leadingAnchor.constraint(equalTo: hiddenContainer.leadingAnchor, constant: 16),
-            scheduleStackView.trailingAnchor.constraint(equalTo: hiddenContainer.trailingAnchor, constant: -16),
-            scheduleStackView.bottomAnchor.constraint(equalTo: hiddenContainer.bottomAnchor, constant: -8)
+            scheduleStackView.topAnchor.constraint(equalTo: hiddenContainer.topAnchor, constant: 0),
+            scheduleStackView.leadingAnchor.constraint(equalTo: hiddenContainer.leadingAnchor, constant: 0),
+            scheduleStackView.trailingAnchor.constraint(equalTo: hiddenContainer.trailingAnchor, constant: -0),
+            scheduleStackView.bottomAnchor.constraint(equalTo: hiddenContainer.bottomAnchor, constant: -0)
         ])
 
         // Add action to toggle button
@@ -696,37 +716,60 @@ class DetailViewController: UIViewController {
         toggleButton.accessibilityHint = "hiddenContainer" // 연결을 위해 힌트를 사용
         toggleButton.tag = hiddenContainer.hash // 고유 ID로 컨테이너를 식별
 
-        return containerStackView
+        // Add containerStackView to outer container with margins
+        outerContainer.addSubview(containerStackView)
+        NSLayoutConstraint.activate([
+            containerStackView.topAnchor.constraint(equalTo: outerContainer.topAnchor, constant: 16),
+            containerStackView.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor, constant: 24),
+            containerStackView.trailingAnchor.constraint(equalTo: outerContainer.trailingAnchor, constant: -24),
+            containerStackView.bottomAnchor.constraint(equalTo: outerContainer.bottomAnchor, constant: -0)
+        ])
+
+        return outerContainer
     }
 
     // 하루의 영업 시간을 나타내는 Horizontal Row 생성
-    private func createHorizontalDayRow(day: String, time: String) -> UIStackView {
+    private func createHorizontalDayRow(day: String, time: String) -> UIView {
+        // Outer container to handle margins
+        let outerContainer = UIView()
+        outerContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        // Row stack view
         let rowStackView = UIStackView()
         rowStackView.translatesAutoresizingMaskIntoConstraints = false
         rowStackView.axis = .horizontal
         rowStackView.spacing = 16
         rowStackView.alignment = .center
 
-        // Day Label
+        // Day label
         let dayLabel = UILabel()
         dayLabel.text = day
-        dayLabel.textColor = .black
-        dayLabel.font = UIFont.systemFont(ofSize: 14)
+        dayLabel.textColor = UIColor(hex: "696969")
+        dayLabel.font = UIFont(name: "Pretendard-SemiBold", size: 15)
         dayLabel.textAlignment = .left
 
-        // Time Label
+        // Time label
         let timeLabel = UILabel()
         timeLabel.text = time
-        timeLabel.textColor = .black
-        timeLabel.font = UIFont.systemFont(ofSize: 14)
+        timeLabel.textColor = UIColor(hex: "696969")
+        timeLabel.font = UIFont(name: "Pretendard-Regular", size: 15)
         timeLabel.textAlignment = .right
 
-        // Add to row stack view
+        // Add views to row stack view
         rowStackView.addArrangedSubview(dayLabel)
         rowStackView.addArrangedSubview(UIView()) // Spacer
         rowStackView.addArrangedSubview(timeLabel)
 
-        return rowStackView
+        // Add row stack view to outer container with margins
+        outerContainer.addSubview(rowStackView)
+        NSLayoutConstraint.activate([
+            rowStackView.topAnchor.constraint(equalTo: outerContainer.topAnchor, constant: 8),
+            rowStackView.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor, constant: 24),
+            rowStackView.trailingAnchor.constraint(equalTo: outerContainer.trailingAnchor, constant: -24),
+            rowStackView.bottomAnchor.constraint(equalTo: outerContainer.bottomAnchor, constant: -8)
+        ])
+
+        return outerContainer
     }
 
     // 토글 동작
@@ -752,20 +795,20 @@ class DetailViewController: UIViewController {
         rowStackView.axis = .horizontal
         rowStackView.distribution = .fill
         rowStackView.alignment = .center
-        rowStackView.spacing = 8
+        rowStackView.spacing = 16
 
         // Icon
         let iconImageView = UIImageView(image: UIImage(named: iconName))
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
 
         // Label
         let textLabel = UILabel()
         textLabel.text = text
-        textLabel.textColor = .black
-        textLabel.font = UIFont.systemFont(ofSize: 14)
+        textLabel.textColor = UIColor(hex: "575754")
+        textLabel.font = UIFont(name: "Pretendard-Regular", size: 14)
 
         // Add to the row stack view
         rowStackView.addArrangedSubview(iconImageView)
