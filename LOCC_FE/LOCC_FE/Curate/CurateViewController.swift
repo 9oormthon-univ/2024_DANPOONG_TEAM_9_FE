@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class CurateViewController: UIViewController {
 
@@ -41,6 +42,30 @@ class CurateViewController: UIViewController {
         
         self.curationView.delegate = self
         self.curationView.dataSource = self
+    }
+    
+    func fetchCurationBookmark(with curationId: Int) {
+        // UserDefaults에서 서버 AccessToken 가져오기
+        guard let token = UserDefaults.standard.string(forKey: "accessToken") else {
+            print("Error: No access token found.")
+            return
+        }
+
+        // API 엔드포인트 설정
+        let endpoint = "/api/v1/curations/\(curationId)/bookmark/toggle"
+
+        // 요청 파라미터 설정
+        let parameters: Parameters = ["curationId": curationId]
+
+        // PUT 요청 실행
+        APIClient.putRequest(endpoint: endpoint, parameters: parameters, token: token, headerType: .authorization) { (result: Result<BookmarkResponse, AFError>) in
+            switch result {
+            case .success(let response):
+                print("Bookmark toggled successfully: \(response.message)")
+            case .failure(let error):
+                print("Failed to toggle bookmark: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func setupUI() {

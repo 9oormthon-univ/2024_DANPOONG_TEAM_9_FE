@@ -30,4 +30,12 @@ class CurationCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
 
+    @IBAction func bookmarkTapped(_ sender: Any) {
+        if bookmarkBtn.isSelected {
+            bookmarkBtn.isSelected = false
+        }
+        else {
+            bookmarkBtn.isSelected = true
+        }
+    }
 }

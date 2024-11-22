@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -68,6 +69,10 @@
                                 <rect key="frame" x="308" y="25" width="21" height="23"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="icon_scrap_unselected"/>
+                                <state key="selected" image="icon_scrape"/>
+                                <connections>
+                                    <action selector="bookmarkTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="WVZ-ga-sId"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="RcZ-KZ-3AY">
                                 <rect key="frame" x="23" y="109.66666666666669" width="314" height="179"/>
@@ -165,6 +170,7 @@
     </objects>
     <resources>
         <image name="icon_scrap_unselected" width="21" height="23"/>
+        <image name="icon_scrape" width="21" height="23"/>
         <image name="icon_star" width="12" height="11"/>
         <image name="icon_“" width="45" height="33"/>
         <namedColor name="Background">

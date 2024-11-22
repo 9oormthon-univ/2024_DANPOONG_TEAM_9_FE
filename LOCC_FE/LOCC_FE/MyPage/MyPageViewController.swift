@@ -16,6 +16,12 @@ class MyPageViewController: UIViewController {
     // label
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
+    
+    // view
+    @IBOutlet weak var containerView: UIView!
+    
+    // instance
+    private var currentViewController: UIViewController?
 
     // MARK: - Constants
     private enum Constants {
@@ -60,6 +66,7 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSegmentedControlLayout()
+        loadChildViewController(for: 0) // 초기 페이지 로드
         getUserInfo()
     }
     
@@ -152,9 +159,39 @@ class MyPageViewController: UIViewController {
         control.setBackgroundImage(backgroundImage, for: .selected, barMetrics: .default)
         control.setDividerImage(backgroundImage, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }
+    
+    // MARK: - Child View Controller
+    private func loadChildViewController(for index: Int) {
+        print("Loading child view controller for index: \(index)") // 디버깅용 로그
+        let viewController: UIViewController
+        if index == 0 {
+            viewController = CurationPageViewController() // 직접 생성
+        } else {
+            viewController = MyListPageViewController() // 직접 생성
+        }
+        
+        // 기존 ViewController 제거
+        if let currentViewController = currentViewController {
+            currentViewController.willMove(toParent: nil)
+            currentViewController.view.removeFromSuperview()
+            currentViewController.removeFromParent()
+        }
+
+        // 새 ViewController 추가
+        addChild(viewController)
+        containerView.addSubview(viewController.view)
+        viewController.view.frame = containerView.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
+
+        // 현재 ViewController 업데이트
+        currentViewController = viewController
+    }
 
     // MARK: - Actions
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        print("Segmented control changed to index: \(sender.selectedSegmentIndex)") // 디버깅용 로그
+        loadChildViewController(for: sender.selectedSegmentIndex)
         changeSegmentedControlLinePosition()
     }
 
