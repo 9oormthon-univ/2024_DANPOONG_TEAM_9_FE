@@ -3,6 +3,16 @@ import UIKit
 class DetailViewController: UIViewController {
     private var storeData: StoreData?
     private var scrapButton: UIButton!
+    
+    private let dayMapping: [String: String] = [
+        "MONDAY": "월",
+        "TUESDAY": "화",
+        "WEDNESDAY": "수",
+        "THURSDAY": "목",
+        "FRIDAY": "금",
+        "SATURDAY": "토",
+        "SUNDAY": "일"
+    ]
 
     private let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3RoZXIwOTA0QG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jqw7J2A7KeEIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIzMTMzMTYsImV4cCI6MTczMzE3NzMxNn0.m1wso6RkWxmvipO8KAe9yHJc2u654_RyU8jptQLWBj0"
     
@@ -693,6 +703,8 @@ class DetailViewController: UIViewController {
     
     // 3. 부가 정보 섹션
     private func createAdditionalInfoSection() -> UIStackView {
+        guard let storeData = storeData else { return UIStackView() }
+        
         let additionalInfoStackView = UIStackView()
         additionalInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         additionalInfoStackView.axis = .vertical
@@ -706,10 +718,10 @@ class DetailViewController: UIViewController {
         let businessStatusStack = createBusinessStatusToggleRow()
 
         // 2. 전화번호 (icon_phone + "070-8807-1987")
-        let phoneNumberStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_phone", text: "070-8807-1987"), top: 8, leading: 24, trailing: 16, bottom: 4)
+        let phoneNumberStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_phone", text: storeData.phone), top: 8, leading: 24, trailing: 16, bottom: 4)
 
         // 3. SNS 링크 (icon_sns + "http://instagram.com/loshuacoffee")
-        let snsLinkStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_sns", text: "http://instagram.com/loshuacoffee"), top: 8, leading: 24, trailing: 16, bottom: 20)
+        let snsLinkStack = wrapWithMargins(view: createHorizontalInfoRow(iconName: "icon_sns", text: storeData.homepage), top: 8, leading: 24, trailing: 16, bottom: 20)
 
         // Add rows to the vertical stack view
         additionalInfoStackView.addArrangedSubview(businessStatusStack)
@@ -737,6 +749,8 @@ class DetailViewController: UIViewController {
 
     // 영업 상태 행 (토글 기능 포함)
     private func createBusinessStatusToggleRow() -> UIView {
+        guard let storeData = storeData else { return UIView() }
+        
         // Outer container to handle margins
         let outerContainer = UIView()
         outerContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -766,7 +780,7 @@ class DetailViewController: UIViewController {
 
         // Label
         let textLabel = UILabel()
-        textLabel.text = "영업중"
+        textLabel.text = storeData.status
         textLabel.textColor = UIColor(hex: "FA9F16")
         textLabel.font = UIFont(name: "Pretendard-Semibold", size: 16)
 
@@ -784,20 +798,9 @@ class DetailViewController: UIViewController {
         hiddenContainer.clipsToBounds = true
         hiddenContainer.isHidden = true // Initially hidden
 
-        // Add vertical stack view for days and times
-        let scheduleStackView = UIStackView()
-        scheduleStackView.translatesAutoresizingMaskIntoConstraints = false
-        scheduleStackView.axis = .vertical
-        scheduleStackView.spacing = 8
-        scheduleStackView.alignment = .fill
-
         // Add rows for each day
-        let days = ["월", "화", "수", "목", "금", "토", "일"]
-        let time = "11:00-23:00"
-        for day in days {
-            let dayRowStackView = createHorizontalDayRow(day: day, time: time)
-            scheduleStackView.addArrangedSubview(dayRowStackView)
-        }
+        let scheduleStackView = createScheduleStackView(from: storeData.businessHours)
+        view.addSubview(scheduleStackView)
 
         // Add schedule stack view to hidden container
         hiddenContainer.addSubview(scheduleStackView)
@@ -835,6 +838,34 @@ class DetailViewController: UIViewController {
         ])
 
         return outerContainer
+    }
+    
+    func createScheduleStackView(from businessHours: [BusinessHour]) -> UIStackView {
+        let scheduleStackView = UIStackView()
+        scheduleStackView.axis = .vertical
+        scheduleStackView.spacing = 8
+        scheduleStackView.alignment = .fill
+        scheduleStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        populateSchedule(from: businessHours, into: scheduleStackView)
+
+        return scheduleStackView
+    }
+    
+    func populateSchedule(from businessHours: [BusinessHour], into scheduleStackView: UIStackView) {
+        for hour in businessHours {
+            guard let koreanDay = dayMapping[hour.dayOfWeek] else { continue }
+
+            // 휴무일 처리
+            if hour.holiday {
+                let dayRowStackView = createHorizontalDayRow(day: koreanDay, time: "휴무")
+                scheduleStackView.addArrangedSubview(dayRowStackView)
+            } else {
+                let time = "\(hour.openTime ?? "-") - \(hour.closeTime ?? "-")"
+                let dayRowStackView = createHorizontalDayRow(day: koreanDay, time: time)
+                scheduleStackView.addArrangedSubview(dayRowStackView)
+            }
+        }
     }
 
     // 하루의 영업 시간을 나타내는 Horizontal Row 생성
