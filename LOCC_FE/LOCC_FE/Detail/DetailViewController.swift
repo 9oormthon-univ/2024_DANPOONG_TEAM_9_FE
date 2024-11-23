@@ -286,39 +286,6 @@ class DetailViewController: UIViewController {
 
         return containerView
     }
-    
-    @objc private func handleBackButton() {
-        // 모달로 표시된 현재 ViewController 닫기
-            self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func toggleBookmark() {
-        let url = URL(string: "http://13.209.85.14/api/v1/stores/1/bookmark/toggle")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
-
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let self = self, let data = data, error == nil else {
-                print("Error toggling bookmark: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(ToggleBookmarkResponse.self, from: data)
-                
-                DispatchQueue.main.async {
-                    self.storeData?.bookmarked = response.data.bookmarked
-                    let updatedImage = UIImage(named: response.data.bookmarked ? "icon_scrape" : "icon_scrap_unselected")
-                    self.scrapButton.setImage(updatedImage, for: .normal)
-                }
-            } catch {
-                print("Failed to decode response: \(error)")
-            }
-        }
-        task.resume()
-    }
 
     // 2. 후기 섹션
     private func createReviewSection() -> UIStackView {
@@ -1107,6 +1074,8 @@ class DetailViewController: UIViewController {
 
     // 6. 주변 가볼만한 곳 섹션
     private func createNearbyPlacesSection() -> UIStackView {
+        guard let storeData = storeData else { return UIStackView() }
+        
         let nearbyPlacesStackView = UIStackView()
         nearbyPlacesStackView.translatesAutoresizingMaskIntoConstraints = false
         nearbyPlacesStackView.axis = .vertical
@@ -1146,40 +1115,9 @@ class DetailViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // 폭 고정
         ])
 
-        // 4. 가게 정보 카드 데이터
-        let storeData: [[String: Any]] = [
-            [
-                "storeName": "로슈아커피",
-                "isClosed": "영업중",
-                "closeTime": "오후 10:00에 영업 종료",
-                "star_rate": 4.40,
-                "reviewNum": 237,
-                "reviews_summary": "커다란 은행나무가 테라스에 있어 멋진 뷰와 함께 여유롭게 커피를 마실 수 있는 카페입니다.",
-                "reviews_image": ["image1", "image2"]
-            ],
-            [
-                "storeName": "몬슈아커피",
-                "isClosed": "영업중",
-                "closeTime": "오후 10:00에 영업 종료",
-                "star_rate": 4.30,
-                "reviewNum": 237,
-                "reviews_summary": "가을에 더욱 매력적인 분위기를 느낄 수 있는 카페입니다.",
-                "reviews_image": ["image3", "image4"]
-            ],
-            [
-                "storeName": "바리스타하우스",
-                "isClosed": "영업중",
-                "closeTime": "오후 11:00에 영업 종료",
-                "star_rate": 4.50,
-                "reviewNum": 237,
-                "reviews_summary": "도심 속에서 조용히 커피를 즐길 수 있는 공간입니다.",
-                "reviews_image": ["image5", "image6"]
-            ]
-        ]
-
         // 5. 가게 정보 카드 생성
-        for data in storeData {
-            if let storeCard = createStoreCard(from: data) {
+        for store in storeData.nearbyStores {
+            if let storeCard = createStoreCard(from: store) {
                 contentView.addArrangedSubview(storeCard)
             }
         }
@@ -1195,19 +1133,7 @@ class DetailViewController: UIViewController {
     }
 
     // 가게 정보 카드 생성
-    private func createStoreCard(from data: [String: Any]) -> UIView? {
-        guard
-            let storeName = data["storeName"] as? String,
-            let isClosed = data["isClosed"] as? String,
-            let closeTime = data["closeTime"] as? String,
-            let starRate = data["star_rate"] as? Double,
-            let reviewNum = data["reviewNum"] as? Int,
-            let reviewsSummary = data["reviews_summary"] as? String,
-            let reviewsImage = data["reviews_image"] as? [String]
-        else {
-            return nil
-        }
-
+    private func createStoreCard(from store: NearbyStore) -> UIView? {
         let cardView = UIView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.layer.borderWidth = 1
@@ -1218,14 +1144,17 @@ class DetailViewController: UIViewController {
 
         // 1. 상단 레이블 + 북마크 버튼
         let nameLabel = UILabel()
-        nameLabel.text = storeName
+        nameLabel.text = store.name
         nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
         nameLabel.textColor = UIColor(hex: "111111")
 
         let bookmarkButton = UIButton(type: .custom)
-        bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal)
-        bookmarkButton.setImage(UIImage(named: "icon_scrape"), for: .selected)
+        bookmarkButton.setImage(UIImage(named: store.bookmarked ? "icon_scrape" : "icon_scrape_unfilled"), for: .normal)
         bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
+
+        // 버튼 액션에 storeId 전달
+        bookmarkButton.tag = store.storeId // storeId를 버튼의 tag에 저장
+        bookmarkButton.addTarget(self, action: #selector(toggleNearBookmark(_:)), for: .touchUpInside)
 
         let nameStackView = UIStackView(arrangedSubviews: [nameLabel, bookmarkButton])
         nameStackView.axis = .horizontal
@@ -1240,12 +1169,12 @@ class DetailViewController: UIViewController {
 
         // 2. 상태 + 종료 시간 (왼쪽 정렬)
         let statusLabel = UILabel()
-        statusLabel.text = isClosed
+        statusLabel.text = store.businessStatus
         statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         statusLabel.textColor = UIColor(hex: "3F8008")
 
         let closeTimeLabel = UILabel()
-        closeTimeLabel.text = closeTime
+        closeTimeLabel.text = "\(store.closeTime)에 영업 종료"
         closeTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
         closeTimeLabel.textColor = UIColor(hex: "696969")
 
@@ -1273,12 +1202,12 @@ class DetailViewController: UIViewController {
         starIcon.heightAnchor.constraint(equalToConstant: 12).isActive = true
         
         let starLabel = UILabel()
-        starLabel.text = "\(starRate)"
+        starLabel.text = "\(store.rating)"
         starLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         starLabel.textColor = UIColor(hex: "696969")
 
         let reviewNumLabel = UILabel()
-        reviewNumLabel.text = "(\(reviewNum))"
+        reviewNumLabel.text = "(\(store.reviewCount))"
         reviewNumLabel.font = UIFont(name: "Pretendard-Regular", size: 10)
         reviewNumLabel.textColor = UIColor(hex: "9C9B97")
 
@@ -1306,9 +1235,12 @@ class DetailViewController: UIViewController {
         imageStackView.distribution = .fillEqually
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        for imageName in reviewsImage {
-            let imageView = UIImageView(image: UIImage(named: imageName))
+        for imageName in store.images {
+            let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
+            if let imageUrl = URL(string: imageName) {
+                imageView.loadImage(from: imageUrl)
+            }
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 8
             imageStackView.addArrangedSubview(imageView)
@@ -1322,7 +1254,7 @@ class DetailViewController: UIViewController {
 
         // 5. 설명
         let descriptionLabel = UILabel()
-        descriptionLabel.text = reviewsSummary
+        descriptionLabel.text = "가게 상세 정보 store.summary"
         descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 14)
         descriptionLabel.numberOfLines = 2
         descriptionLabel.textColor = UIColor(hex: "575754")
@@ -1358,6 +1290,70 @@ class DetailViewController: UIViewController {
         ])
 
         return cardView
+    }
+    
+    @objc private func handleBackButton() {
+        // 모달로 표시된 현재 ViewController 닫기
+            self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func toggleBookmark() {
+        let url = URL(string: "http://13.209.85.14/api/v1/stores/1/bookmark/toggle")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self, let data = data, error == nil else {
+                print("Error toggling bookmark: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(ToggleBookmarkResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    self.storeData?.bookmarked = response.data.bookmarked
+                    let updatedImage = UIImage(named: response.data.bookmarked ? "icon_scrape" : "icon_scrap_unselected")
+                    self.scrapButton.setImage(updatedImage, for: .normal)
+                }
+            } catch {
+                print("Failed to decode response: \(error)")
+            }
+        }
+        task.resume()
+    }
+    
+    @objc private func toggleNearBookmark(_ sender: UIButton) {
+        let storeId = sender.tag // 버튼의 tag에서 storeId 가져오기
+        let url = URL(string: "http://13.209.85.14/api/v1/stores/\(storeId)/bookmark/toggle")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self, let data = data, error == nil else {
+                print("Error toggling bookmark: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(ToggleBookmarkResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    let updatedBookmarked = response.data.bookmarked
+                    sender.setImage(
+                        UIImage(named: updatedBookmarked ? "icon_scrape" : "icon_scrape_unfilled"),
+                        for: .normal
+                    )
+                }
+            } catch {
+                print("Failed to decode response: \(error)")
+            }
+        }
+        task.resume()
     }
 
     // 공통 섹션 생성
@@ -1466,4 +1462,10 @@ struct ToggleBookmarkResponse: Codable {
 struct StoreBookmarkData: Codable {
     let count: Int
     let bookmarked: Bool
+}
+
+struct ToggleNearBookmarkResponse: Decodable {
+    let code: String
+    let message: String
+    let data: StoreBookmarkData
 }
