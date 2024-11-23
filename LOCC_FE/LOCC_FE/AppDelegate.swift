@@ -7,7 +7,6 @@
 
 import UIKit
 import KakaoSDKCommon
-import KakaoMapsSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         KakaoSDK.initSDK(appKey: "e668c785e391d228321c3f44b76d9118")
         
         // 카카오맵
-        SDKInitializer.InitSDK(appKey: "ebb81c505aad040f7f1ff900272123e9")
+//        SDKInitializer.InitSDK(appKey: "")
         return true
     }
     

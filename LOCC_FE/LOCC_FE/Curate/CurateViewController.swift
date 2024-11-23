@@ -225,7 +225,7 @@ extension CurateViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.rating.text = "\(store.storeInfo.rating)"
         cell.reviewCount.text = "(\(store.storeInfo.reviewCount))"
         cell.onSale.text = store.storeInfo.businessStatus
-        cell.closeTime.text = store.storeInfo.closeTime ?? "N/A"
+        cell.closeTime.text = store.storeInfo.closeTime ?? ""
 
         cell.configureSummaryText(store.summary ?? "설명 없음")
         cell.summary.font = UIFont(name: "Pretendard-Regular", size: 16)

@@ -311,14 +311,14 @@ class Onboarding1ViewController: UIViewController {
         
         if isSpaceSelected {
             didTapCnt -= 1
-            spaceButton.setImage(UIImage(named: "on_space")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            spaceButton.setImage(UIImage(named: "on_bar")?.withRenderingMode(.alwaysTemplate), for: .normal)
             spaceButton.tintColor = UIColor(named: "DefaultGreen")
             spaceView.layer.borderColor = UIColor(named: "DefaultGreen")?.cgColor
             spaceView.backgroundColor = UIColor(named: "ButtonBackground")
         }
         else {
             didTapCnt += 1
-            spaceButton.setImage(UIImage(named: "on_space")?.withRenderingMode(.alwaysTemplate), for: .normal)
+            spaceButton.setImage(UIImage(named: "on_bar")?.withRenderingMode(.alwaysTemplate), for: .normal)
             spaceButton.tintColor = .white
             spaceView.layer.borderColor = UIColor.clear.cgColor
             spaceView.backgroundColor = UIColor(named: "SelectedGreen")
@@ -366,7 +366,7 @@ class Onboarding1ViewController: UIViewController {
         if isShoppingSelected { selectedCategories.append("쇼핑") }
         if isTownStoreSelected { selectedCategories.append("온라인") }
         if isBookstoreSelected { selectedCategories.append("문화") }
-        if isSpaceSelected { selectedCategories.append("공간") }
+        if isSpaceSelected { selectedCategories.append("술집") }
         if isAccomodationSelected { selectedCategories.append("숙소") }
         
         onboardingData.selectedCategories = selectedCategories

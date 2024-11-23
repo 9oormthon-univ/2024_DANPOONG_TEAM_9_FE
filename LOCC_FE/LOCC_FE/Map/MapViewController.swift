@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import KakaoMapsSDK
 
 class MapViewController: UIViewController, UIScrollViewDelegate {
     // 필터 버튼들을 담을 스택 뷰를 멤버 변수로 선언
@@ -1037,25 +1036,6 @@ extension MapViewController: SearchViewControllerDelegate {
         
         // 전달받은 keyword를 검색 바에 입력된 것처럼 설정
         searchTextField.text = keyword
-    }
-}
-
-// MapControllerDelegate의 기본 구현 추가
-extension MapControllerDelegate {
-    func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-        print("Default: addViewSucceeded - viewName: \(viewName), viewInfoName: \(viewInfoName)")
-    }
-
-    func addViewFailed(_ viewName: String, viewInfoName: String) {
-        print("Default: addViewFailed - viewName: \(viewName), viewInfoName: \(viewInfoName)")
-    }
-
-    func engineActivated() {
-        print("Default: Engine Activated")
-    }
-
-    func engineActivationFailed() {
-        print("Default: Engine Activation Failed")
     }
 }
 

@@ -61,26 +61,8 @@
                         <color key="textColor" name="OnSale"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kI9-1e-Ts3">
-                        <rect key="frame" x="179.33333333333334" y="71.333333333333329" width="18" height="12"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <color key="textColor" name="TimeLabel"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Z8-ld-KBJ">
-                        <rect key="frame" x="199.33333333333334" y="71.333333333333329" width="28" height="12"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <color key="textColor" name="TimeLabel"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영업종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAK-Ob-3NZ">
-                        <rect key="frame" x="238.33333333333334" y="71.333333333333329" width="35.000000000000028" height="12"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <color key="textColor" name="TimeLabel"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="에" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVE-Bf-doa">
-                        <rect key="frame" x="227.33333333333334" y="71.333333333333329" width="9" height="12"/>
+                        <rect key="frame" x="179.33333333333334" y="71.333333333333329" width="28" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" name="TimeLabel"/>
                         <nil key="highlightedColor"/>
@@ -116,23 +98,17 @@
                     <constraint firstItem="k0A-Gf-t0e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22.030000000000001" id="Bxu-MB-Bfc"/>
                     <constraint firstItem="SNU-pL-Rqf" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="Cgh-D8-Bm1"/>
                     <constraint firstItem="cfe-uT-mxw" firstAttribute="leading" secondItem="1Xg-Iv-8xL" secondAttribute="trailing" constant="2" id="D5y-o2-beU"/>
-                    <constraint firstItem="kI9-1e-Ts3" firstAttribute="leading" secondItem="RlI-Kb-xIc" secondAttribute="trailing" constant="2" id="KJb-i7-Vdz"/>
                     <constraint firstItem="yMM-7L-rYn" firstAttribute="leading" secondItem="k0A-Gf-t0e" secondAttribute="trailing" constant="20.140000000000001" id="OQu-ZY-YQe"/>
-                    <constraint firstItem="IVE-Bf-doa" firstAttribute="leading" secondItem="2Z8-ld-KBJ" secondAttribute="trailing" id="PAa-0K-OL9"/>
+                    <constraint firstItem="2Z8-ld-KBJ" firstAttribute="leading" secondItem="RlI-Kb-xIc" secondAttribute="trailing" constant="2" id="QaF-BA-Eor"/>
                     <constraint firstItem="2Z8-ld-KBJ" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="RDn-MI-6Zc"/>
                     <constraint firstItem="k0A-Gf-t0e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20.75" id="Rg1-jr-LBK"/>
-                    <constraint firstItem="kI9-1e-Ts3" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="TjW-cy-yjB"/>
                     <constraint firstItem="1Xg-Iv-8xL" firstAttribute="top" secondItem="yMM-7L-rYn" secondAttribute="bottom" constant="5" id="Tsh-RT-gTb"/>
                     <constraint firstItem="1Xg-Iv-8xL" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="WEl-tH-NVD"/>
-                    <constraint firstItem="kAK-Ob-3NZ" firstAttribute="leading" secondItem="IVE-Bf-doa" secondAttribute="trailing" constant="2" id="WXb-mF-v9L"/>
                     <constraint firstItem="oIZ-ve-o23" firstAttribute="leading" secondItem="7Sn-5u-j4J" secondAttribute="trailing" constant="2" id="XKb-bH-3bA"/>
-                    <constraint firstItem="IVE-Bf-doa" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="biO-qa-cYV"/>
-                    <constraint firstItem="2Z8-ld-KBJ" firstAttribute="leading" secondItem="kI9-1e-Ts3" secondAttribute="trailing" constant="2" id="fqP-al-W3r"/>
                     <constraint firstItem="tR4-7R-E8o" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="fsE-fh-4o7"/>
                     <constraint firstItem="oIZ-ve-o23" firstAttribute="centerY" secondItem="lh7-TG-pH0" secondAttribute="centerY" id="lwT-aF-qi8"/>
                     <constraint firstItem="lh7-TG-pH0" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="paQ-OM-bOj"/>
                     <constraint firstItem="7Sn-5u-j4J" firstAttribute="leading" secondItem="lh7-TG-pH0" secondAttribute="trailing" constant="2" id="rFW-Qm-Hry"/>
-                    <constraint firstItem="kAK-Ob-3NZ" firstAttribute="centerY" secondItem="RlI-Kb-xIc" secondAttribute="centerY" id="sAY-v6-Fz2"/>
                     <constraint firstItem="RlI-Kb-xIc" firstAttribute="leading" secondItem="yMM-7L-rYn" secondAttribute="leading" id="saF-sa-HC7"/>
                     <constraint firstItem="yMM-7L-rYn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25.670000000000002" id="tfY-cD-2QZ"/>
                     <constraint firstItem="cfe-uT-mxw" firstAttribute="centerY" secondItem="1Xg-Iv-8xL" secondAttribute="centerY" id="zHe-Yu-lOF"/>

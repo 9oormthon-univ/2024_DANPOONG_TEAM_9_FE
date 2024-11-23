@@ -97,6 +97,13 @@ extension MyListPageViewController: UITableViewDelegate, UITableViewDataSource {
         cell.reviewCnt.text = "(\(store.reviewCount))"
         cell.mylistImg.load(from: store.imageUrl) // 이미지 로드 메서드 사용
         
+        // closeTime 설정
+        if let closeTime = store.closeTime, !closeTime.isEmpty {
+            cell.closeTime.text = "오후 \(closeTime)에 영업종료"
+        } else {
+            cell.closeTime.text = "" // null일 경우 출력하지 않음
+        }
+        
         return cell
     }
 }
