@@ -44,6 +44,11 @@ class WriteReviewViewController: UIViewController {
         setupCollectionView()
         setupDatePicker() // 날짜 선택기 설정
         reviewText.delegate = self
+        
+        // 화면 터치로 키보드 숨기기 설정
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false // 터치 이벤트가 다른 UI에 전달되도록 설정
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupLabelUI() {
@@ -200,6 +205,10 @@ class WriteReviewViewController: UIViewController {
         } else {
             reviewBtn.backgroundColor = UIColor.defaultGreen // 초기 상태
         }
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true) // 키보드 숨기기
     }
     
     // action
