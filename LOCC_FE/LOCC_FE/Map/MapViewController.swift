@@ -13,6 +13,8 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // 필터 버튼들을 담을 스택 뷰를 멤버 변수로 선언
     private let filterButtonsStackView = UIStackView()
     
+    private let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3RoZXIwOTA0QG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jqw7J2A7KeEIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIzMTMzMTYsImV4cCI6MTczMzE3NzMxNn0.m1wso6RkWxmvipO8KAe9yHJc2u654_RyU8jptQLWBj0"
+    
     // UI 요소 선언
     private var bottomSheetTopConstraint: NSLayoutConstraint!
     private let bottomSheetHeightRatio: CGFloat = 0.4 // 화면의 40%를 차지하도록 설정
@@ -22,7 +24,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let backButton = UIButton(type: .system)
     private let bottomSheet = UIView()
     
-    private var selectedCategories: [String] = [] // 최대 2개
+    private var selectedCategories: [String] = ["CAFE"] // 최대 2개
     private var selectedRegions: [String] = []    // 최대 1개
     private var selectedCities: [String] = []     // 최대 1개
     
@@ -188,7 +190,6 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         setupSearchBar()
         setupFilterButtons()
         setupBottomBorder()
-        setupStoreDetailsSection()
     }
     
     // 바텀 시트 가장 위쪽 핸들 아이콘 설정
@@ -379,45 +380,82 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     @objc private func filterButtonTapped(_ sender: UIButton) {
         guard let title = sender.title(for: .normal) else { return }
         
-        let categoryGroup = [
-            "식품", "맛집", "카페", "공방", "쇼핑", "동네가게", "책방", "공간", "숙소"
+        // 매핑 테이블
+        let categoryMapping: [String: String] = [
+            "식품": "FOOD",
+            "맛집": "RESTAURANT",
+            "카페": "CAFE",
+            "공방": "HANDCRAFT",
+            "쇼핑": "SHOPPING",
+            "동네가게": "LOCAL_STORE",
+            "책방": "BOOKSTORE",
+            "공간": "SPACE",
+            "숙소": "ACCOMMODATION"
         ]
-        let regionGroup = [
-            "서울", "경기", "인천", "강원", "대전", "충청", "전라", "광주", "경상",
-            "대구", "부산", "울산", "제주"
+        
+        let regionMapping: [String: String] = [
+            "서울": "SEOUL",
+            "경기": "GYEONGGI",
+            "인천": "INCHEON",
+            "강원": "GANGWON",
+            "대전": "DAEJEON",
+            "충청": "CHUNGCHEONG",
+            "전라": "JEOLLA",
+            "광주": "GWANGJU",
+            "경상": "GYEONGSANG",
+            "대구": "DAEGU",
+            "부산": "BUSAN",
+            "울산": "ULSAN",
+            "제주": "JEJU"
         ]
-        let cityGroup = [
-            "춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시",
-            "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군",
-            "화천군", "양구군", "인제군", "고성군", "양양군"
+        
+        let cityMapping: [String: String] = [
+            "춘천시": "CHUNCHEON",
+            "원주시": "WONJU",
+            "강릉시": "GANGNEUNG",
+            "동해시": "DONGHAE",
+            "태백시": "TAEBAEK",
+            "속초시": "SOKCHO",
+            "삼척시": "SAMCHEOK",
+            "홍천군": "HONGCHEON",
+            "횡성군": "HOENGSEONG",
+            "영월군": "YEONGWOL",
+            "평창군": "PYEONGCHANG",
+            "정선군": "JEONGSEON",
+            "철원군": "CHEORWON",
+            "화천군": "HWACHEON",
+            "양구군": "YANGGU",
+            "인제군": "INJE",
+            "고성군": "GOSEONG",
+            "양양군": "YANGYANG"
         ]
         
         // 현재 선택 상태
         let isSelected = sender.backgroundColor == UIColor(hex: "#F8F7F0")
         
-        if categoryGroup.contains(title) {
+        if categoryMapping.keys.contains(title) {
             if isSelected {
-                selectedCategories.removeAll { $0 == title }
+                selectedCategories.removeAll { $0 == categoryMapping[title] }
             } else if selectedCategories.count < 2 {
-                selectedCategories.append(title)
+                selectedCategories.append(categoryMapping[title]!)
             } else {
                 print("카테고리는 최대 2개까지 선택 가능합니다.")
                 return
             }
-        } else if regionGroup.contains(title) {
+        } else if regionMapping.keys.contains(title) {
             if isSelected {
-                selectedRegions.removeAll { $0 == title }
+                selectedRegions.removeAll { $0 == regionMapping[title] }
             } else if selectedRegions.count < 1 {
-                selectedRegions.append(title)
+                selectedRegions.append(regionMapping[title]!)
             } else {
                 print("지역은 최대 1개만 선택 가능합니다.")
                 return
             }
-        } else if cityGroup.contains(title) {
+        } else if cityMapping.keys.contains(title) {
             if isSelected {
-                selectedCities.removeAll { $0 == title }
+                selectedCities.removeAll { $0 == cityMapping[title] }
             } else if selectedCities.count < 1 {
-                selectedCities.append(title)
+                selectedCities.append(cityMapping[title]!)
             } else {
                 print("도시는 최대 1개만 선택 가능합니다.")
                 return
@@ -427,10 +465,73 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         // 모든 버튼 상태 업데이트
         updateAllButtonsState()
         
-        // 선택된 상태 출력
-        print("선택된 카테고리: \(selectedCategories)")
-        print("선택된 지역: \(selectedRegions)")
-        print("선택된 도시: \(selectedCities)")
+        // API 요청 실행
+        requestStores()
+    }
+
+    // API 요청 메서드
+    private func requestStores() {
+        let baseURL = "http://13.209.85.14/api/v1/stores"
+        
+        let categories = selectedCategories.isEmpty ? "&category=" : selectedCategories.map { "category=\($0)" }.joined(separator: "&")
+        let region = selectedRegions.first ?? ""
+        let city = selectedCities.first ?? ""
+        let storeName = searchKeyword ?? ""
+        
+        var urlString = "\(baseURL)?\(categories)&province=\(region)&city=\(city)&storeName=\(storeName)"
+        urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? urlString
+        print("🌐 요청 URL: \(urlString)")
+        
+        guard let url = URL(string: urlString) else {
+            print("❌ URL 생성 실패: \(urlString)")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("❌ 요청 실패: \(error.localizedDescription)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("🌐 HTTP 상태 코드: \(httpResponse.statusCode)")
+                if httpResponse.statusCode != 200 {
+                    print("❌ 서버 오류 또는 권한 문제")
+                    return
+                }
+            }
+            
+            guard let data = data else {
+                print("❌ 응답 데이터 없음")
+                return
+            }
+            
+            print("✅ 응답 데이터: \(String(data: data, encoding: .utf8) ?? "데이터 없음")")
+            
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                if let jsonDict = jsonObject as? [String: Any],
+                   let jsonArray = jsonDict["data"] as? [[String: Any]] {
+                    // `data` 배열에서 `MapViewStoreData`로 변환
+                    let storeData = jsonArray.compactMap { MapViewStoreData(json: $0) }
+                    print("✅ 파싱된 데이터: \(storeData)")
+                    
+                    DispatchQueue.main.async {
+                        self.setupStoreDetailsSection(with: storeData)
+                    }
+                } else {
+                    print("❌ JSON 응답이 예상과 다릅니다: \(jsonObject)")
+                }
+            } catch {
+                print("❌ JSON 파싱 오류: \(error.localizedDescription)")
+            }
+        }
+        
+        task.resume()
     }
 
     private func updateAllButtonsState() {
@@ -470,287 +571,248 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         bottomSheet.layer.addSublayer(border)
     }
 
-    private func setupStoreDetailsSection() {
-        // 스크롤 뷰 생성
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
-        scrollView.backgroundColor = .white
-        scrollView.delegate = self // ScrollView Delegate 설정
-        bottomSheet.addSubview(scrollView)
+    private func setupStoreDetailsSection(with storeData: [MapViewStoreData]) {
+            // 스크롤 뷰 생성
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.showsVerticalScrollIndicator = true
+            scrollView.backgroundColor = .white
+            scrollView.delegate = self // ScrollView Delegate 설정
+            bottomSheet.addSubview(scrollView)
 
-        // 콘텐츠 뷰 생성
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contentView)
+            // 콘텐츠 뷰 생성
+            let contentView = UIView()
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview(contentView)
 
-        // 탭 바 높이 계산 (기본 높이 83으로 설정, 필요 시 확인)
-        let tabBarHeight: CGFloat = 83
+            // 탭 바 높이 계산 (기본 높이 83으로 설정, 필요 시 확인)
+            let tabBarHeight: CGFloat = 83
 
-        // 스크롤 뷰와 콘텐츠 뷰의 제약 조건 설정
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: filterContainerView.bottomAnchor, constant: 4),
-            scrollView.leadingAnchor.constraint(equalTo: bottomSheet.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: bottomSheet.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomSheet.bottomAnchor),
+            // 스크롤 뷰와 콘텐츠 뷰의 제약 조건 설정
+            NSLayoutConstraint.activate([
+                scrollView.topAnchor.constraint(equalTo: filterContainerView.bottomAnchor, constant: 4),
+                scrollView.leadingAnchor.constraint(equalTo: bottomSheet.leadingAnchor),
+                scrollView.trailingAnchor.constraint(equalTo: bottomSheet.trailingAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: bottomSheet.bottomAnchor),
 
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // 폭 고정
-        ])
+                contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor) // 폭 고정
+            ])
 
-        // 서버에서 제공되는 더미 데이터
-        let storeData: [[String: Any]] = [
-            [
-                "storeName": "로슈아커피",
-                "isClosed": "영업중",
-                "closeTime": "오후 10:00에 영업 종료",
-                "star_rate": 4.40,
-                "reviewNum": 237,
-                "reviews_summary": "커다란 은행나무가 테라스에 있어 멋진 뷰와 함께 여유롭게 커피를 마실 수 있는 카페입니다.",
-                "reviews_image": ["image1", "image2"]
-            ],
-            [
-                "storeName": "몬슈아커피",
-                "isClosed": "영업중",
-                "closeTime": "오후 10:00에 영업 종료",
-                "star_rate": 4.30,
-                "reviewNum": 237,
-                "reviews_summary": "가을에 더욱 매력적인 분위기를 느낄 수 있는 카페입니다.",
-                "reviews_image": ["image3", "image4"]
-            ],
-            [
-                "storeName": "바리스타하우스",
-                "isClosed": "영업중",
-                "closeTime": "오후 11:00에 영업 종료",
-                "star_rate": 4.50,
-                "reviewNum": 237,
-                "reviews_summary": "도심 속에서 조용히 커피를 즐길 수 있는 공간입니다.",
-                "reviews_image": ["image5", "image6"]
-            ]
-        ]
+            var lastView: UIView? = nil
 
-        var lastView: UIView? = nil
+            for data in storeData {
+                if let storeCard = createStoreCard(from: data) {
+                    contentView.addSubview(storeCard)
 
-        for data in storeData {
-            if let storeCard = createStoreCard(from: data) {
-                contentView.addSubview(storeCard)
+                    NSLayoutConstraint.activate([
+                        storeCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0), // 카드 좌측 여백
+                        storeCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -0), // 카드 우측 여백
+                        storeCard.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? contentView.topAnchor, constant: 0) // 카드 상단 여백
+                    ])
 
-                NSLayoutConstraint.activate([
-                    storeCard.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0), // 카드 좌측 여백
-                    storeCard.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -0), // 카드 우측 여백
-                    storeCard.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? contentView.topAnchor, constant: 0) // 카드 상단 여백
-                ])
-
-                lastView = storeCard
+                    lastView = storeCard
+                }
             }
+
+            // 빈 공간 뷰 추가
+            let spacerView = UIView()
+            spacerView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(spacerView)
+
+            NSLayoutConstraint.activate([
+                spacerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? contentView.topAnchor, constant: 0),
+                spacerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                spacerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                spacerView.heightAnchor.constraint(equalToConstant: tabBarHeight), // 탭바 높이만큼 공간 설정
+                spacerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor) // 콘텐츠 뷰의 마지막
+            ])
         }
+    
+    private func createStoreCard(from data: MapViewStoreData) -> UIView? {
+ 
+            let cardView = UIView()
+            cardView.layer.cornerRadius = 0
+            cardView.layer.borderWidth = 0
+            cardView.layer.borderColor = UIColor.clear.cgColor
+            cardView.layer.masksToBounds = true
+            cardView.translatesAutoresizingMaskIntoConstraints = false
+            
+            // 하단 선 추가
+            let cardBottomLine = UIView()
+            cardBottomLine.backgroundColor = UIColor(white: 0.067, alpha: 0.2) // #111111 20% 투명도
+            cardBottomLine.translatesAutoresizingMaskIntoConstraints = false
+            cardView.addSubview(cardBottomLine)
+            
+            // 북마크 버튼 추가
+            let bookmarkButton = UIButton(type: .custom)
+            bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal) // 북마크 안 된 상태
+            bookmarkButton.setImage(UIImage(named: "icon_scrape"), for: .selected) // 북마크 된 상태
+            bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
 
-        // 빈 공간 뷰 추가
-        let spacerView = UIView()
-        spacerView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(spacerView)
+            // 북마크 버튼 클릭 액션 추가
+            bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped(_:)), for: .touchUpInside)
 
-        NSLayoutConstraint.activate([
-            spacerView.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? contentView.topAnchor, constant: 0),
-            spacerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            spacerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            spacerView.heightAnchor.constraint(equalToConstant: tabBarHeight), // 탭바 높이만큼 공간 설정
-            spacerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor) // 콘텐츠 뷰의 마지막
-        ])
-    }
-
-    private func createStoreCard(from data: [String: Any]) -> UIView? {
-        guard
-            let storeName = data["storeName"] as? String,
-            let isClosed = data["isClosed"] as? String,
-            let closeTime = data["closeTime"] as? String,
-            let starRate = data["star_rate"] as? Double,
-            let reviewNum = data["reviewNum"] as? Int,
-            let reviewsSummary = data["reviews_summary"] as? String,
-            let reviewsImage = data["reviews_image"] as? [String]
-        else {
-            return nil
-        }
-        
-        let cardView = UIView()
-        cardView.layer.cornerRadius = 0
-        cardView.layer.borderWidth = 0
-        cardView.layer.borderColor = UIColor.clear.cgColor
-        cardView.layer.masksToBounds = true
-        cardView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // 하단 선 추가
-        let cardBottomLine = UIView()
-        cardBottomLine.backgroundColor = UIColor(white: 0.067, alpha: 0.2) // #111111 20% 투명도
-        cardBottomLine.translatesAutoresizingMaskIntoConstraints = false
-        cardView.addSubview(cardBottomLine)
-        
-        // 북마크 버튼 추가
-        let bookmarkButton = UIButton(type: .custom)
-        bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal) // 북마크 안 된 상태
-        bookmarkButton.setImage(UIImage(named: "icon_scrape"), for: .selected) // 북마크 된 상태
-        bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
-
-        // 북마크 버튼 클릭 액션 추가
-        bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped(_:)), for: .touchUpInside)
-
-        // Store Name Label
-        let nameLabel = UILabel()
-        nameLabel.text = storeName
-        nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
-        nameLabel.textColor = UIColor(hex: "#111111")
-        
-        // Image Container에 Gesture Recognizer 추가
-        let nameLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(nameLabelTapped))
-        nameLabel.addGestureRecognizer(nameLabelTapGesture)
-        nameLabel.isUserInteractionEnabled = true
+            // Store Name Label
+            let nameLabel = UILabel()
+        nameLabel.text = data.name
+            nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
+            nameLabel.textColor = UIColor(hex: "#111111")
+            
+            // Image Container에 Gesture Recognizer 추가
+            let nameLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(nameLabelTapped))
+            nameLabel.addGestureRecognizer(nameLabelTapGesture)
+            nameLabel.isUserInteractionEnabled = true
 
 
-        // Status Label
-        let statusLabel = UILabel()
-        statusLabel.text = isClosed
-        statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        statusLabel.textColor = UIColor(hex: "#3F8008")
-        statusLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        statusLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            // Status Label
+            let statusLabel = UILabel()
+        statusLabel.text = data.businessStatus
+            statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
+            statusLabel.textColor = UIColor(hex: "#3F8008")
+            statusLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            statusLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
-        // Close Time Label
-        let closeTimeLabel = UILabel()
-        closeTimeLabel.text = closeTime
-        closeTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
-        closeTimeLabel.textColor = UIColor(hex: "#696969")
-        closeTimeLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        closeTimeLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            // Close Time Label
+            let closeTimeLabel = UILabel()
+        closeTimeLabel.text = data.closeTime
+            closeTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
+            closeTimeLabel.textColor = UIColor(hex: "#696969")
+            closeTimeLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            closeTimeLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        // Status and Close Time Stack
-        let statusStack = UIStackView(arrangedSubviews: [statusLabel, closeTimeLabel])
-        statusStack.axis = .horizontal
-        statusStack.alignment = .bottom
-        statusStack.spacing = 4 // 딱 붙이기 위한 간격
-        statusStack.translatesAutoresizingMaskIntoConstraints = false
+            // Status and Close Time Stack
+            let statusStack = UIStackView(arrangedSubviews: [statusLabel, closeTimeLabel])
+            statusStack.axis = .horizontal
+            statusStack.alignment = .bottom
+            statusStack.spacing = 4 // 딱 붙이기 위한 간격
+            statusStack.translatesAutoresizingMaskIntoConstraints = false
 
-        // Star Rating Section
-        let starIcon = UIImageView(image: UIImage(named: "icon_star"))
-        starIcon.contentMode = .scaleAspectFit
-        starIcon.translatesAutoresizingMaskIntoConstraints = false
+            // Star Rating Section
+            let starIcon = UIImageView(image: UIImage(named: "icon_star"))
+            starIcon.contentMode = .scaleAspectFit
+            starIcon.translatesAutoresizingMaskIntoConstraints = false
 
-        let starRateLabel = UILabel()
-        starRateLabel.text = String(format: "%.2f", starRate)
-        starRateLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
-        starRateLabel.textColor = UIColor(hex: "#696969")
-        // Hugging 및 Compression 설정
-        starRateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        starRateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            let starRateLabel = UILabel()
+        starRateLabel.text = String(format: "%.2f", data.rating)
+            starRateLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
+            starRateLabel.textColor = UIColor(hex: "#696969")
+            // Hugging 및 Compression 설정
+            starRateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            starRateLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        let reviewNumLabel = UILabel()
-        reviewNumLabel.text = "(\(reviewNum))"
-        reviewNumLabel.font = UIFont(name: "Pretendard-Regular", size: 10)
-        reviewNumLabel.textColor = UIColor(hex: "#9C9B97")
-        // Hugging 및 Compression 설정
-        reviewNumLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        reviewNumLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            let reviewNumLabel = UILabel()
+        reviewNumLabel.text = "(\(data.reviewCount))"
+            reviewNumLabel.font = UIFont(name: "Pretendard-Regular", size: 10)
+            reviewNumLabel.textColor = UIColor(hex: "#9C9B97")
+            // Hugging 및 Compression 설정
+            reviewNumLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            reviewNumLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        // Star Rating Stack
-        let starStack = UIStackView(arrangedSubviews: [starIcon, starRateLabel, reviewNumLabel])
-        starStack.axis = .horizontal
-        starStack.spacing = 2 // 딱 붙이기 위한 간격
-        starStack.alignment = .center
-        starStack.translatesAutoresizingMaskIntoConstraints = false
+            // Star Rating Stack
+            let starStack = UIStackView(arrangedSubviews: [starIcon, starRateLabel, reviewNumLabel])
+            starStack.axis = .horizontal
+            starStack.spacing = 2 // 딱 붙이기 위한 간격
+            starStack.alignment = .center
+            starStack.translatesAutoresizingMaskIntoConstraints = false
 
-        // Image Container
-        let imageContainer = UIStackView()
-        imageContainer.axis = .horizontal
-        imageContainer.spacing = 8
-        imageContainer.distribution = .fillEqually
-        imageContainer.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Image Container에 Gesture Recognizer 추가
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageContainerTapped))
-        imageContainer.addGestureRecognizer(tapGesture)
-        imageContainer.isUserInteractionEnabled = true
+            // Image Container
+            let imageContainer = UIStackView()
+            imageContainer.axis = .horizontal
+            imageContainer.spacing = 8
+            imageContainer.distribution = .fillEqually
+            imageContainer.translatesAutoresizingMaskIntoConstraints = false
+            
+            // Image Container에 Gesture Recognizer 추가
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageContainerTapped))
+            imageContainer.addGestureRecognizer(tapGesture)
+            imageContainer.isUserInteractionEnabled = true
 
-        for imageName in reviewsImage {
-            if let image = UIImage(named: imageName) {
-                let imageView = UIImageView(image: image)
-                imageView.contentMode = .scaleAspectFill
-                imageView.clipsToBounds = true
-                imageView.layer.cornerRadius = 8
-                imageContainer.addArrangedSubview(imageView)
-            } else {
-                print("❌ 이미지 로드 실패: \(imageName)")
+        for imageName in data.images {
+                if let image = UIImage(named: imageName) {
+                    let imageView = UIImageView()
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    if let imageUrl = URL(string: imageName) {
+                        imageView.loadImage(from: imageUrl)
+                    }
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.clipsToBounds = true
+                    imageView.layer.cornerRadius = 8
+                    imageContainer.addArrangedSubview(imageView)
+                } else {
+                    print("❌ 이미지 로드 실패: \(imageName)")
+                }
             }
+            
+            // Reviews Summary Label
+            let descriptionLabel = UILabel()
+        descriptionLabel.text = data.summary
+            descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 16)
+            descriptionLabel.numberOfLines = 2
+            descriptionLabel.textColor = UIColor(hex: "#575754")
+            
+            // Reviews Summary Icon
+            let reviewIcon = UIImageView(image: UIImage(named: "icon_review"))
+            reviewIcon.contentMode = .scaleAspectFit
+            reviewIcon.translatesAutoresizingMaskIntoConstraints = false
+
+            // Horizontal Stack for Icon and Description Label
+            let descriptionStack = UIStackView(arrangedSubviews: [reviewIcon, descriptionLabel])
+            descriptionStack.axis = .horizontal
+            descriptionStack.spacing = 4 // 아이콘과 텍스트 간 간격
+            descriptionStack.alignment = .top // 수직 상단 정렬
+            descriptionStack.translatesAutoresizingMaskIntoConstraints = false
+
+            // Vertical Stack
+            let verticalStack = UIStackView(arrangedSubviews: [nameLabel, statusStack, starStack, imageContainer, descriptionStack])
+            verticalStack.axis = .vertical
+            verticalStack.spacing = 6
+            verticalStack.translatesAutoresizingMaskIntoConstraints = false
+
+            cardView.addSubview(verticalStack)
+            cardView.addSubview(bookmarkButton)
+
+            NSLayoutConstraint.activate([
+                verticalStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
+                verticalStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
+                verticalStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -20),
+                verticalStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
+                
+                statusStack.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor),
+                starStack.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor),
+                starStack.bottomAnchor.constraint(equalTo: imageContainer.topAnchor, constant: -16), // starStack 하단 여백 (이미지 컨테이너 상단 여백)
+
+                imageContainer.heightAnchor.constraint(equalToConstant: 154), // 이미지 섹션 높이 고정
+                imageContainer.bottomAnchor.constraint(equalTo: descriptionStack.topAnchor, constant: -20), // 이미지 컨테이너 하단 여백
+
+                // 북마크 버튼 위치 설정
+                bookmarkButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
+                bookmarkButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -20),
+                bookmarkButton.widthAnchor.constraint(equalToConstant: 21),
+                bookmarkButton.heightAnchor.constraint(equalToConstant: 25),
+
+                // Star Icon 크기
+                starIcon.widthAnchor.constraint(equalToConstant: 14),
+                starIcon.heightAnchor.constraint(equalToConstant: 14),
+                
+                // Review Icon 크기
+                reviewIcon.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: 4),
+                reviewIcon.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: -8), // 오른쪽 여백
+                reviewIcon.widthAnchor.constraint(equalToConstant: 20),
+                reviewIcon.heightAnchor.constraint(equalToConstant: 20),
+                
+                // 하단 선
+                cardBottomLine.heightAnchor.constraint(equalToConstant: 0.5), // 선 두께
+                cardBottomLine.leadingAnchor.constraint(equalTo: cardView.leadingAnchor), // 카드뷰 왼쪽 끝
+                cardBottomLine.trailingAnchor.constraint(equalTo: cardView.trailingAnchor), // 카드뷰 오른쪽 끝
+                cardBottomLine.bottomAnchor.constraint(equalTo: cardView.bottomAnchor) // 카드뷰 하단에 고정
+            ])
+            
+            return cardView
         }
-        
-        // Reviews Summary Label
-        let descriptionLabel = UILabel()
-        descriptionLabel.text = reviewsSummary
-        descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 16)
-        descriptionLabel.numberOfLines = 2
-        descriptionLabel.textColor = UIColor(hex: "#575754")
-        
-        // Reviews Summary Icon
-        let reviewIcon = UIImageView(image: UIImage(named: "icon_review"))
-        reviewIcon.contentMode = .scaleAspectFit
-        reviewIcon.translatesAutoresizingMaskIntoConstraints = false
-
-        // Horizontal Stack for Icon and Description Label
-        let descriptionStack = UIStackView(arrangedSubviews: [reviewIcon, descriptionLabel])
-        descriptionStack.axis = .horizontal
-        descriptionStack.spacing = 4 // 아이콘과 텍스트 간 간격
-        descriptionStack.alignment = .top // 수직 상단 정렬
-        descriptionStack.translatesAutoresizingMaskIntoConstraints = false
-
-        // Vertical Stack
-        let verticalStack = UIStackView(arrangedSubviews: [nameLabel, statusStack, starStack, imageContainer, descriptionStack])
-        verticalStack.axis = .vertical
-        verticalStack.spacing = 6
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
-
-        cardView.addSubview(verticalStack)
-        cardView.addSubview(bookmarkButton)
-
-        NSLayoutConstraint.activate([
-            verticalStack.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
-            verticalStack.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
-            verticalStack.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -20),
-            verticalStack.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -24),
-            
-            statusStack.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor),
-            starStack.leadingAnchor.constraint(equalTo: verticalStack.leadingAnchor),
-            starStack.bottomAnchor.constraint(equalTo: imageContainer.topAnchor, constant: -16), // starStack 하단 여백 (이미지 컨테이너 상단 여백)
-
-            imageContainer.heightAnchor.constraint(equalToConstant: 154), // 이미지 섹션 높이 고정
-            imageContainer.bottomAnchor.constraint(equalTo: descriptionStack.topAnchor, constant: -20), // 이미지 컨테이너 하단 여백
-
-            // 북마크 버튼 위치 설정
-            bookmarkButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 24),
-            bookmarkButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -20),
-            bookmarkButton.widthAnchor.constraint(equalToConstant: 21),
-            bookmarkButton.heightAnchor.constraint(equalToConstant: 25),
-
-            // Star Icon 크기
-            starIcon.widthAnchor.constraint(equalToConstant: 14),
-            starIcon.heightAnchor.constraint(equalToConstant: 14),
-            
-            // Review Icon 크기
-            reviewIcon.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: 4),
-            reviewIcon.trailingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor, constant: -8), // 오른쪽 여백
-            reviewIcon.widthAnchor.constraint(equalToConstant: 20),
-            reviewIcon.heightAnchor.constraint(equalToConstant: 20),
-            
-            // 하단 선
-            cardBottomLine.heightAnchor.constraint(equalToConstant: 0.5), // 선 두께
-            cardBottomLine.leadingAnchor.constraint(equalTo: cardView.leadingAnchor), // 카드뷰 왼쪽 끝
-            cardBottomLine.trailingAnchor.constraint(equalTo: cardView.trailingAnchor), // 카드뷰 오른쪽 끝
-            cardBottomLine.bottomAnchor.constraint(equalTo: cardView.bottomAnchor) // 카드뷰 하단에 고정
-        ])
-        
-        return cardView
-    }
-
     @objc private func bookmarkButtonTapped(_ sender: UIButton) {
         // 상태를 토글
         sender.isSelected.toggle()
@@ -917,5 +979,56 @@ extension MapControllerDelegate {
 
     func engineActivationFailed() {
         print("Default: Engine Activation Failed")
+    }
+}
+
+struct MapViewStoreData {
+    let storeId: Int
+    let name: String
+    let category: String
+    let province: String
+    let city: String
+    let address: String
+    let images: [String]
+    let summary: String
+    let rating: Double
+    let reviewCount: Int
+    let openTime: String? // 옵셔널 처리
+    let closeTime: String? // 옵셔널 처리
+    let businessStatus: String
+
+    init?(json: [String: Any]) {
+        guard
+            let storeId = json["storeId"] as? Int,
+            let name = json["name"] as? String,
+            let category = json["category"] as? String,
+            let province = json["province"] as? String,
+            let city = json["city"] as? String,
+            let address = json["address"] as? String,
+            let images = json["images"] as? [String],
+            let summary = json["summary"] as? String,
+            let rating = json["rating"] as? Double,
+            let reviewCount = json["reviewCount"] as? Int,
+            let businessStatus = json["businessStatus"] as? String
+        else {
+            print("❌ 초기화 실패: \(json)")
+            return nil
+        }
+
+        // 옵셔널 필드 처리
+        self.openTime = json["openTime"] as? String
+        self.closeTime = json["closeTime"] as? String
+
+        self.storeId = storeId
+        self.name = name
+        self.category = category
+        self.province = province
+        self.city = city
+        self.address = address
+        self.images = images
+        self.summary = summary
+        self.rating = rating
+        self.reviewCount = reviewCount
+        self.businessStatus = businessStatus
     }
 }
