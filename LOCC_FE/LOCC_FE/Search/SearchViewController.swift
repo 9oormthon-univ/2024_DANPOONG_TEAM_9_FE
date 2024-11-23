@@ -5,9 +5,12 @@ class SearchViewController: UIViewController {
     
     // MARK: - Properties
     private let searchTextField = UITextField()
-    private var recentTags: [String] = ["단양 카페", "안동 카페", "파주 카페", "세븐틴 카페", "승관 카페", "곰돌이 카페", "고양이 카페"]
+    private var recentKeywords: [RecentKeyword] = []
+//    private var recentTags: [String] = ["단양 카페", "안동 카페", "파주 카페"]
     private var recommemdedTags: [String] = ["파주 스테이", "파주 카페", "파주 맛집", "단양 숙소", "단양 맛집", "단양 기념품", "부산 카페"]
     private var popularSearches: [String] = ["성수", "강릉", "속초", "행궁동", "북카페", "드라이브", "경주", "파주", "제주도", "감자빵"]
+    
+    private let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3RoZXIwOTA0QG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jqw7J2A7KeEIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIzMTMzMTYsImV4cCI6MTczMzE3NzMxNn0.m1wso6RkWxmvipO8KAe9yHJc2u654_RyU8jptQLWBj0"
     
     private let tagCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -44,9 +47,30 @@ class SearchViewController: UIViewController {
         return button
     }()
     
+    private let recommendedTagsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let popularSearchesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = 16
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchTags()
         setupView()
         setupUI()
     }
@@ -56,6 +80,129 @@ class SearchViewController: UIViewController {
         
         // Update height constraint to match content size
         tagCollectionViewHeightConstraint.constant = tagCollectionView.collectionViewLayout.collectionViewContentSize.height
+    }
+    
+    // MARK: - API Fetch
+    private func fetchTags() {
+        // API URL
+        let urlString = "http://13.209.85.14/api/v1/searches"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        // URLRequest 설정
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        // 네트워크 요청
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            if let error = error {
+                print("Error fetching tags: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Status Code: \(httpResponse.statusCode)")
+                if !(200...299).contains(httpResponse.statusCode) {
+                    print("Invalid response or status code")
+                    return
+                }
+            }
+            
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            
+            do {
+                // JSON 디코딩
+                let decodedResponse = try JSONDecoder().decode(TagResponse.self, from: data)
+                DispatchQueue.main.async {
+                    // 태그 데이터 업데이트
+//                    self?.recentTags = decodedResponse.data.recentKeywords.map { $0.keyword }
+                    self?.recentKeywords = decodedResponse.data.recentKeywords
+                    self?.recommemdedTags = decodedResponse.data.recommendedKeywords
+//                    self?.popularSearches = decodedResponse.data.popularKeywords
+                    
+//                    print("Recent Tags: \(self?.recentTags ?? [])")
+                    print("Recent Keywords: \(self?.recentKeywords ?? [])")
+                    print("Recommended Tags: \(self?.recommemdedTags ?? [])")
+                    print("Popular Searches: \(self?.popularSearches ?? [])")
+                    
+                    // 화면 업데이트
+                    self?.updateRecommendedTagsUI()
+                    self?.updatePopularSearchesUI()
+                    self?.tagCollectionView.reloadData() // Recent Tags UI 업데이트
+                }
+            } catch {
+                print("Error decoding response: \(error)")
+            }
+        }
+        task.resume()
+    }
+    
+    private func deleteSearchHistory(searchHistoryId: Int, completion: @escaping (Bool) -> Void) {
+        // API URL
+        let urlString = "http://13.209.85.14/api/v1/searches/\(searchHistoryId)"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            completion(false)
+            return
+        }
+        
+        // URLRequest 설정
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        // 네트워크 요청
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error deleting search history: \(error)")
+                completion(false)
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Status Code: \(httpResponse.statusCode)")
+                if (200...299).contains(httpResponse.statusCode) {
+                    completion(true) // 성공
+                } else {
+                    completion(false) // 실패
+                }
+            }
+        }
+        task.resume()
+    }
+
+
+    // MARK: - UI Update
+    private func updateRecommendedTagsUI() {
+        for subview in recommendedTagsStackView.arrangedSubviews {
+            recommendedTagsStackView.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+
+        let recommendedHeaderView = setupRecommendedHeaderView()
+        recommendedTagsStackView.addArrangedSubview(recommendedHeaderView)
+
+        let recommendedTagsView = setupRecommendedTags()
+        recommendedTagsStackView.addArrangedSubview(recommendedTagsView)
+    }
+
+    private func updatePopularSearchesUI() {
+        for subview in popularSearchesStackView.arrangedSubviews {
+            popularSearchesStackView.removeArrangedSubview(subview)
+            subview.removeFromSuperview()
+        }
+
+        let popularSearchesHeaderView = setupPopularSearchesHeaderView()
+        popularSearchesStackView.addArrangedSubview(popularSearchesHeaderView)
+
+        let popularSearchesTagsView = setupPopularSearches()
+        popularSearchesStackView.addArrangedSubview(popularSearchesTagsView)
     }
     
     // MARK: - Setup Methods
@@ -89,7 +236,6 @@ class SearchViewController: UIViewController {
         
         // Set collection view constraints
         tagCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        tagCollectionView.backgroundColor = .blue
         tagCollectionViewHeightConstraint = tagCollectionView.heightAnchor.constraint(equalToConstant: 0)
         tagCollectionViewHeightConstraint.isActive = true
 
@@ -100,20 +246,15 @@ class SearchViewController: UIViewController {
         view.addSubview(borderView)
         
         // Create a stack view for Tag Header and Tag Collection
-        let recommendedStackView = UIStackView()
-        recommendedStackView.axis = .vertical
-        recommendedStackView.alignment = .fill
-        recommendedStackView.spacing = 16
-        recommendedStackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(recommendedStackView)
+        view.addSubview(recommendedTagsStackView)
         
         // Add Tag Header View
         let recommendedHeaderView = setupRecommendedHeaderView()
-        recommendedStackView.addArrangedSubview(recommendedHeaderView)
+        recommendedTagsStackView.addArrangedSubview(recommendedHeaderView)
         
         // 최근 태그 추가
         let recommendedTagsView = setupRecommendedTags()
-        recommendedStackView.addArrangedSubview(recommendedTagsView)
+        recommendedTagsStackView.addArrangedSubview(recommendedTagsView)
         
         // Add border below the stack view
         let secondBorderView = UIView()
@@ -122,11 +263,6 @@ class SearchViewController: UIViewController {
         view.addSubview(secondBorderView)
         
         // Create a stack view for Tag Header and Tag Collection
-        let popularSearchesStackView = UIStackView()
-        popularSearchesStackView.axis = .vertical
-        popularSearchesStackView.alignment = .fill
-        popularSearchesStackView.spacing = 16
-        popularSearchesStackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(popularSearchesStackView)
         
         // Add Tag Header View
@@ -151,11 +287,11 @@ class SearchViewController: UIViewController {
             borderView.heightAnchor.constraint(equalToConstant: 5), // 5px height
             
             // Stack View Constraints
-            recommendedStackView.topAnchor.constraint(equalTo: borderView.bottomAnchor, constant: 16),
-            recommendedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            recommendedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            recommendedTagsStackView.topAnchor.constraint(equalTo: borderView.bottomAnchor, constant: 16),
+            recommendedTagsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            recommendedTagsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            secondBorderView.topAnchor.constraint(equalTo: recommendedStackView.bottomAnchor, constant: 20), // 20px below the stackView
+            secondBorderView.topAnchor.constraint(equalTo: recommendedTagsStackView.bottomAnchor, constant: 20), // 20px below the stackView
             secondBorderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             secondBorderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             secondBorderView.heightAnchor.constraint(equalToConstant: 5),
@@ -328,8 +464,8 @@ class SearchViewController: UIViewController {
         verticalStackView.addArrangedSubview(firstContainerView)
 
         // 두 번째 태그 그룹 (3~6번)
-        let secondContainerView = createTagsContainerView(from: recommemdedTags[3...6])
-        verticalStackView.addArrangedSubview(secondContainerView)
+//        let secondContainerView = createTagsContainerView(from: recommemdedTags[3...6])
+//        verticalStackView.addArrangedSubview(secondContainerView)
 
         // 수직 스택뷰 제약 조건 설정
         NSLayoutConstraint.activate([
@@ -516,7 +652,7 @@ class SearchViewController: UIViewController {
     }
     
     @objc private func handleDeleteAll() {
-        recentTags.removeAll() // Clear all tags
+//        recentTags.removeAll() // Clear all tags
         tagCollectionView.reloadData() // Refresh collection view
         print("전체 태그 삭제됨")
     }
@@ -532,19 +668,31 @@ class SearchViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension SearchViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recentTags.count
+        return recentKeywords.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as! TagCell
-        let tag = recentTags[indexPath.item]
+        let keyword = recentKeywords[indexPath.item]
 
         // Configure the cell
-        cell.configure(with: tag) { [weak self] in
+        cell.configure(with: keyword.keyword) { [weak self] in
             guard let self = self else { return }
-//            self.tags.remove(at: indexPath.item)
-//            self.tagCollectionView.deleteItems(at: [indexPath])
-            print("\(tag) 태그 삭제 버튼 클릭")
+            
+            // API 호출
+            self.deleteSearchHistory(searchHistoryId: keyword.searchHistoryId) { success in
+                DispatchQueue.main.async {
+                    if success {
+                        print("\(keyword.keyword) 삭제 완료")
+                        
+                        // 태그 삭제 후 UI 업데이트
+                        self.recentKeywords.remove(at: indexPath.item)
+                        collectionView.deleteItems(at: [indexPath])
+                    } else {
+                        print("\(keyword.keyword) 삭제 실패")
+                    }
+                }
+            }
         }
 
         return cell
@@ -554,7 +702,7 @@ extension SearchViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let tag = recentTags[indexPath.item]
+        let tag = recentKeywords[indexPath.item].keyword
         
         // Calculate label width dynamically
         let labelWidth = tag.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]).width
@@ -565,7 +713,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let tag = recentTags[indexPath.item]
+        let tag = recentKeywords[indexPath.item].keyword
         print("\(tag) 태그 클릭")
     }
 }
@@ -628,4 +776,22 @@ class TagCell: UICollectionViewCell {
     @objc private func closeButtonTapped() {
         onCloseButtonTapped?()
     }
+}
+
+// MARK: - TagResponse 구조체
+struct TagResponse: Decodable {
+    let code: String
+    let data: TagData
+}
+
+struct TagData: Decodable {
+    let baseTime: String
+    let recentKeywords: [RecentKeyword]
+    let recommendedKeywords: [String]
+    let popularKeywords: [String]
+}
+
+struct RecentKeyword: Decodable {
+    let searchHistoryId: Int
+    let keyword: String
 }

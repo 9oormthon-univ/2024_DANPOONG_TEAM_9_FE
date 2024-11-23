@@ -11,11 +11,50 @@ class ReviewViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchReviews(storeId: 1)
+        
         setupData()
         setupUI()
         setupSwipeGesture() // 스와이프 제스처 추가
     }
     
+    private func fetchReviews(storeId: Int) {
+        let urlString = "http://13.209.85.14/api/v1/reviews?storeId=\(storeId)"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjaGFlaW5nZUBrYWthby5jb20iLCJ1c2VybmFtZSI6IuyehOyxhOyYgSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzMyMTgzNDMzLCJleHAiOjE3MzMwNDc0MzN9.EfZBwT15UZxcXGoa3YXR4TbnhP8rGqK1aYBAE5IrvWA"
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error fetching reviews: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Status Code: \(httpResponse.statusCode)") // 상태 코드 출력
+                if !(200...299).contains(httpResponse.statusCode) {
+                    print("Invalid response or status code")
+                    return
+                }
+            }
+
+            if let data = data, let jsonString = String(data: data, encoding: .utf8) {
+                print("Fetched Data: \(jsonString)")
+            } else {
+                print("No data received or data is corrupted.")
+            }
+        }
+        task.resume()
+    }
+
     // 1. 리뷰 데이터 설정
     private func setupData() {
         reviews = [
