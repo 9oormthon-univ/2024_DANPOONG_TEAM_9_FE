@@ -251,7 +251,7 @@ class DetailViewController: UIViewController {
         statusStackView.addArrangedSubview(statusLabel)
 
         let closingTimeLabel = UILabel()
-        closingTimeLabel.text = "\(storeData.closeTime)에 영업 종료"
+        closingTimeLabel.text = storeData.closeTime != nil ? "\(storeData.closeTime)에 영업 종료" : ""
         closingTimeLabel.textAlignment = .left
         closingTimeLabel.textColor = .white
         closingTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
@@ -1174,7 +1174,7 @@ class DetailViewController: UIViewController {
         statusLabel.textColor = UIColor(hex: "3F8008")
 
         let closeTimeLabel = UILabel()
-        closeTimeLabel.text = "\(store.closeTime)에 영업 종료"
+        closeTimeLabel.text = store.closeTime != nil ? "\(store.closeTime)에 영업 종료" : ""
         closeTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
         closeTimeLabel.textColor = UIColor(hex: "696969")
 
@@ -1254,7 +1254,7 @@ class DetailViewController: UIViewController {
 
         // 5. 설명
         let descriptionLabel = UILabel()
-        descriptionLabel.text = "가게 상세 정보 store.summary"
+        descriptionLabel.text = store.content
         descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 14)
         descriptionLabel.numberOfLines = 2
         descriptionLabel.textColor = UIColor(hex: "575754")
@@ -1412,8 +1412,8 @@ struct StoreData: Codable {
     let address: String
     let phone: String
     let imageUrl: String
-    let openTime: String
-    let closeTime: String
+    let openTime: String?
+    let closeTime: String?
     let status: String
     let homepage: String
     let rating: Double
@@ -1444,12 +1444,13 @@ struct StoreReview: Codable {
 struct NearbyStore: Codable {
     let storeId: Int
     let name: String
+    let content: String
     let category: String
     let images: [String]
     let rating: Double
     let reviewCount: Int
-    let openTime: String
-    let closeTime: String
+    let openTime: String?
+    let closeTime: String?
     let businessStatus: String
     let bookmarked: Bool
 }
