@@ -26,4 +26,5 @@ class ReviewCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
     }
+
 }

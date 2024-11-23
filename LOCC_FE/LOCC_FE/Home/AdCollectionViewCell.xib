@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -20,6 +21,10 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aek-N3-Y9U">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="204"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFb-TE-y9h">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="204"/>
+                        <color key="backgroundColor" name="SubView"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSW-BH-vPZ">
                         <rect key="frame" x="21" y="90.666666666666671" width="215" height="38.333333333333329"/>
                         <string key="text">이동할 때부터 지칠 수는 없으니까 
@@ -42,10 +47,14 @@
                 <constraint firstItem="RSW-BH-vPZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="7jE-Le-1yF"/>
                 <constraint firstItem="aek-N3-Y9U" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="9lS-oj-Ya9"/>
                 <constraint firstAttribute="bottom" secondItem="aek-N3-Y9U" secondAttribute="bottom" id="HSU-X3-loE"/>
+                <constraint firstAttribute="trailing" secondItem="RFb-TE-y9h" secondAttribute="trailing" id="INY-fl-03K"/>
                 <constraint firstAttribute="trailing" secondItem="aek-N3-Y9U" secondAttribute="trailing" id="Kof-3g-eJG"/>
                 <constraint firstItem="wtC-ay-OEB" firstAttribute="leading" secondItem="RSW-BH-vPZ" secondAttribute="leading" id="O1x-6P-Xg6"/>
                 <constraint firstItem="aek-N3-Y9U" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ORR-CM-z8I"/>
+                <constraint firstItem="RFb-TE-y9h" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Q4v-nd-wLX"/>
+                <constraint firstItem="RFb-TE-y9h" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="XFs-72-PX4"/>
                 <constraint firstItem="wtC-ay-OEB" firstAttribute="top" secondItem="RSW-BH-vPZ" secondAttribute="bottom" constant="6" id="hQ0-bQ-iNz"/>
+                <constraint firstAttribute="bottom" secondItem="RFb-TE-y9h" secondAttribute="bottom" id="jJr-SW-vvZ"/>
                 <constraint firstAttribute="bottom" secondItem="RSW-BH-vPZ" secondAttribute="bottom" constant="75" id="liV-Dd-dbK"/>
             </constraints>
             <connections>
@@ -62,6 +71,9 @@
         </namedColor>
         <namedColor name="ButtonBackground">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SubView">
+            <color red="0.16862745098039217" green="0.18431372549019609" blue="0.094117647058823528" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

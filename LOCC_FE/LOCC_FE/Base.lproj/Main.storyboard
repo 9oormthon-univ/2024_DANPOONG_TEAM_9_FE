@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Kf-Lc-QOU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ety-R1-FKB">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -749,7 +749,7 @@
                                                 </constraints>
                                             </view>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nZ3-aC-nVc">
-                                                <rect key="frame" x="0.0" y="105" width="393" height="398"/>
+                                                <rect key="frame" x="0.0" y="94" width="393" height="398"/>
                                                 <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="398" id="UvH-31-U2A"/>
@@ -772,69 +772,69 @@
                                                 </cells>
                                             </collectionView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rUs-1O-Uoc">
-                                                <rect key="frame" x="33" y="531" width="46" height="64"/>
+                                                <rect key="frame" x="33" y="520" width="46" height="64"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_food"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ad0-fw-aOe">
-                                                <rect key="frame" x="103" y="530" width="46" height="65"/>
+                                                <rect key="frame" x="103" y="519" width="46" height="65"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_restaurant"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nF5-w2-Vfu">
-                                                <rect key="frame" x="173" y="532" width="46" height="63"/>
+                                                <rect key="frame" x="173" y="521" width="46" height="63"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_cafe"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I35-hU-jLa">
-                                                <rect key="frame" x="243" y="534" width="46" height="61"/>
+                                                <rect key="frame" x="243" y="523" width="46" height="61"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_town_store"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apu-oz-YFR">
-                                                <rect key="frame" x="313" y="529" width="46" height="66"/>
+                                                <rect key="frame" x="313" y="518" width="46" height="66"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_craft"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNt-7m-vZk">
-                                                <rect key="frame" x="33" y="610" width="46" height="62"/>
+                                                <rect key="frame" x="33" y="599" width="46" height="62"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_shopping"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Goe-eI-JvC">
-                                                <rect key="frame" x="103" y="612" width="46" height="60"/>
+                                                <rect key="frame" x="103" y="601" width="46" height="60"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_bookstore"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uj5-hn-aZS">
-                                                <rect key="frame" x="173" y="610" width="46" height="62"/>
+                                                <rect key="frame" x="173" y="599" width="46" height="62"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_accomodation"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VF5-dO-qo6">
-                                                <rect key="frame" x="243" y="607" width="46" height="65"/>
+                                                <rect key="frame" x="243" y="596" width="46" height="65"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_space"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ULf-wF-Rzy">
-                                                <rect key="frame" x="313" y="607" width="46" height="65"/>
+                                                <rect key="frame" x="313" y="596" width="46" height="65"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" image="main_lesuire"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="지금 주어지는 혜택" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BD4-6N-ziJ">
-                                                <rect key="frame" x="20" y="714" width="148" height="24"/>
+                                                <rect key="frame" x="20" y="703" width="148" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오직 로크에서만! 지금 할인받고 탐방하자" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEH-WL-gvd">
-                                                <rect key="frame" x="20" y="740" width="241" height="18"/>
+                                                <rect key="frame" x="20" y="729" width="241" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="m3U-b2-rts">
-                                                <rect key="frame" x="0.0" y="778" width="393" height="139"/>
+                                                <rect key="frame" x="0.0" y="767" width="393" height="139"/>
                                                 <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="139" id="MDY-ou-Ewd"/>
@@ -857,7 +857,7 @@
                                                 </cells>
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MKS-s8-Rr1">
-                                                <rect key="frame" x="0.0" y="947" width="393" height="61"/>
+                                                <rect key="frame" x="0.0" y="936" width="393" height="61"/>
                                                 <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="61" id="1v9-jj-rfh"/>
@@ -880,7 +880,7 @@
                                                 </cells>
                                             </collectionView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="70T-ks-5mk">
-                                                <rect key="frame" x="0.0" y="1041.3333333333333" width="393" height="204"/>
+                                                <rect key="frame" x="0.0" y="1030.3333333333333" width="393" height="204"/>
                                                 <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="204" id="Cev-UQ-TSU"/>
@@ -903,19 +903,19 @@
                                                 </cells>
                                             </collectionView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="탐방 후기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKW-Vl-DiI">
-                                                <rect key="frame" x="22" y="1280" width="74" height="24"/>
+                                                <rect key="frame" x="22" y="1269" width="74" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="먼저 탐방을 다녀온 단원들의 생생한 리뷰 보기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAJ-2e-fqx">
-                                                <rect key="frame" x="22" y="1306" width="269.66666666666669" height="18"/>
+                                                <rect key="frame" x="22" y="1295" width="269.66666666666669" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="028-5C-y93">
-                                                <rect key="frame" x="0.0" y="1334" width="393" height="220"/>
+                                                <rect key="frame" x="0.0" y="1323" width="393" height="220"/>
                                                 <color key="backgroundColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="220" id="YAZ-WE-mF0"/>
@@ -952,7 +952,7 @@
                                             <constraint firstItem="m3U-b2-rts" firstAttribute="top" secondItem="vEH-WL-gvd" secondAttribute="bottom" constant="20" id="Ac9-kw-CjM"/>
                                             <constraint firstItem="PNt-7m-vZk" firstAttribute="top" secondItem="rUs-1O-Uoc" secondAttribute="bottom" constant="15" id="BI8-EY-8Cr"/>
                                             <constraint firstItem="w98-6F-FvX" firstAttribute="leading" secondItem="V5T-6c-cv5" secondAttribute="leading" constant="24" id="CeJ-nc-OH8"/>
-                                            <constraint firstItem="nZ3-aC-nVc" firstAttribute="top" secondItem="bfq-sx-0Xz" secondAttribute="bottom" constant="21" id="Ch3-XF-6xB"/>
+                                            <constraint firstItem="nZ3-aC-nVc" firstAttribute="top" secondItem="bfq-sx-0Xz" secondAttribute="bottom" constant="10" id="Ch3-XF-6xB"/>
                                             <constraint firstAttribute="trailing" secondItem="MKS-s8-Rr1" secondAttribute="trailing" id="Cu5-z4-qnQ"/>
                                             <constraint firstItem="I35-hU-jLa" firstAttribute="leading" secondItem="nF5-w2-Vfu" secondAttribute="trailing" constant="24" id="D35-5d-u9q"/>
                                             <constraint firstItem="VF5-dO-qo6" firstAttribute="leading" secondItem="Uj5-hn-aZS" secondAttribute="trailing" constant="24" id="DNH-GA-dOC"/>
@@ -1503,7 +1503,7 @@
             </objects>
             <point key="canvasLocation" x="3501.5267175572517" y="924.64788732394368"/>
         </scene>
-        <!--스크랩-->
+        <!--검색-->
         <scene sceneID="Vgg-WL-MNL">
             <objects>
                 <viewController id="bsS-Os-WQ0" sceneMemberID="viewController">
@@ -1513,7 +1513,7 @@
                         <viewLayoutGuide key="safeArea" id="i5w-FC-idk"/>
                         <color key="backgroundColor" name="Background"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="스크랩" image="bar_scrape" id="mcv-XK-0UA"/>
+                    <tabBarItem key="tabBarItem" title="검색" image="icon_search" id="mcv-XK-0UA"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWu-g3-Mpw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1626,11 +1626,11 @@
         <image name="bar_map" width="24" height="22"/>
         <image name="bar_mypage" width="18" height="24"/>
         <image name="bar_post" width="50" height="50"/>
-        <image name="bar_scrape" width="22" height="22"/>
         <image name="icon_back" width="25" height="25"/>
         <image name="icon_bell" width="20" height="23"/>
         <image name="icon_scrap_unselected" width="21" height="23"/>
         <image name="icon_scrape" width="21" height="23"/>
+        <image name="icon_search" width="22" height="22"/>
         <image name="icon_setting" width="20" height="23"/>
         <image name="kakao" width="291" height="55"/>
         <image name="logo" width="81" height="23"/>
