@@ -257,7 +257,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.curateTitle.text = curation.title
             
             // subtitle을 두 줄로 나누어 설정
-            let formattedSubtitle = splitSubtitleIntoTwoLines(curation.subtitle)
+            let formattedSubtitle = splitSubtitleIntoTwoLines(curation.subtitle ?? "1")
             cell.curateSubTitle.text = formattedSubtitle
             
             cell.curateImg.load(from: curation.imageUrl)

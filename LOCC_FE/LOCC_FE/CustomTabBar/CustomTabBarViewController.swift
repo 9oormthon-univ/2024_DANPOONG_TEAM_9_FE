@@ -50,5 +50,7 @@ class CustomTabBarViewController: UITabBarController {
     
     private func setBackground() {
         tabBar.backgroundColor = UIColor.buttonBackground
+        tabBar.layer.borderWidth = 1
+        tabBar.layer.borderColor = UIColor.line2.cgColor
     }
 }

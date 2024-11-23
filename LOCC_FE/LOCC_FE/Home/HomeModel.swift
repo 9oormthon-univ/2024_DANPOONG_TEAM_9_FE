@@ -24,10 +24,10 @@ struct HomeData: Codable {
 
 // Home Curation Model
 struct HomeCuration: Codable {
-    let curationId: Int
-    let title: String
-    let subtitle: String
-    let imageUrl: String
+    let curationId: Int?
+    let title: String?
+    let subtitle: String?
+    let imageUrl: String?
 }
 
 // Home Benefit Model
@@ -37,13 +37,13 @@ struct HomeBenefit: Codable {
     let rating: Float
     let province: String
     let city: String
-    let imageUrl: String
+    let imageUrl: String?
 }
 
 // Home Province Model
 struct HomeProvince: Codable {
     let province: String
-    let imageUrl: String
+    let imageUrl: String?
 }
 
 // Home Review Model
@@ -54,7 +54,7 @@ struct HomeReview: Codable {
     let category: String
     let rating: Int
     let reviewCount: Int
-    let imageUrl: String
+    let imageUrl: String?
 }
 
 // Home Advertisement Model
@@ -62,5 +62,5 @@ struct HomeAdvertisement: Codable {
     let advertisementId: Int
     let title: String
     let subtitle: String
-    let imageUrl: String
+    let imageUrl: String?
 }
