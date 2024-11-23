@@ -10,6 +10,8 @@ import UIKit
 import KakaoMapsSDK
 
 class MapViewController: UIViewController, UIScrollViewDelegate {
+    // 필터 버튼들을 담을 스택 뷰를 멤버 변수로 선언
+    private let filterButtonsStackView = UIStackView()
     
     // UI 요소 선언
     private var bottomSheetTopConstraint: NSLayoutConstraint!
@@ -19,6 +21,10 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let messageLabel = UILabel()
     private let backButton = UIButton(type: .system)
     private let bottomSheet = UIView()
+    
+    private var selectedCategories: [String] = [] // 최대 2개
+    private var selectedRegions: [String] = []    // 최대 1개
+    private var selectedCities: [String] = []     // 최대 1개
     
     var searchKeyword: String? // 검색어를 받을 프로퍼티
     
@@ -35,7 +41,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let sortButton = createFilterButton(title: "추천순", fontWeight: "Medium")
     private let categoryButton = createFilterButton(title: "카테고리", fontWeight: "Regular")
     private let locationButton = createFilterButton(title: "지역", fontWeight: "Regular")
-    
+
     private var shouldAllowScroll = false
     
     override func viewDidLoad() {
@@ -266,7 +272,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         
         // 필터 아이콘을 감쌀 둥근 뷰 설정
         let filterIconBackgroundView = UIView()
-        filterIconBackgroundView.backgroundColor = .clear
+        filterIconBackgroundView.backgroundColor = .white
         filterIconBackgroundView.layer.cornerRadius = 16
         filterIconBackgroundView.layer.borderWidth = 0.75 // 테두리 두께
         filterIconBackgroundView.layer.borderColor = UIColor(hex: "#111111").withAlphaComponent(0.3).cgColor // 테두리 색상
@@ -284,8 +290,43 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         separatorView.translatesAutoresizingMaskIntoConstraints = false
         separatorView.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
+        // 스크롤 뷰 설정
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.backgroundColor = .clear
+        
         // 필터 버튼들 스택뷰 설정
-        let filterStackView = UIStackView(arrangedSubviews: [sortButton, separatorView, categoryButton, locationButton])
+//        let filterButtonsStackView = UIStackView()
+        filterButtonsStackView.axis = .horizontal
+        filterButtonsStackView.spacing = 8
+        filterButtonsStackView.alignment = .center
+        filterButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(filterButtonsStackView)
+        
+        // 버튼 목록 (한글 레이블만)
+        let buttonTitles = [
+            "식품", "맛집", "카페", "공방", "쇼핑", "동네가게", "책방", "공간", "숙소",
+            "서울", "경기", "인천", "강원", "대전", "충청", "전라", "광주", "경상",
+            "대구", "부산", "울산", "제주", "춘천시", "원주시", "강릉시", "동해시", "태백시",
+            "속초시", "삼척시", "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군",
+            "화천군", "양구군", "인제군", "고성군", "양양군"
+        ]
+        
+        // 버튼 생성 및 추가
+        for title in buttonTitles {
+            let button = MapViewController.createFilterButton(title: title, fontWeight: "Regular")
+            
+            // 버튼 클릭 시 동작 추가
+            button.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
+            
+            filterButtonsStackView.addArrangedSubview(button)
+        }
+        
+        // 필터 스택뷰 설정
+        let filterStackView = UIStackView(arrangedSubviews: [sortButton, separatorView, scrollView])
         filterStackView.axis = .horizontal
         filterStackView.spacing = 8
         filterStackView.alignment = .center // 세로로 가운데 정렬
@@ -302,6 +343,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             
             // 필터 스택뷰 위치 설정
             filterStackView.leadingAnchor.constraint(equalTo: filterContainerView.leadingAnchor),
+            filterStackView.trailingAnchor.constraint(equalTo: filterContainerView.trailingAnchor),
             filterStackView.centerYAnchor.constraint(equalTo: filterContainerView.centerYAnchor),
             
             // 필터 아이콘 배경 뷰 위치 및 크기 설정
@@ -317,10 +359,104 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             filterIconView.heightAnchor.constraint(equalToConstant: 18), // 아이콘 크기
             
             // 세로 라인 높이를 버튼과 동일하게 설정
-            separatorView.heightAnchor.constraint(equalTo: sortButton.heightAnchor, constant: -8)
+            separatorView.heightAnchor.constraint(equalTo: sortButton.heightAnchor, constant: -8),
+            
+            // 스크롤뷰 위치 설정
+            scrollView.heightAnchor.constraint(equalTo: filterContainerView.heightAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: separatorView.trailingAnchor, constant: 8),
+            scrollView.trailingAnchor.constraint(equalTo: filterIconBackgroundView.leadingAnchor, constant: -8),
+            scrollView.centerYAnchor.constraint(equalTo: filterContainerView.centerYAnchor),
+            
+            // 스택뷰 위치 설정 (스크롤뷰 내부)
+            filterButtonsStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            filterButtonsStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            filterButtonsStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            filterButtonsStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            filterButtonsStackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
     }
     
+    @objc private func filterButtonTapped(_ sender: UIButton) {
+        guard let title = sender.title(for: .normal) else { return }
+        
+        let categoryGroup = [
+            "식품", "맛집", "카페", "공방", "쇼핑", "동네가게", "책방", "공간", "숙소"
+        ]
+        let regionGroup = [
+            "서울", "경기", "인천", "강원", "대전", "충청", "전라", "광주", "경상",
+            "대구", "부산", "울산", "제주"
+        ]
+        let cityGroup = [
+            "춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시",
+            "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군",
+            "화천군", "양구군", "인제군", "고성군", "양양군"
+        ]
+        
+        // 현재 선택 상태
+        let isSelected = sender.backgroundColor == UIColor(hex: "#F8F7F0")
+        
+        if categoryGroup.contains(title) {
+            if isSelected {
+                selectedCategories.removeAll { $0 == title }
+            } else if selectedCategories.count < 2 {
+                selectedCategories.append(title)
+            } else {
+                print("카테고리는 최대 2개까지 선택 가능합니다.")
+                return
+            }
+        } else if regionGroup.contains(title) {
+            if isSelected {
+                selectedRegions.removeAll { $0 == title }
+            } else if selectedRegions.count < 1 {
+                selectedRegions.append(title)
+            } else {
+                print("지역은 최대 1개만 선택 가능합니다.")
+                return
+            }
+        } else if cityGroup.contains(title) {
+            if isSelected {
+                selectedCities.removeAll { $0 == title }
+            } else if selectedCities.count < 1 {
+                selectedCities.append(title)
+            } else {
+                print("도시는 최대 1개만 선택 가능합니다.")
+                return
+            }
+        }
+        
+        // 모든 버튼 상태 업데이트
+        updateAllButtonsState()
+        
+        // 선택된 상태 출력
+        print("선택된 카테고리: \(selectedCategories)")
+        print("선택된 지역: \(selectedRegions)")
+        print("선택된 도시: \(selectedCities)")
+    }
+
+    private func updateAllButtonsState() {
+        for subview in filterButtonsStackView.subviews {
+            if let button = subview as? UIButton, let title = button.title(for: .normal) {
+                if selectedCategories.contains(title) || selectedRegions.contains(title) || selectedCities.contains(title) {
+                    updateButtonState(button, isSelected: true) // 선택된 버튼은 노란색 유지
+                } else {
+                    updateButtonState(button, isSelected: false) // 나머지 버튼은 기본 상태로
+                }
+            }
+        }
+    }
+
+    private func updateButtonState(_ button: UIButton, isSelected: Bool) {
+        if isSelected {
+            // 선택된 상태
+            button.backgroundColor = UIColor(hex: "#F8F7F0")
+            button.setTitleColor(UIColor(hex: "#111111"), for: .normal)
+        } else {
+            // 선택 해제된 상태
+            button.backgroundColor = .white
+            button.setTitleColor(UIColor(hex: "#111111").withAlphaComponent(0.5), for: .normal)
+        }
+    }
+
     private func setupBottomBorder() {
         // bottomBorder 생성 및 설정
         let border = CALayer()
