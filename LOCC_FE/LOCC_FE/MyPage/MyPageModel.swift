@@ -16,7 +16,7 @@ struct MyPageResponse: Codable {
 struct UserData: Codable {
     let username: String?
     let handle: String?
-    let profileImageUrl: URL?
+    let profileImageUrl: String?
     let savedCurations: [Curation]
     let savedStores: [Store]
 }
@@ -25,7 +25,7 @@ struct Curation: Codable {
     let curationId: Int
     let title: String
     let subtitle: String
-    let imageUrl: String
+    let imageUrl: String?
 }
 
 struct Store: Codable {
@@ -34,10 +34,10 @@ struct Store: Codable {
     let category: String
     let province: String
     let city: String
-    let imageUrl: String
+    let imageUrl: String?
     let rating: Double
     let reviewCount: Int
     let openTime: String
     let closeTime: String
-    let businessStatus: String
+    let businessStatus: String?
 }
