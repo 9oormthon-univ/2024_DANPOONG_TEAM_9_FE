@@ -37,7 +37,7 @@ struct Store: Codable {
     let imageUrl: String?
     let rating: Double
     let reviewCount: Int
-    let openTime: String
-    let closeTime: String
+    let openTime: String?
+    let closeTime: String?
     let businessStatus: String?
 }

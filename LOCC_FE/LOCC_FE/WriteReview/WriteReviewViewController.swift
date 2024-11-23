@@ -63,6 +63,7 @@ class WriteReviewViewController: UIViewController {
         starRatingView.settings.fillMode = .half
         starRatingView.settings.filledImage = UIImage(named: "icon_star_full") // 채워진 별
         starRatingView.settings.emptyImage = UIImage(named: "icon_star_unfull") // 빈 별
+        starRatingView.settings.starSize = 31.75
         
         // SearchBar 스타일
         if let backgroundImage = UIImage(color: UIColor.searchBar) {
