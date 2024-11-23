@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-//import KakaoMapsSDK
+import KakaoMapsSDK
 
 class MapViewController: UIViewController, UIScrollViewDelegate {
     
@@ -21,8 +21,6 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let bottomSheet = UIView()
     
     var searchKeyword: String? // 검색어를 받을 프로퍼티
-    
-//    private var mapController: KMController?
     
     // 검색 필드 컨테이너 뷰와 내부 요소들
     private let handleIconView = UIImageView()
@@ -50,6 +48,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         searchTextField.isUserInteractionEnabled = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchFieldTapped))
         searchContainerView.addGestureRecognizer(tapGesture)
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,74 +69,50 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // UI 설정 메서드
     private func setupUI() {
         setupDimmingView()
-        setupKakaoMap()
+//        addViews()
         setupBackButton()
         setupBottomSheet()
     }
     
     // kakaomap 추가
-    private func setupKakaoMap() {
-        // 배경이 흰색인 뷰 생성
-            let mapBackgroundView = UIView()
-            mapBackgroundView.backgroundColor = .white
-            mapBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-
-            // "Hello, this is map view!" 라벨 생성
-            let label = UILabel()
-            label.text = "Hello, this is map view!"
-            label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-            label.textColor = .black
-            label.textAlignment = .center
-            label.translatesAutoresizingMaskIntoConstraints = false
-
-            // 뷰를 추가
-            view.addSubview(mapBackgroundView)
-            mapBackgroundView.addSubview(label)
-
-            // 배경 뷰의 제약 조건 설정 (전체 화면 차지)
-            NSLayoutConstraint.activate([
-                mapBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-                mapBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                mapBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                mapBackgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
-
-            // 라벨의 제약 조건 설정 (중앙 배치)
-            NSLayoutConstraint.activate([
-                label.centerXAnchor.constraint(equalTo: mapBackgroundView.centerXAnchor),
-                label.centerYAnchor.constraint(equalTo: mapBackgroundView.centerYAnchor)
-            ])
-//        let mapContainer = KMViewContainer(frame: self.view.bounds)
-//        mapContainer.translatesAutoresizingMaskIntoConstraints = false
-//        mapContainer.backgroundColor = .red
+//    override func addViews() {
+//        guard let mapController = mapController else {
+//            print("Error: mapController is nil in addViews")
+//            return
+//        }
 //
-//        view.addSubview(mapContainer)
+//        // 엔진 준비 상태 확인
+//        if !mapController.isEnginePrepared {
+//            print("Engine not prepared. Preparing engine...")
+//            mapController.prepareEngine() // 엔진 준비
+//        }
+//
+//        if !mapController.isEngineActive {
+//            print("Engine not active. Activating engine...")
+//            mapController.activateEngine() // 엔진 활성화
+//        }
 //        
-//        self.mapController = KMController(viewContainer: mapContainer)
-//        mapController?.prepareEngine()
-//        mapController?.activateEngine()
-//        
-//        // 지도 추가
-//        let defaultPosition = MapPoint(longitude: 127.108678, latitude: 37.402001)
-//        let mapViewInfo = MapviewInfo(
-//            viewName: "mapview",
-//            viewInfoName: "map",
-//            defaultPosition: defaultPosition,
-//            defaultLevel: 7
-//        )
-//        mapController?.addView(mapViewInfo)
-//        
-//        NSLayoutConstraint.activate([
-//            mapContainer.topAnchor.constraint(equalTo: view.topAnchor),
-//            mapContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            mapContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            mapContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ])
-//        
-//        print("mapContainer frame: \(mapContainer.frame)")
+//
+//        // 다시 엔진 상태를 확인
+//        if mapController.isEnginePrepared && mapController.isEngineActive {
+//            print("Engine Prepared: \(mapController.isEnginePrepared)")
+//            print("Engine Active: \(mapController.isEngineActive)")
+//
+//            let defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691) // 서울 좌표
+//            let mapviewInfo = MapviewInfo(
+//                viewName: "unique_mapview",
+//                viewInfoName: "map",
+//                defaultPosition: defaultPosition,
+//                defaultLevel: 7
+//            )
+//
+//            mapController.addView(mapviewInfo)
+//            print("MapView added successfully")
+//        } else {
+//            print("Engine is not ready after preparation")
+//        }
+//    }
 
-    }
-    
     
     // 뒤로 가기 버튼 설정
     private func setupBackButton() {
@@ -787,5 +762,24 @@ extension MapViewController: SearchViewControllerDelegate {
         
         // 전달받은 keyword를 검색 바에 입력된 것처럼 설정
         searchTextField.text = keyword
+    }
+}
+
+// MapControllerDelegate의 기본 구현 추가
+extension MapControllerDelegate {
+    func addViewSucceeded(_ viewName: String, viewInfoName: String) {
+        print("Default: addViewSucceeded - viewName: \(viewName), viewInfoName: \(viewInfoName)")
+    }
+
+    func addViewFailed(_ viewName: String, viewInfoName: String) {
+        print("Default: addViewFailed - viewName: \(viewName), viewInfoName: \(viewInfoName)")
+    }
+
+    func engineActivated() {
+        print("Default: Engine Activated")
+    }
+
+    func engineActivationFailed() {
+        print("Default: Engine Activation Failed")
     }
 }

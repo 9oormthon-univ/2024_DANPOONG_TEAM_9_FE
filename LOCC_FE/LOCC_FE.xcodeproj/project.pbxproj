@@ -62,6 +62,14 @@
 		B2DAC0032CEEC66C003A0E39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0012CEEC66C003A0E39 /* SearchViewController.swift */; };
 		B2DAC00A2CEF4862003A0E39 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0092CEF4862003A0E39 /* ReviewViewController.swift */; };
 		B2DAC00D2CEFC653003A0E39 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC00C2CEFC653003A0E39 /* DetailViewController.swift */; };
+		B2DAC01C2CF1C5EF003A0E39 /* FirstMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC01B2CF1C5EF003A0E39 /* FirstMapViewController.swift */; };
+		B2DAC01E2CF1C610003A0E39 /* KakaoMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC01D2CF1C610003A0E39 /* KakaoMapManager.swift */; };
+		B2DAC0202CF1C6DA003A0E39 /* SimpleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC01F2CF1C6DA003A0E39 /* SimpleMapView.swift */; };
+		B2DAC0302CF1C87B003A0E39 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC02C2CF1C87B003A0E39 /* Samples.swift */; };
+		B2DAC0312CF1C87B003A0E39 /* APISampleBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC02B2CF1C87B003A0E39 /* APISampleBaseViewController.swift */; };
+		B2DAC0322CF1C87B003A0E39 /* SamplesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC02E2CF1C87B003A0E39 /* SamplesTableViewController.swift */; };
+		B2DAC0332CF1C87B003A0E39 /* SampleContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC02F2CF1C87B003A0E39 /* SampleContainerViewController.swift */; };
+		B2DAC0342CF1C87B003A0E39 /* SampleSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC02D2CF1C87B003A0E39 /* SampleSplitViewController.swift */; };
 		EB18B42A0E9839B66DC5B1C1 /* Pods_LOCC_FE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933AF9FB10709C182A2CACC2 /* Pods_LOCC_FE.framework */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +156,14 @@
 		B2DAC0012CEEC66C003A0E39 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B2DAC0092CEF4862003A0E39 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		B2DAC00C2CEFC653003A0E39 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		B2DAC01B2CF1C5EF003A0E39 /* FirstMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMapViewController.swift; sourceTree = "<group>"; };
+		B2DAC01D2CF1C610003A0E39 /* KakaoMapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapManager.swift; sourceTree = "<group>"; };
+		B2DAC01F2CF1C6DA003A0E39 /* SimpleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMapView.swift; sourceTree = "<group>"; };
+		B2DAC02B2CF1C87B003A0E39 /* APISampleBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISampleBaseViewController.swift; sourceTree = "<group>"; };
+		B2DAC02C2CF1C87B003A0E39 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
+		B2DAC02D2CF1C87B003A0E39 /* SampleSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSplitViewController.swift; sourceTree = "<group>"; };
+		B2DAC02E2CF1C87B003A0E39 /* SamplesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplesTableViewController.swift; sourceTree = "<group>"; };
+		B2DAC02F2CF1C87B003A0E39 /* SampleContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleContainerViewController.swift; sourceTree = "<group>"; };
 		C09D9EE9B5003E373EF0ADF6 /* Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,6 +233,12 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				B2DAC02B2CF1C87B003A0E39 /* APISampleBaseViewController.swift */,
+				B2DAC02C2CF1C87B003A0E39 /* Samples.swift */,
+				B2DAC02D2CF1C87B003A0E39 /* SampleSplitViewController.swift */,
+				B2DAC02E2CF1C87B003A0E39 /* SamplesTableViewController.swift */,
+				B2DAC02F2CF1C87B003A0E39 /* SampleContainerViewController.swift */,
+				B2DAC0182CF1C36D003A0E39 /* TestMap */,
 				B2DAC00B2CEFC63D003A0E39 /* Detail */,
 				B2DAC0082CEF4850003A0E39 /* Review */,
 				B2DAC0042CEECEDB003A0E39 /* Map */,
@@ -385,6 +407,16 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		B2DAC0182CF1C36D003A0E39 /* TestMap */ = {
+			isa = PBXGroup;
+			children = (
+				B2DAC01F2CF1C6DA003A0E39 /* SimpleMapView.swift */,
+				B2DAC01D2CF1C610003A0E39 /* KakaoMapManager.swift */,
+				B2DAC01B2CF1C5EF003A0E39 /* FirstMapViewController.swift */,
+			);
+			path = TestMap;
+			sourceTree = "<group>";
+		};
 		C03E35860E3C5DCC72330913 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +439,7 @@
 				8B11EF772CEB2AE9003F92AC /* Frameworks */,
 				8B11EF782CEB2AE9003F92AC /* Resources */,
 				9B98643FB70F9A496CC0C7B4 /* [CP] Embed Pods Frameworks */,
+				46094F5EB7CDA96AAADD6B49 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -445,6 +478,7 @@
 				8B11EF972CEB2AEB003F92AC /* Frameworks */,
 				8B11EF982CEB2AEB003F92AC /* Resources */,
 				A4F90DCA9FE19E06077DD9C5 /* [CP] Embed Pods Frameworks */,
+				6BA9CBA3AEF6D4FECBD42FF1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -566,6 +600,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		46094F5EB7CDA96AAADD6B49 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE/Pods-LOCC_FE-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5AB7828113FCC9CDDADD6AB6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -586,6 +637,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BA9CBA3AEF6D4FECBD42FF1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		77CBF347005BDDD1BF5DBBBC /* [CP] Check Pods Manifest.lock */ = {
@@ -652,9 +720,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B808EF52CEFA17000810937 /* CurationPageViewController.swift in Sources */,
+				B2DAC01E2CF1C610003A0E39 /* KakaoMapManager.swift in Sources */,
 				8B219F172CEE3B8C001643A3 /* LoginModel.swift in Sources */,
 				8B0E7A372CEFA71F00603FBC /* BookmarkCollectionViewCell.swift in Sources */,
 				8BC98D562CEB31A4005CBE75 /* Onboarding2ViewController.swift in Sources */,
+				B2DAC0202CF1C6DA003A0E39 /* SimpleMapView.swift in Sources */,
 				B2DAC00D2CEFC653003A0E39 /* DetailViewController.swift in Sources */,
 				8B6736952CF08FFA001B8CDE /* CurationModel.swift in Sources */,
 				8B6736932CF061C3001B8CDE /* OnboardingModel.swift in Sources */,
@@ -669,6 +739,7 @@
 				8BCCD2622CED729600F0391C /* CurateCollectionViewCell.swift in Sources */,
 				8B11EFB82CEB2AF0003F92AC /* AppDelegate.swift in Sources */,
 				8BCCD26A2CED781F00F0391C /* ProvinceCollectionViewCell.swift in Sources */,
+				B2DAC01C2CF1C5EF003A0E39 /* FirstMapViewController.swift in Sources */,
 				8BC98D592CEB3362005CBE75 /* CustomTabBarViewController.swift in Sources */,
 				B2DAC0032CEEC66C003A0E39 /* SearchViewController.swift in Sources */,
 				8BB425A52CEB914B00FA3EAB /* MyPageViewController.swift in Sources */,
@@ -676,6 +747,11 @@
 				8BF0531A2CED831400A86F2E /* CurateViewController.swift in Sources */,
 				8B8C02CF2CEB64D3007F86E6 /* HomeViewController.swift in Sources */,
 				8BC98D542CEB319D005CBE75 /* Onboarding1ViewController.swift in Sources */,
+				B2DAC0302CF1C87B003A0E39 /* Samples.swift in Sources */,
+				B2DAC0312CF1C87B003A0E39 /* APISampleBaseViewController.swift in Sources */,
+				B2DAC0322CF1C87B003A0E39 /* SamplesTableViewController.swift in Sources */,
+				B2DAC0332CF1C87B003A0E39 /* SampleContainerViewController.swift in Sources */,
+				B2DAC0342CF1C87B003A0E39 /* SampleSplitViewController.swift in Sources */,
 				8B11EFB92CEB2AF0003F92AC /* SceneDelegate.swift in Sources */,
 				B2DAC00A2CEF4862003A0E39 /* ReviewViewController.swift in Sources */,
 				8BCCD26E2CED787400F0391C /* AdCollectionViewCell.swift in Sources */,

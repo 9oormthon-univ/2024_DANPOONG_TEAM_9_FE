@@ -1,10 +1,49 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    private var storeData: StoreData?
+    private var scrapButton: UIButton!
+
+    private let jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc3RoZXIwOTA0QG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jqw7J2A7KeEIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MzIzMTMzMTYsImV4cCI6MTczMzE3NzMxNn0.m1wso6RkWxmvipO8KAe9yHJc2u654_RyU8jptQLWBj0"
+    
+    func fetchStoreDetails(storeId: Int, completion: @escaping (StoreData?) -> Void) {
+        let url = URL(string: "http://13.209.85.14/api/v1/stores/\(storeId)")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let storeResponse = try decoder.decode(StoreDetailResponse.self, from: data)
+                completion(storeResponse.data)
+            } catch {
+                print("Decoding error: \(error)")
+                completion(nil)
+            }
+        }
+        task.resume()
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        setupUI()
+//        setupUI()
+        fetchStoreDetails(storeId: 1) { [weak self] data in
+            guard let self = self, let data = data else { return }
+            DispatchQueue.main.async {
+                self.storeData = data
+                self.setupUI()
+            }
+        }
     }
     
     private func setupUI() {
@@ -72,6 +111,8 @@ class DetailViewController: UIViewController {
 
     // 1. 가게 기본 정보 섹션
     private func createBasicInfoSection() -> UIView {
+        guard let storeData = storeData else { return UIView() }
+        
         // Main Container View
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +121,9 @@ class DetailViewController: UIViewController {
         // 배경 이미지
         let backgroundImageView = UIImageView()
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImageView.image = UIImage(named: "image1") // 배경 이미지 이름
+        if let imageUrl = URL(string: storeData.imageUrl) {
+            backgroundImageView.loadImage(from: imageUrl)
+        }
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         containerView.addSubview(backgroundImageView)
@@ -115,17 +158,19 @@ class DetailViewController: UIViewController {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         backButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         headerStackView.addArrangedSubview(backButton)
 
         let spacer = UIView()
         spacer.translatesAutoresizingMaskIntoConstraints = false
         headerStackView.addArrangedSubview(spacer)
 
-        let scrapButton = UIButton()
-        scrapButton.setImage(UIImage(named: "icon_scrap_unselected"), for: .normal)
+        scrapButton = UIButton()
+        scrapButton.setImage(UIImage(named: storeData.bookmarked ? "icon_scrape" : "icon_scrap_unselected"), for: .normal)
         scrapButton.translatesAutoresizingMaskIntoConstraints = false
         scrapButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         scrapButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        scrapButton.addTarget(self, action: #selector(toggleBookmark), for: .touchUpInside)
         headerStackView.addArrangedSubview(scrapButton)
 
         // Header StackView를 Header Container View에 추가
@@ -157,7 +202,7 @@ class DetailViewController: UIViewController {
         categoryContainerView.layer.cornerRadius = 12
 
         let categoryLabel = UILabel()
-        categoryLabel.text = "카페"
+        categoryLabel.text = storeData.category
         categoryLabel.textAlignment = .center
         categoryLabel.textColor = UIColor(hex: "DC8F1C")
         categoryLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
@@ -176,7 +221,7 @@ class DetailViewController: UIViewController {
 
         // 가게 이름
         let nameLabel = UILabel()
-        nameLabel.text = "로슈아커피"
+        nameLabel.text = storeData.storeName
         nameLabel.textAlignment = .left
         nameLabel.textColor = .white
         nameLabel.font = UIFont(name: "Pretendard-Bold", size: 24)
@@ -189,14 +234,14 @@ class DetailViewController: UIViewController {
         statusStackView.spacing = 8
 
         let statusLabel = UILabel()
-        statusLabel.text = "영업중"
+        statusLabel.text = storeData.status
         statusLabel.textAlignment = .left
         statusLabel.textColor = UIColor(hex: "3F8008")
         statusLabel.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         statusStackView.addArrangedSubview(statusLabel)
 
         let closingTimeLabel = UILabel()
-        closingTimeLabel.text = "오후 10:00에 영업 종료"
+        closingTimeLabel.text = "\(storeData.closeTime)에 영업 종료"
         closingTimeLabel.textAlignment = .left
         closingTimeLabel.textColor = .white
         closingTimeLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
@@ -230,6 +275,39 @@ class DetailViewController: UIViewController {
         ])
 
         return containerView
+    }
+    
+    @objc private func handleBackButton() {
+        // 모달로 표시된 현재 ViewController 닫기
+            self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func toggleBookmark() {
+        let url = URL(string: "http://13.209.85.14/api/v1/stores/1/bookmark/toggle")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self, let data = data, error == nil else {
+                print("Error toggling bookmark: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(ToggleBookmarkResponse.self, from: data)
+                
+                DispatchQueue.main.async {
+                    self.storeData?.bookmarked = response.data.bookmarked
+                    let updatedImage = UIImage(named: response.data.bookmarked ? "icon_scrape" : "icon_scrap_unselected")
+                    self.scrapButton.setImage(updatedImage, for: .normal)
+                }
+            } catch {
+                print("Failed to decode response: \(error)")
+            }
+        }
+        task.resume()
     }
 
     // 2. 후기 섹션
@@ -293,6 +371,8 @@ class DetailViewController: UIViewController {
 
     // 별점 및 후기 정보
     private func createRatingInfoStackView() -> UIStackView {
+        guard let storeData = storeData else { return UIStackView() }
+        
         let ratingInfoStackView = UIStackView()
         ratingInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         ratingInfoStackView.axis = .horizontal
@@ -310,7 +390,13 @@ class DetailViewController: UIViewController {
         starStackView.distribution = .fillEqually
         starStackView.alignment = .center
         starStackView.spacing = 4
-        for _ in 1...5 {
+
+        // 별점 계산 및 이미지 추가
+        let fullStars = Int(storeData.rating) // 정수 부분
+        let hasHalfStar = storeData.rating - Double(fullStars) >= 0.5 // 소수점 부분이 0.5 이상이면 true
+
+        // Full stars
+        for _ in 0..<fullStars {
             let starImageView = UIImageView(image: UIImage(named: "icon_star"))
             starImageView.translatesAutoresizingMaskIntoConstraints = false
             starImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
@@ -318,9 +404,28 @@ class DetailViewController: UIViewController {
             starStackView.addArrangedSubview(starImageView)
         }
 
+        // Half star
+        if hasHalfStar {
+            let halfStarImageView = UIImageView(image: UIImage(named: "icon_star_half"))
+            halfStarImageView.translatesAutoresizingMaskIntoConstraints = false
+            halfStarImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            halfStarImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            starStackView.addArrangedSubview(halfStarImageView)
+        }
+
+        // Empty stars
+        let emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
+        for _ in 0..<emptyStars {
+            let emptyStarImageView = UIImageView(image: UIImage(named: "icon_star_unfilled"))
+            emptyStarImageView.translatesAutoresizingMaskIntoConstraints = false
+            emptyStarImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            emptyStarImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            starStackView.addArrangedSubview(emptyStarImageView)
+        }
+
         // 별점 정보
         let ratingLabel = UILabel()
-        ratingLabel.text = "4.4"
+        ratingLabel.text = String(format: "%.1f", storeData.rating)
         ratingLabel.textColor = UIColor(hex: "696969")
         ratingLabel.font = UIFont(name: "Pretendard-Medium", size: 16)
 
@@ -331,7 +436,7 @@ class DetailViewController: UIViewController {
 
         // 총 후기 개수
         let reviewCountLabel = UILabel()
-        reviewCountLabel.text = "(273)"
+        reviewCountLabel.text = "(\(storeData.reviewCount))"
         reviewCountLabel.textColor = UIColor(hex: "9C9B97")
         reviewCountLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
 
@@ -357,6 +462,8 @@ class DetailViewController: UIViewController {
 
     // 후기 카드 스크롤 뷰
     private func createReviewCardScrollView() -> UIScrollView {
+        guard let storeData = storeData else { return UIScrollView() }
+
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -378,17 +485,17 @@ class DetailViewController: UIViewController {
             contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
 
-        // 샘플 후기 카드
-        for i in 1...3 {
+        // 동적으로 리뷰 데이터를 사용하여 카드 생성
+        for review in storeData.reviews {
+            let profileUrl = review.profileImageUrl
+            let imageUrl = review.images.first ?? "" // 첫 번째 이미지 URL 가져오기
             let cardView = createReviewCard(
-                profileImage: UIImage(named: "image6"), // 유저 프로필 이미지 (샘플 이미지 사용)
-                userName: "유저 \(i)",
-                rating: 4.5,
-                reviewText: "옥수수빵이 진짜 큰데 맛도리뱅뱅임. 차 2시간 타고 올만 하다 이거임.",
+                profileImage: profileUrl, // 기본 프로필 이미지 사용
+                userName: review.username, // 유저 이름 대체
+                rating: review.rating,
+                reviewText: review.summary,
                 images: [
-                    UIImage(named: "image1") ?? UIImage(),
-                    UIImage(named: "image2") ?? UIImage(),
-                    UIImage(named: "image3") ?? UIImage()
+                    imageUrl, imageUrl, imageUrl // 동일한 URL 3번 사용
                 ]
             )
             contentView.addArrangedSubview(cardView)
@@ -398,7 +505,7 @@ class DetailViewController: UIViewController {
     }
 
     // 후기 카드 생성
-    private func createReviewCard(profileImage: UIImage?, userName: String, rating: Double, reviewText: String, images: [UIImage]) -> UIView {
+    private func createReviewCard(profileImage: String, userName: String, rating: Double, reviewText: String, images: [String]) -> UIView {
         let cardView = UIView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.backgroundColor = .white
@@ -434,10 +541,11 @@ class DetailViewController: UIViewController {
         userInfoStackView.distribution = .equalSpacing // 내부 콘텐츠 간 간격 균등 배치
         userInfoStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
-        let profileImageView = UIImageView(image: profileImage)
+        let profileImageView = UIImageView()
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.layer.cornerRadius = 14
         profileImageView.clipsToBounds = true
+        profileImageView.loadImage(from: profileImage)
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.widthAnchor.constraint(equalToConstant: 26).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 26).isActive = true
@@ -553,12 +661,13 @@ class DetailViewController: UIViewController {
         imageStackView.alignment = .center
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        for image in images {
-            let imageView = UIImageView(image: image)
+        for imageUrl in images {
+            let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.layer.cornerRadius = 8
             imageView.clipsToBounds = true
             imageView.contentMode = .scaleAspectFill
+            imageView.loadImage(from: imageUrl) // URL로 이미지 로드
             imageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
             imageStackView.addArrangedSubview(imageView)
@@ -1236,4 +1345,96 @@ class DetailViewController: UIViewController {
         
         return stackView
     }
+}
+
+extension UIImageView {
+    func loadImage(from url: URL) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Failed to load image: \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = data, let image = UIImage(data: data) else {
+                print("Failed to decode image data")
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.image = image
+            }
+        }
+        task.resume()
+    }
+
+    func loadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL string: \(urlString)")
+            return
+        }
+        loadImage(from: url)
+    }
+}
+
+// MARK: 모델 구조체
+struct StoreDetailResponse: Codable {
+    let code: String
+    let data: StoreData
+}
+
+struct StoreData: Codable {
+    let storeName: String
+    let category: String
+    let phone: String
+    let imageUrl: String
+    let openTime: String
+    let closeTime: String
+    let status: String
+    let homepage: String
+    let rating: Double
+    let reviewCount: Int
+    let content: String
+    let businessHours: [BusinessHour]
+    let reviews: [StoreReview]
+    let nearbyStores: [NearbyStore]
+    var bookmarked: Bool
+}
+
+struct BusinessHour: Codable {
+    let dayOfWeek: String
+    let openTime: String?
+    let closeTime: String?
+    let holiday: Bool
+}
+
+struct StoreReview: Codable {
+    let reviewId: Int
+    let profileImageUrl: String
+    let username: String
+    let rating: Double
+    let summary: String
+    let images: [String]
+}
+
+struct NearbyStore: Codable {
+    let storeId: Int
+    let name: String
+    let category: String
+    let images: [String]
+    let rating: Double
+    let reviewCount: Int
+    let openTime: String
+    let closeTime: String
+    let businessStatus: String
+    let bookmarked: Bool
+}
+
+struct ToggleBookmarkResponse: Codable {
+    let code: String
+    let data: StoreBookmarkData // 이름 변경
+}
+
+struct StoreBookmarkData: Codable {
+    let count: Int
+    let bookmarked: Bool
 }

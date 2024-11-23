@@ -653,7 +653,6 @@ class SearchViewController: UIViewController {
     @objc private func handleBackButton() {
         // 모달로 표시된 현재 ViewController 닫기
             self.dismiss(animated: true, completion: nil)
-//        navigationController?.popViewController(animated: true)
     }
     
     @objc private func handleDeleteAll() {
