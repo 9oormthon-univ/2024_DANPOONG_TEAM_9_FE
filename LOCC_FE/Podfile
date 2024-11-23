@@ -6,10 +6,10 @@ target 'LOCC_FE' do
   use_frameworks!
 
   # Pods for LOCC_FE
-  pod 'DropDown'
   pod 'Alamofire'
   pod 'KakaoSDKAuth'
   pod 'KakaoSDKUser'
+  pod 'Cosmos', '~> 25.0'
 
   target 'LOCC_FETests' do
     inherit! :search_paths

@@ -58,6 +58,7 @@
 		8BF0531A2CED831400A86F2E /* CurateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF053192CED831400A86F2E /* CurateViewController.swift */; };
 		8BF053212CED984400A86F2E /* CurationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */; };
 		8BF053222CED984400A86F2E /* CurationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */; };
+		8BFD3D6E2CF16985002F3F0F /* WriteReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD3D6D2CF16985002F3F0F /* WriteReviewViewController.swift */; };
 		B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */; };
 		B2DAC0032CEEC66C003A0E39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0012CEEC66C003A0E39 /* SearchViewController.swift */; };
 		B2DAC00A2CEF4862003A0E39 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0092CEF4862003A0E39 /* ReviewViewController.swift */; };
@@ -142,6 +143,7 @@
 		8BF053192CED831400A86F2E /* CurateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurateViewController.swift; sourceTree = "<group>"; };
 		8BF0531F2CED984400A86F2E /* CurationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurationCollectionViewCell.swift; sourceTree = "<group>"; };
 		8BF053202CED984400A86F2E /* CurationCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurationCollectionViewCell.xib; sourceTree = "<group>"; };
+		8BFD3D6D2CF16985002F3F0F /* WriteReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewViewController.swift; sourceTree = "<group>"; };
 		921B048C7895C78C48CE49EF /* Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.release.xcconfig"; sourceTree = "<group>"; };
 		933AF9FB10709C182A2CACC2 /* Pods_LOCC_FE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LOCC_FE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = LOCC_FE/Map/MapViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -217,6 +219,7 @@
 		8B11EFB72CEB2AF0003F92AC /* LOCC_FE */ = {
 			isa = PBXGroup;
 			children = (
+				8BFD3D6C2CF16958002F3F0F /* WriteReview */,
 				B2DAC00B2CEFC63D003A0E39 /* Detail */,
 				B2DAC0082CEF4850003A0E39 /* Review */,
 				B2DAC0042CEECEDB003A0E39 /* Map */,
@@ -351,6 +354,14 @@
 				8B6736942CF08FFA001B8CDE /* CurationModel.swift */,
 			);
 			path = Curate;
+			sourceTree = "<group>";
+		};
+		8BFD3D6C2CF16958002F3F0F /* WriteReview */ = {
+			isa = PBXGroup;
+			children = (
+				8BFD3D6D2CF16985002F3F0F /* WriteReviewViewController.swift */,
+			);
+			path = WriteReview;
 			sourceTree = "<group>";
 		};
 		B2DAC0022CEEC66C003A0E39 /* Search */ = {
@@ -664,6 +675,7 @@
 				8BC98D522CEB313D005CBE75 /* LoginViewController.swift in Sources */,
 				8B5E0A982CEFAEC700A42F46 /* MyListTableViewCell.swift in Sources */,
 				8BCCD2722CED793D00F0391C /* ReviewCollectionViewCell.swift in Sources */,
+				8BFD3D6E2CF16985002F3F0F /* WriteReviewViewController.swift in Sources */,
 				8BC98CB02CEB2C82005CBE75 /* API+Extension.swift in Sources */,
 				B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */,
 				8BCCD2622CED729600F0391C /* CurateCollectionViewCell.swift in Sources */,

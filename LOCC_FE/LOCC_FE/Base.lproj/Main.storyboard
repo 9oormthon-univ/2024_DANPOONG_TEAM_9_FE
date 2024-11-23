@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wKj-LJ-9vO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1232,15 +1232,45 @@
             </objects>
             <point key="canvasLocation" x="2915" y="2415"/>
         </scene>
-        <!--View Controller-->
+        <!--Write Review View Controller-->
         <scene sceneID="7ug-jP-cvj">
             <objects>
-                <viewController id="7Kf-Lc-QOU" sceneMemberID="viewController">
+                <viewController id="7Kf-Lc-QOU" customClass="WriteReviewViewController" customModule="LOCC_FE" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EGW-eF-XdV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="리뷰 작성하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1s-Xs-0Hd">
+                                <rect key="frame" x="31.333333333333329" y="65" width="97.999999999999986" height="22"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K0V-FE-RIp">
+                                <rect key="frame" x="0.0" y="106" width="393" height="0.6666666666666714"/>
+                                <color key="backgroundColor" name="LineColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.75" id="WXr-4e-gAw"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로컬 크리에이터의 상품(공간)이 어떠셨나요?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCZ-j7-OZC">
+                                <rect key="frame" x="21" y="124.66666666666669" width="282" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="pLw-rq-aqP"/>
                         <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="pLw-rq-aqP" firstAttribute="trailing" secondItem="K0V-FE-RIp" secondAttribute="trailing" id="1gh-YH-BPg"/>
+                            <constraint firstItem="m1s-Xs-0Hd" firstAttribute="top" secondItem="pLw-rq-aqP" secondAttribute="top" constant="6" id="FXI-Mi-AEJ"/>
+                            <constraint firstItem="UCZ-j7-OZC" firstAttribute="top" secondItem="K0V-FE-RIp" secondAttribute="bottom" constant="18" id="aIv-UX-t6d"/>
+                            <constraint firstItem="UCZ-j7-OZC" firstAttribute="leading" secondItem="pLw-rq-aqP" secondAttribute="leading" constant="21" id="abk-ul-n1a"/>
+                            <constraint firstItem="K0V-FE-RIp" firstAttribute="leading" secondItem="pLw-rq-aqP" secondAttribute="leading" id="ddl-jT-839"/>
+                            <constraint firstItem="K0V-FE-RIp" firstAttribute="top" secondItem="m1s-Xs-0Hd" secondAttribute="bottom" constant="19" id="qLR-Ox-19I"/>
+                            <constraint firstItem="m1s-Xs-0Hd" firstAttribute="leading" secondItem="pLw-rq-aqP" secondAttribute="leading" constant="31.329999999999998" id="sc0-KJ-bNR"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="bar_post" id="Vsj-hC-EZI"/>
                 </viewController>
