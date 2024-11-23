@@ -959,6 +959,8 @@ class DetailViewController: UIViewController {
     
     // 4. 상세 정보 섹션
     private func createDetailedInfoSection() -> UIStackView {
+        guard let storeData = storeData else { return UIStackView() }
+        
         let detailedInfoStackView = UIStackView()
         detailedInfoStackView.translatesAutoresizingMaskIntoConstraints = false
         detailedInfoStackView.axis = .vertical
@@ -969,26 +971,19 @@ class DetailViewController: UIViewController {
         detailedInfoStackView.clipsToBounds = true
 
         // 1. 이미지
-        let imageView = UIImageView(image: UIImage(named: "image1")) // "image1" 에셋 이미지
+        let imageView = UIImageView() // "image1" 에셋 이미지
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        if let imageUrl = URL(string: storeData.imageUrl) {
+            imageView.loadImage(from: imageUrl)
+        }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.heightAnchor.constraint(equalToConstant: 246).isActive = true // 이미지 높이 설정
+        imageView.heightAnchor.constraint(equalToConstant: 246).isActive = true
 
         // 2. 텍스트
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.text = """
-        커다란 은행나무가 테라스에 있어 멋진 뷰와 함께
-        여유롭게 커피를 마실 수 있는 카페입니다.
-        가을에 가장 아름다운 모습을 뽐내어 가을에
-        꼭 방문해야 하는 공간이에요.
-
-        커다란 은행나무가 테라스에 있어 멋진 뷰와 함께
-        여유롭게 커피를 마실 수 있는 카페입니다.
-        가을에 가장 아름다운 모습을 뽐내어 가을에
-        꼭 방문해야 하는 공간이에요.
-        """
+        descriptionLabel.text = storeData.content
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = UIColor(hex: "696969")
         descriptionLabel.font = UIFont(name: "Pretendard-Regular", size: 16)
@@ -1009,9 +1004,11 @@ class DetailViewController: UIViewController {
 
         return detailedInfoStackView
     }
-
+    
     // 5. 위치 안내 섹션
     private func createLocationSection() -> UIStackView {
+        guard let storeData = storeData else { return UIStackView() }
+        
         let locationSectionStackView = UIStackView()
         locationSectionStackView.translatesAutoresizingMaskIntoConstraints = false
         locationSectionStackView.axis = .vertical
@@ -1044,7 +1041,7 @@ class DetailViewController: UIViewController {
         let whiteContainerViewView = wrapWithMargins(view: whiteContainerView, top: 0, leading: 20, trailing: 20, bottom: 24)
         
         // 2-1. 지도 이미지
-        let mapImageView = UIImageView(image: UIImage(named: "image4")) // "map_sample" 에셋 이미지
+        let mapImageView = UIImageView(image: UIImage(named: "pseudo_map")) // "map_sample" 에셋 이미지
         mapImageView.translatesAutoresizingMaskIntoConstraints = false
         mapImageView.contentMode = .scaleAspectFill
         mapImageView.clipsToBounds = true
@@ -1072,7 +1069,7 @@ class DetailViewController: UIViewController {
         locationIcon.heightAnchor.constraint(equalToConstant: 13).isActive = true
 
         let addressLabel = UILabel()
-        addressLabel.text = "경기 양주시 광사로 145 로슈아커피"
+        addressLabel.text = storeData.address
         addressLabel.textColor = UIColor(hex: "333332")
         addressLabel.font = UIFont(name: "Pretendard-Regular", size: 12)
         addressLabel.numberOfLines = 0
@@ -1416,6 +1413,7 @@ struct StoreDetailResponse: Codable {
 struct StoreData: Codable {
     let storeName: String
     let category: String
+    let address: String
     let phone: String
     let imageUrl: String
     let openTime: String
