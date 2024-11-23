@@ -128,7 +128,7 @@ class SearchViewController: UIViewController {
                     // 태그 데이터 업데이트
                     self?.recentKeywords = decodedResponse.data.recentKeywords
                     self?.recommemdedTags = decodedResponse.data.recommendedKeywords
-//                    self?.popularSearches = decodedResponse.data.popularKeywords
+                    self?.popularSearches = decodedResponse.data.popularKeywords
                     
                     print("Recent Keywords: \(self?.recentKeywords ?? [])")
                     print("Recommended Tags: \(self?.recommemdedTags ?? [])")
@@ -174,6 +174,38 @@ class SearchViewController: UIViewController {
                     completion(true) // 성공
                 } else {
                     completion(false) // 실패
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    private func deleteAllSearchHistory() {
+        // API URL
+        let urlString = "http://13.209.85.14/api/v1/searches"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        
+        // URLRequest 설정
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
+        
+        // 네트워크 요청
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error deleting search history: \(error)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Status Code: \(httpResponse.statusCode)")
+                if (200...299).contains(httpResponse.statusCode) {
+                    print("태그 전체 삭제 성공")
+                } else {
+                    print("태그 전체 삭제 실패")
                 }
             }
         }
@@ -469,8 +501,8 @@ class SearchViewController: UIViewController {
         verticalStackView.addArrangedSubview(firstContainerView)
 
         // 두 번째 태그 그룹 (3~6번)
-//        let secondContainerView = createTagsContainerView(from: recommemdedTags[3...6])
-//        verticalStackView.addArrangedSubview(secondContainerView)
+        let secondContainerView = createTagsContainerView(from: recommemdedTags[3...6])
+        verticalStackView.addArrangedSubview(secondContainerView)
 
         // 수직 스택뷰 제약 조건 설정
         NSLayoutConstraint.activate([
@@ -656,7 +688,8 @@ class SearchViewController: UIViewController {
     }
     
     @objc private func handleDeleteAll() {
-//        recentTags.removeAll() // Clear all tags
+        deleteAllSearchHistory() // Clear all tags
+        recentKeywords.removeAll()
         tagCollectionView.reloadData() // Refresh collection view
         print("전체 태그 삭제됨")
     }
