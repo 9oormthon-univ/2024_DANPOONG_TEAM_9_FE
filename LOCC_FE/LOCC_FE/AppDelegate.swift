@@ -19,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 카카오로그인
         KakaoSDK.initSDK(appKey: "e668c785e391d228321c3f44b76d9118")
+        
+        // 카카오맵
+//        SDKInitializer.InitSDK(appKey: "")
         return true
     }
     

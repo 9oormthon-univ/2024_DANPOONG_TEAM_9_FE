@@ -67,6 +67,7 @@
 		B2DAC0032CEEC66C003A0E39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0012CEEC66C003A0E39 /* SearchViewController.swift */; };
 		B2DAC00A2CEF4862003A0E39 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0092CEF4862003A0E39 /* ReviewViewController.swift */; };
 		B2DAC00D2CEFC653003A0E39 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC00C2CEFC653003A0E39 /* DetailViewController.swift */; };
+		B2DAC03A2CF26D19003A0E39 /* StoreTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAC0392CF26D19003A0E39 /* StoreTapGesture.swift */; };
 		EB18B42A0E9839B66DC5B1C1 /* Pods_LOCC_FE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933AF9FB10709C182A2CACC2 /* Pods_LOCC_FE.framework */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +159,7 @@
 		B2DAC0012CEEC66C003A0E39 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B2DAC0092CEF4862003A0E39 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		B2DAC00C2CEFC653003A0E39 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		B2DAC0392CF26D19003A0E39 /* StoreTapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTapGesture.swift; sourceTree = "<group>"; };
 		C09D9EE9B5003E373EF0ADF6 /* Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; path = "Target Support Files/Pods-LOCC_FE-LOCC_FEUITests/Pods-LOCC_FE-LOCC_FEUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				B2DABFE82CEB90E7003A0E39 /* MapViewController.swift */,
+				B2DAC0392CF26D19003A0E39 /* StoreTapGesture.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				8BFD3D6E2CF16985002F3F0F /* WriteReviewViewController.swift in Sources */,
 				8BC98CB02CEB2C82005CBE75 /* API+Extension.swift in Sources */,
 				B2DABFE92CEB90E7003A0E39 /* MapViewController.swift in Sources */,
+				B2DAC03A2CF26D19003A0E39 /* StoreTapGesture.swift in Sources */,
 				8BCCD2622CED729600F0391C /* CurateCollectionViewCell.swift in Sources */,
 				8B11EFB82CEB2AF0003F92AC /* AppDelegate.swift in Sources */,
 				8BCCD26A2CED781F00F0391C /* ProvinceCollectionViewCell.swift in Sources */,
