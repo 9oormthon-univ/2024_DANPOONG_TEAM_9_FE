@@ -97,6 +97,8 @@ class MyPageViewController: UIViewController {
                     // 프로필 이미지 로드
                     if let profileImageUrl = userData.profileImageUrl {
                         self.profileImg.layer.cornerRadius = 40.935
+                        self.profileImg.layer.borderWidth = 1
+                        self.profileImg.layer.borderColor = UIColor.line2.cgColor
                         self.profileImg.clipsToBounds = true
                         self.profileImg.load(from: profileImageUrl)
                     }

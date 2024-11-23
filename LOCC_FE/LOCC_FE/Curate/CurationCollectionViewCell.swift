@@ -32,6 +32,8 @@ class CurationCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         curateBaseView.layer.cornerRadius = 15
+        curateBaseView.layer.borderWidth = 1
+        curateBaseView.layer.borderColor = UIColor.line2.cgColor
         curateBaseView.layer.masksToBounds = true
         
         category.layer.cornerRadius = 9

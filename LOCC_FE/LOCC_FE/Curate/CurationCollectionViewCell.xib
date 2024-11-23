@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="353" height="465"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="카페" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMX-MG-ffc">
-                                <rect key="frame" x="23" y="25" width="36" height="19"/>
+                                <rect key="frame" x="25" y="23" width="36" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="mX9-mT-gny"/>
                                     <constraint firstAttribute="height" constant="19" id="oL1-Ca-vDz"/>
@@ -32,25 +32,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="로슈아커피" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puH-cP-Rx5">
-                                <rect key="frame" x="23" y="52" width="78" height="21.666666666666671"/>
+                                <rect key="frame" x="25" y="50" width="78" height="21.666666666666671"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="영업중" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hdl-Mm-ISo">
-                                <rect key="frame" x="23.000000000000004" y="81.666666666666671" width="36.333333333333343" height="17"/>
+                                <rect key="frame" x="25.000000000000004" y="79.666666666666671" width="36.333333333333343" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <color key="textColor" name="LabelGreen"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 10:00에 영업 종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPn-WO-U7d">
-                                <rect key="frame" x="63.333333333333336" y="84.333333333333329" width="96.666666666666657" height="12"/>
+                                <rect key="frame" x="65.333333333333314" y="82.333333333333329" width="96.666666666666686" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" name="TimeLabel"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fzy-vw-USp">
-                                <rect key="frame" x="23" y="106.66666666666667" width="12" height="12"/>
+                                <rect key="frame" x="25" y="104.66666666666667" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="ke9-kF-ato"/>
                                 </constraints>
@@ -58,19 +58,19 @@
                                 <state key="normal" image="icon_star"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hk4-tR-Y19">
-                                <rect key="frame" x="37" y="105.66666666666667" width="26" height="14.333333333333329"/>
+                                <rect key="frame" x="39" y="103.66666666666667" width="26" height="14.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" name="RateLabel"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(273)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2za-Z1-lg8">
-                                <rect key="frame" x="65" y="107.33333333333333" width="24" height="11"/>
+                                <rect key="frame" x="67" y="105.33333333333333" width="24" height="11"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <color key="textColor" name="SegmentedGray"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLb-zM-oVq">
-                                <rect key="frame" x="308" y="25" width="21" height="23"/>
+                                <rect key="frame" x="308" y="23" width="21" height="23"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="icon_scrap_unselected"/>
                                 <state key="selected" image="icon_scrape"/>
@@ -79,7 +79,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="RcZ-KZ-3AY">
-                                <rect key="frame" x="23" y="128" width="314" height="179"/>
+                                <rect key="frame" x="25" y="126" width="314" height="179"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tlI-1E-Gq2">
                                         <rect key="frame" x="0.0" y="0.0" width="153.33333333333334" height="179"/>
@@ -98,16 +98,16 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHG-Ti-3uq">
-                                <rect key="frame" x="24" y="327" width="15" height="11"/>
+                                <rect key="frame" x="24" y="320" width="15" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="0ir-mW-aVG"/>
                                     <constraint firstAttribute="height" constant="11" id="AtW-na-zN7"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="icon_“"/>
+                                <state key="normal" image="icon_quotes"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6d3-Fy-eum">
-                                <rect key="frame" x="24" y="348" width="306.33333333333331" height="76.666666666666686"/>
+                                <rect key="frame" x="24" y="341" width="306.33333333333331" height="76.666666666666686"/>
                                 <string key="text">커다란 은행나무가 테라스에 있어 멋진 뷰와 함께 
 여유롭게 커피를 마실 수 있는 카페입니다. 
 가장 아름다운 모습을 뽐내어 가을에 꼭 방문해야 
@@ -133,12 +133,12 @@
                             <constraint firstItem="VPn-WO-U7d" firstAttribute="centerY" secondItem="Hdl-Mm-ISo" secondAttribute="centerY" id="fzp-WF-5JA"/>
                             <constraint firstItem="6d3-Fy-eum" firstAttribute="top" secondItem="dHG-Ti-3uq" secondAttribute="bottom" constant="10" id="gMc-sE-LhD"/>
                             <constraint firstItem="hk4-tR-Y19" firstAttribute="centerY" secondItem="Fzy-vw-USp" secondAttribute="centerY" id="hev-Pt-16B"/>
-                            <constraint firstItem="YMX-MG-ffc" firstAttribute="top" secondItem="wNG-Q3-GZk" secondAttribute="top" constant="25" id="k6d-HS-bM7"/>
+                            <constraint firstItem="YMX-MG-ffc" firstAttribute="top" secondItem="wNG-Q3-GZk" secondAttribute="top" constant="23" id="k6d-HS-bM7"/>
                             <constraint firstItem="dHG-Ti-3uq" firstAttribute="leading" secondItem="wNG-Q3-GZk" secondAttribute="leading" constant="24" id="kmE-Xe-iXf"/>
                             <constraint firstItem="Fzy-vw-USp" firstAttribute="top" secondItem="Hdl-Mm-ISo" secondAttribute="bottom" constant="8" id="ksj-mj-NfL"/>
                             <constraint firstItem="DLb-zM-oVq" firstAttribute="top" secondItem="YMX-MG-ffc" secondAttribute="top" id="nV1-ii-YB0"/>
-                            <constraint firstItem="YMX-MG-ffc" firstAttribute="leading" secondItem="wNG-Q3-GZk" secondAttribute="leading" constant="23" id="skf-Xc-oWo"/>
-                            <constraint firstItem="dHG-Ti-3uq" firstAttribute="top" secondItem="RcZ-KZ-3AY" secondAttribute="bottom" constant="20" id="sks-xX-rYa"/>
+                            <constraint firstItem="YMX-MG-ffc" firstAttribute="leading" secondItem="wNG-Q3-GZk" secondAttribute="leading" constant="25" id="skf-Xc-oWo"/>
+                            <constraint firstItem="dHG-Ti-3uq" firstAttribute="top" secondItem="RcZ-KZ-3AY" secondAttribute="bottom" constant="15" id="sks-xX-rYa"/>
                             <constraint firstItem="RcZ-KZ-3AY" firstAttribute="top" secondItem="hk4-tR-Y19" secondAttribute="bottom" constant="8" id="v3o-A4-Bmb"/>
                             <constraint firstItem="6d3-Fy-eum" firstAttribute="leading" secondItem="dHG-Ti-3uq" secondAttribute="leading" id="vBW-uZ-Cxl"/>
                             <constraint firstItem="Hdl-Mm-ISo" firstAttribute="top" secondItem="puH-cP-Rx5" secondAttribute="bottom" constant="8" id="xdc-gx-Xf1"/>
@@ -169,14 +169,14 @@
                 <outlet property="storeName" destination="puH-cP-Rx5" id="hFe-aT-e3D"/>
                 <outlet property="summary" destination="6d3-Fy-eum" id="VtG-CB-SYB"/>
             </connections>
-            <point key="canvasLocation" x="138.1679389312977" y="19.366197183098592"/>
+            <point key="canvasLocation" x="138.1679389312977" y="19.014084507042256"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="icon_quotes" width="45" height="33"/>
         <image name="icon_scrap_unselected" width="21" height="23"/>
         <image name="icon_scrape" width="21" height="23"/>
         <image name="icon_star" width="12" height="11"/>
-        <image name="icon_“" width="45" height="33"/>
         <namedColor name="Background">
             <color red="0.97254901960784312" green="0.96862745098039216" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

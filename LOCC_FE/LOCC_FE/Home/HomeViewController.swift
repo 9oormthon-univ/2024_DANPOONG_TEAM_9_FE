@@ -343,6 +343,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.reviewCnt.font = UIFont(name: "Pretendard-Medium", size: 8)
             
             cell.baseView.layer.cornerRadius = 20
+            cell.baseView.layer.borderWidth = 1
+            cell.baseView.layer.borderColor = UIColor.line2.cgColor
             cell.baseView.layer.masksToBounds = true // 경계가 둥글게 잘리도록 설정
             
             cell.nameView.layer.cornerRadius = 4
