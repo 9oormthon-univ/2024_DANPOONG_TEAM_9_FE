@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.9.1)
+  - BSImagePicker (3.3.3)
   - Cosmos (25.0.1)
   - KakaoSDKAuth (2.22.7):
     - KakaoSDKCommon (= 2.22.7)
@@ -15,6 +16,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BSImagePicker (~> 3.1)
   - Cosmos (~> 25.0)
   - KakaoSDKAuth
   - KakaoSDKUser
@@ -22,6 +24,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - BSImagePicker
     - Cosmos
     - KakaoSDKAuth
     - KakaoSDKCommon
@@ -29,11 +32,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  BSImagePicker: 57900b323f951711608acaf97d52e9183530cb6d
   Cosmos: 02db0a1c953107049bfd2d7af19ceef55ecb7e98
   KakaoSDKAuth: 45204252ff7c379c0f86c5573f97ec36885afca0
   KakaoSDKCommon: 132164a6bac8bcd3a4346d3bf777f34f8f39fdca
   KakaoSDKUser: 4c9cf1da78710d19d0b2c2dd32d1a44c544cdfa4
 
-PODFILE CHECKSUM: 7304c22f392f7c9c8610d876e430006fe7a527cb
+PODFILE CHECKSUM: 459fc297f89c429e1344eff8de4f68767574bf85
 
 COCOAPODS: 1.15.2
