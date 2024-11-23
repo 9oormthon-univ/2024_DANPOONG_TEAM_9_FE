@@ -25,10 +25,60 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let bottomSheet = UIView()
     
     private var selectedCategories: [String] = ["CAFE"] // 최대 2개
-    private var selectedRegions: [String] = []    // 최대 1개
-    private var selectedCities: [String] = []     // 최대 1개
+    private var selectedRegions: [String] = ["GANGWON"]    // 최대 1개
+    private var selectedCities: [String] = ["GANGNEUNG"]     // 최대 1개
     
     var searchKeyword: String? // 검색어를 받을 프로퍼티
+    
+    private let categoryMapping: [String: String] = [
+        "식품": "FOOD",
+        "맛집": "RESTAURANT",
+        "카페": "CAFE",
+        "공방": "HANDCRAFT",
+        "쇼핑": "SHOPPING",
+        "동네가게": "LOCAL_STORE",
+        "책방": "BOOKSTORE",
+        "공간": "SPACE",
+        "숙소": "ACCOMMODATION"
+    ]
+
+    private let regionMapping: [String: String] = [
+        "서울": "SEOUL",
+        "경기": "GYEONGGI",
+        "인천": "INCHEON",
+        "강원": "GANGWON",
+        "대전": "DAEJEON",
+        "충청": "CHUNGCHEONG",
+        "전라": "JEOLLA",
+        "광주": "GWANGJU",
+        "경상": "GYEONGSANG",
+        "대구": "DAEGU",
+        "부산": "BUSAN",
+        "울산": "ULSAN",
+        "제주": "JEJU"
+    ]
+
+    private let cityMapping: [String: String] = [
+        "춘천시": "CHUNCHEON",
+        "원주시": "WONJU",
+        "강릉시": "GANGNEUNG",
+        "동해시": "DONGHAE",
+        "태백시": "TAEBAEK",
+        "속초시": "SOKCHO",
+        "삼척시": "SAMCHEOK",
+        "홍천군": "HONGCHEON",
+        "횡성군": "HOENGSEONG",
+        "영월군": "YEONGWOL",
+        "평창군": "PYEONGCHANG",
+        "정선군": "JEONGSEON",
+        "철원군": "CHEORWON",
+        "화천군": "HWACHEON",
+        "양구군": "YANGGU",
+        "인제군": "INJE",
+        "고성군": "GOSEONG",
+        "양양군": "YANGYANG"
+    ]
+
     
     // 검색 필드 컨테이너 뷰와 내부 요소들
     private let handleIconView = UIImageView()
@@ -51,6 +101,8 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         
         setupFont()
         setupUI()
+        requestStores()
+        highlightSelectedButtons()
         
         // searchField를 비활성화하고 클릭 시 액션 설정
         searchTextField.isUserInteractionEnabled = false
@@ -77,50 +129,31 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     // UI 설정 메서드
     private func setupUI() {
         setupDimmingView()
-//        addViews()
+        addMap()
         setupBackButton()
         setupBottomSheet()
     }
     
     // kakaomap 추가
-//    override func addViews() {
-//        guard let mapController = mapController else {
-//            print("Error: mapController is nil in addViews")
-//            return
-//        }
-//
-//        // 엔진 준비 상태 확인
-//        if !mapController.isEnginePrepared {
-//            print("Engine not prepared. Preparing engine...")
-//            mapController.prepareEngine() // 엔진 준비
-//        }
-//
-//        if !mapController.isEngineActive {
-//            print("Engine not active. Activating engine...")
-//            mapController.activateEngine() // 엔진 활성화
-//        }
-//        
-//
-//        // 다시 엔진 상태를 확인
-//        if mapController.isEnginePrepared && mapController.isEngineActive {
-//            print("Engine Prepared: \(mapController.isEnginePrepared)")
-//            print("Engine Active: \(mapController.isEngineActive)")
-//
-//            let defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691) // 서울 좌표
-//            let mapviewInfo = MapviewInfo(
-//                viewName: "unique_mapview",
-//                viewInfoName: "map",
-//                defaultPosition: defaultPosition,
-//                defaultLevel: 7
-//            )
-//
-//            mapController.addView(mapviewInfo)
-//            print("MapView added successfully")
-//        } else {
-//            print("Engine is not ready after preparation")
-//        }
-//    }
+    private func addMap() {
+        // 1. Map Image View 설정
+        let mapImageView = UIImageView()
+        mapImageView.translatesAutoresizingMaskIntoConstraints = false
+        mapImageView.contentMode = .scaleAspectFill // 배경 꽉 차게 설정
+        mapImageView.image = UIImage(named: "pseudo_whole_map") // Assets의 이미지 사용
 
+        // 2. 뷰에 추가
+        view.addSubview(mapImageView)
+
+        // 3. Auto Layout 설정
+        NSLayoutConstraint.activate([
+            // Map Image View가 전체 화면을 차지하도록 설정
+            mapImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
     
     // 뒤로 가기 버튼 설정
     private func setupBackButton() {
@@ -436,8 +469,10 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         if categoryMapping.keys.contains(title) {
             if isSelected {
                 selectedCategories.removeAll { $0 == categoryMapping[title] }
+                print(selectedCategories)
             } else if selectedCategories.count < 2 {
                 selectedCategories.append(categoryMapping[title]!)
+                print(selectedCategories)
             } else {
                 print("카테고리는 최대 2개까지 선택 가능합니다.")
                 return
@@ -445,8 +480,10 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         } else if regionMapping.keys.contains(title) {
             if isSelected {
                 selectedRegions.removeAll { $0 == regionMapping[title] }
+                print(selectedRegions)
             } else if selectedRegions.count < 1 {
                 selectedRegions.append(regionMapping[title]!)
+                print(selectedRegions)
             } else {
                 print("지역은 최대 1개만 선택 가능합니다.")
                 return
@@ -454,8 +491,10 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         } else if cityMapping.keys.contains(title) {
             if isSelected {
                 selectedCities.removeAll { $0 == cityMapping[title] }
+                print(selectedCities)
             } else if selectedCities.count < 1 {
                 selectedCities.append(cityMapping[title]!)
+                print(selectedCities)
             } else {
                 print("도시는 최대 1개만 선택 가능합니다.")
                 return
@@ -463,11 +502,36 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         }
         
         // 모든 버튼 상태 업데이트
-        updateAllButtonsState()
+//        updateAllButtonsState()
+        
+        highlightSelectedButtons()
         
         // API 요청 실행
         requestStores()
     }
+    
+    private func highlightSelectedButtons() {
+        // 모든 버튼 순회
+        for subview in filterButtonsStackView.subviews {
+            guard let button = subview as? UIButton, let title = button.title(for: .normal) else { continue }
+
+            // 매핑 테이블과 비교
+            if let mappedCategory = categoryMapping[title], selectedCategories.contains(mappedCategory) {
+                // 카테고리 매칭
+                updateButtonState(button, isSelected: true)
+            } else if let mappedRegion = regionMapping[title], selectedRegions.contains(mappedRegion) {
+                // 지역 매칭
+                updateButtonState(button, isSelected: true)
+            } else if let mappedCity = cityMapping[title], selectedCities.contains(mappedCity) {
+                // 도시 매칭
+                updateButtonState(button, isSelected: true)
+            } else {
+                // 선택되지 않은 버튼은 기본 상태로
+                updateButtonState(button, isSelected: false)
+            }
+        }
+    }
+
 
     // API 요청 메서드
     private func requestStores() {
@@ -477,6 +541,8 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         let region = selectedRegions.first ?? ""
         let city = selectedCities.first ?? ""
         let storeName = searchKeyword ?? ""
+        
+        print("searchKeyword: \(storeName)")
         
         var urlString = "\(baseURL)?\(categories)&province=\(region)&city=\(city)&storeName=\(storeName)"
         urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? urlString
@@ -549,8 +615,8 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private func updateButtonState(_ button: UIButton, isSelected: Bool) {
         if isSelected {
             // 선택된 상태
-            button.backgroundColor = UIColor(hex: "#F8F7F0")
-            button.setTitleColor(UIColor(hex: "#111111"), for: .normal)
+            button.backgroundColor = UIColor(hex: "#EBF3E4")
+            button.setTitleColor(UIColor(hex: "#6B7D5C"), for: .normal)
         } else {
             // 선택 해제된 상태
             button.backgroundColor = .white
@@ -651,9 +717,11 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             let bookmarkButton = UIButton(type: .custom)
             bookmarkButton.setImage(UIImage(named: "icon_scrape_unfilled"), for: .normal) // 북마크 안 된 상태
             bookmarkButton.setImage(UIImage(named: "icon_scrape"), for: .selected) // 북마크 된 상태
+//        bookmarkButton.setImage(UIImage(named: data.bookmarked ? "icon_scrape" : "icon_scrape_unfilled"), for: .normal)
             bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
 
             // 북마크 버튼 클릭 액션 추가
+        bookmarkButton.tag = data.storeId
             bookmarkButton.addTarget(self, action: #selector(bookmarkButtonTapped(_:)), for: .touchUpInside)
 
             // Store Name Label
@@ -662,10 +730,11 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             nameLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
             nameLabel.textColor = UIColor(hex: "#111111")
             
-            // Image Container에 Gesture Recognizer 추가
-            let nameLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(nameLabelTapped))
-            nameLabel.addGestureRecognizer(nameLabelTapGesture)
-            nameLabel.isUserInteractionEnabled = true
+            // nameLabel에 Gesture Recognizer 추가
+        let nameLabelTapGesture = StoreTapGesture(target: self, action: #selector(nameLabelTapped(_:)))
+        nameLabelTapGesture.storeId = data.storeId // storeId 설정
+        nameLabel.addGestureRecognizer(nameLabelTapGesture)
+        nameLabel.isUserInteractionEnabled = true
 
 
             // Status Label
@@ -727,12 +796,12 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             imageContainer.translatesAutoresizingMaskIntoConstraints = false
             
             // Image Container에 Gesture Recognizer 추가
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageContainerTapped))
+            let tapGesture = StoreTapGesture(target: self, action: #selector(nameLabelTapped(_:)))
+        tapGesture.storeId = data.storeId // storeId 설정
             imageContainer.addGestureRecognizer(tapGesture)
             imageContainer.isUserInteractionEnabled = true
 
         for imageName in data.images {
-                if let image = UIImage(named: imageName) {
                     let imageView = UIImageView()
                     imageView.translatesAutoresizingMaskIntoConstraints = false
                     if let imageUrl = URL(string: imageName) {
@@ -742,9 +811,6 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
                     imageView.clipsToBounds = true
                     imageView.layer.cornerRadius = 8
                     imageContainer.addArrangedSubview(imageView)
-                } else {
-                    print("❌ 이미지 로드 실패: \(imageName)")
-                }
             }
             
             // Reviews Summary Label
@@ -813,6 +879,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
             
             return cardView
         }
+    
     @objc private func bookmarkButtonTapped(_ sender: UIButton) {
         // 상태를 토글
         sender.isSelected.toggle()
@@ -826,7 +893,7 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
-    @objc private func imageContainerTapped() {
+    @objc public func imageContainerTapped() {
         print("Image container tapped")
         
         // 스토리보드에서 ReviewViewController 인스턴스 생성
@@ -844,23 +911,31 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
         self.present(reviewVC, animated: true, completion: nil)
     }
     
-    @objc private func nameLabelTapped() {
-        print("Name label tapped")
-        
-        // 스토리보드에서 ReviewViewController 인스턴스 생성
+    @objc private func nameLabelTapped(_ sender: StoreTapGesture) {
+        guard let storeId = sender.storeId else {
+            print("storeId가 전달되지 않았습니다.")
+            return
+        }
+        print("Name label tapped with storeId: \(storeId)")
+
+        // 스토리보드에서 DetailViewController 인스턴스 생성
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let reviewVC = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else {
             print("Failed to instantiate DetailViewController")
             return
         }
-        
+
+        // storeId 값을 DetailViewController에 전달
+        reviewVC.storeId = storeId
+
         // 화면 전환 스타일 설정
         reviewVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
         reviewVC.modalTransitionStyle = .coverVertical // 애니메이션 스타일
-        
+
         // 화면 전환 실행
         self.present(reviewVC, animated: true, completion: nil)
     }
+
 
     // 필터 버튼 생성 메서드
     private static func createFilterButton(title: String, fontWeight: String) -> UIButton {
@@ -956,6 +1031,8 @@ extension UIColor {
 extension MapViewController: SearchViewControllerDelegate {
     func didEnterSearchKeyword(_ keyword: String) {
         print("검색어 전달받음: \(keyword)")
+        searchKeyword = keyword
+        requestStores()
         // 필요한 추가 작업 수행
         
         // 전달받은 keyword를 검색 바에 입력된 것처럼 설정

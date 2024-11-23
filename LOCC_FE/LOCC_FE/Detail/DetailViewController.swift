@@ -3,6 +3,7 @@ import UIKit
 class DetailViewController: UIViewController {
     private var storeData: StoreData?
     private var scrapButton: UIButton!
+    var storeId: Int? // storeId를 받을 프로퍼티 추가
     
     private let dayMapping: [String: String] = [
         "MONDAY": "월",
@@ -46,13 +47,17 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-//        setupUI()
-        fetchStoreDetails(storeId: 1) { [weak self] data in
-            guard let self = self, let data = data else { return }
-            DispatchQueue.main.async {
-                self.storeData = data
-                self.setupUI()
+        // storeId를 사용하여 데이터를 로드
+        if let storeId = storeId {
+            fetchStoreDetails(storeId: storeId) { [weak self] data in
+                guard let self = self, let data = data else { return }
+                DispatchQueue.main.async {
+                    self.storeData = data
+                    self.setupUI()
+                }
             }
+        } else {
+            print("storeId가 전달되지 않았습니다.")
         }
     }
     
@@ -466,13 +471,15 @@ class DetailViewController: UIViewController {
         for review in storeData.reviews {
             let profileUrl = review.profileImageUrl
             let imageUrl = review.images.first ?? "" // 첫 번째 이미지 URL 가져오기
+            let imageUrl2 = review.images[1] ?? ""
+            let imageUrl3 = review.images[2] ?? ""
             let cardView = createReviewCard(
                 profileImage: profileUrl, // 기본 프로필 이미지 사용
                 userName: review.username, // 유저 이름 대체
                 rating: review.rating,
                 reviewText: review.summary,
                 images: [
-                    imageUrl, imageUrl, imageUrl // 동일한 URL 3번 사용
+                    imageUrl, imageUrl2, imageUrl3 // 동일한 URL 3번 사용
                 ]
             )
             contentView.addArrangedSubview(cardView)
@@ -1298,7 +1305,12 @@ class DetailViewController: UIViewController {
     }
     
     @objc private func toggleBookmark() {
-        let url = URL(string: "http://13.209.85.14/api/v1/stores/1/bookmark/toggle")!
+        guard let storeId = storeId else {
+            print("❌ storeId가 nil입니다.")
+            return
+        }
+        print("storeId: \(storeId)")
+        let url = URL(string: "http://13.209.85.14/api/v1/stores/\(storeId)/bookmark/toggle")!
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.setValue("Bearer \(jwtToken)", forHTTPHeaderField: "Authorization")
@@ -1325,7 +1337,7 @@ class DetailViewController: UIViewController {
         task.resume()
     }
     
-    @objc private func toggleNearBookmark(_ sender: UIButton) {
+    @objc public func toggleNearBookmark(_ sender: UIButton) {
         let storeId = sender.tag // 버튼의 tag에서 storeId 가져오기
         let url = URL(string: "http://13.209.85.14/api/v1/stores/\(storeId)/bookmark/toggle")!
         var request = URLRequest(url: url)
@@ -1418,7 +1430,7 @@ struct StoreData: Codable {
     let homepage: String
     let rating: Double
     let reviewCount: Int
-    let content: String
+    let content: String?
     let businessHours: [BusinessHour]
     let reviews: [StoreReview]
     let nearbyStores: [NearbyStore]
