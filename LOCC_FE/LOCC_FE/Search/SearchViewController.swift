@@ -1,5 +1,9 @@
 import UIKit
 
+protocol SearchViewControllerDelegate: AnyObject {
+    func didEnterSearchKeyword(_ keyword: String)
+}
+
 // MARK: - SearchViewController
 class SearchViewController: UIViewController {
     
@@ -65,6 +69,7 @@ class SearchViewController: UIViewController {
         return stackView
     }()
 
+    weak var delegate: SearchViewControllerDelegate? // any 제거
 
     
     // MARK: - Lifecycle
@@ -121,12 +126,10 @@ class SearchViewController: UIViewController {
                 let decodedResponse = try JSONDecoder().decode(TagResponse.self, from: data)
                 DispatchQueue.main.async {
                     // 태그 데이터 업데이트
-//                    self?.recentTags = decodedResponse.data.recentKeywords.map { $0.keyword }
                     self?.recentKeywords = decodedResponse.data.recentKeywords
                     self?.recommemdedTags = decodedResponse.data.recommendedKeywords
 //                    self?.popularSearches = decodedResponse.data.popularKeywords
                     
-//                    print("Recent Tags: \(self?.recentTags ?? [])")
                     print("Recent Keywords: \(self?.recentKeywords ?? [])")
                     print("Recommended Tags: \(self?.recommemdedTags ?? [])")
                     print("Popular Searches: \(self?.popularSearches ?? [])")
@@ -332,6 +335,8 @@ class SearchViewController: UIViewController {
     }
     
     private func setupSearchBar() {
+        searchTextField.delegate = self
+        
         searchContainerView.layer.cornerRadius = 18
         searchContainerView.backgroundColor = UIColor(hex: "#111111").withAlphaComponent(0.06)
         searchContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -715,6 +720,21 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tag = recentKeywords[indexPath.item].keyword
         print("\(tag) 태그 클릭")
+    }
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let searchText = textField.text {
+            print("입력된 검색어: \(searchText)")
+
+            // Delegate를 통해 MapViewController에 검색어 전달
+            delegate?.didEnterSearchKeyword(searchText)
+
+            // 화면 닫기
+            self.dismiss(animated: true, completion: nil)
+        }
+        return true
     }
 }
 

@@ -20,6 +20,8 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     private let backButton = UIButton(type: .system)
     private let bottomSheet = UIView()
     
+    var searchKeyword: String? // 검색어를 받을 프로퍼티
+    
 //    private var mapController: KMController?
     
     // 검색 필드 컨테이너 뷰와 내부 요소들
@@ -266,19 +268,17 @@ class MapViewController: UIViewController, UIScrollViewDelegate {
     
     // searchField 클릭 시 다른 페이지로 이동하는 액션
     @objc private func searchFieldTapped() {
-        print("move to search page")
-        // 스토리보드에서 SearchViewController 인스턴스 생성
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else {
             print("Failed to instantiate SearchViewController")
             return
         }
-        
-        // 모달 방식으로 화면 전환 설정
-        searchVC.modalPresentationStyle = .fullScreen // 화면 전체를 덮도록 설정
-        searchVC.modalTransitionStyle = .coverVertical // 전환 애니메이션 스타일 (기본값)
-        
-        // 화면 전환 실행
+
+        // Delegate 설정
+        searchVC.delegate = self
+
+        // 모달로 화면 전환
+        searchVC.modalPresentationStyle = .fullScreen
         self.present(searchVC, animated: true, completion: nil)
 
     }
@@ -777,5 +777,15 @@ extension UIColor {
         let blue = CGFloat(rgbValue & 0x0000FF) / 255.0
         
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+}
+
+extension MapViewController: SearchViewControllerDelegate {
+    func didEnterSearchKeyword(_ keyword: String) {
+        print("검색어 전달받음: \(keyword)")
+        // 필요한 추가 작업 수행
+        
+        // 전달받은 keyword를 검색 바에 입력된 것처럼 설정
+        searchTextField.text = keyword
     }
 }
