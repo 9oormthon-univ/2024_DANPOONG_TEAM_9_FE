@@ -32,7 +32,7 @@ open LOCC_FE.xcworkspace
 <br>
 
 ## 📌 Overview
-<img src="https://github.com/user-attachments/assets/50d8244f-4b93-49ee-80b1-e337bf596248" style="max-width: 80%; height: auto;" />
+<img src="https://github.com/user-attachments/assets/50d8244f-4b93-49ee-80b1-e337bf596248" style="width: 80%; height: auto;" />
 <br>
 
 ## 🏗️ System Architecture
